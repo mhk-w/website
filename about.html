@@ -3,29 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About Me - Minho Kim</title>
+  <title>About - Minho Kim</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
   <link rel="stylesheet" href="styles.css" />
   <style>
+    /* Mirrors .hero-main / .hero-left / .hero-photo / .hero-right on the
+       Home page, so the photo+text presentation matches exactly. */
     .profile-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      align-items: flex-start;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: start;
+      gap: clamp(2rem, 6vw, 4rem);
     }
 
     .profile-photo {
-      flex: 0 0 280px;
+      text-align: center;
+      min-width: 280px;
     }
 
     .profile-photo img {
-      width: 100%;
-      max-width: 300px;
-      border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      width: clamp(200px, 32vw, 280px);
+      height: clamp(260px, 42vw, 360px);
+      object-fit: cover;
+      border-radius: 14px;
+      margin: 0 auto;
+      display: block;
+      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+    }
+
+    .profile-photo .bio-switch {
+      width: fit-content;
+      margin: 1.5rem auto 0;
     }
 
     .profile-text {
-      flex: 1 1 400px;
+      min-width: 0;
     }
 
     .profile-section {
@@ -58,15 +70,24 @@
       text-decoration: underline;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
       .profile-container {
-        flex-direction: column;
-        align-items: center;
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
       }
       .profile-photo {
-        margin-bottom: 1.2rem;
+        min-width: auto;
       }
     }
+
+    @media (max-width: 480px) {
+      .profile-photo img {
+        width: 160px;
+        height: 210px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -78,8 +99,8 @@
 
       <nav>
         <ul class="nav-menu" id="nav-menu">
-          <li><a href="index.html" class="nav-link active">Home</a></li>
-          <li><a href="about.html" class="nav-link">About Me</a></li>
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link active">About</a></li>
           <li><a href="news.html" class="nav-link">News</a></li>
           <li><a href="research.html" class="nav-link">Research</a></li>
           <li><a href="teaching.html" class="nav-link">Teaching</a></li>
@@ -100,7 +121,7 @@
     <div class="sidebar-menu" id="sidebar-menu">
         <ul>
           <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="about.html" class="nav-link">About Me</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
           <li><a href="news.html" class="nav-link">News</a></li>
           <li><a href="research.html" class="nav-link">Research</a></li>
           <li><a href="teaching.html" class="nav-link">Teaching</a></li>
@@ -111,24 +132,69 @@
 <main class="main-content">
   <div class="container">
     <div class="content-card">
-      <h2 class="section-title">About Me</h2>
+      <h2 class="section-title">About</h2>
+      <p class="lede-text">
+        I am an <i>environmental planner</i>, <i>civil engineer</i>, and <i>data scientist</i> building computational
+        solutions for
+        <span class="annotate" style="--annotate-delay: 0.3s">
+          <span class="lede-hl">data-driven planning</span>
+          <svg class="annotate-mark annotate-mark-circle" viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M14,52 C10,24 48,6 100,6 C155,6 191,22 190,54 C189,84 148,95 99,95 C46,95 12,82 16,50" />
+            <path d="M28,18 C55,2 112,-2 142,9" />
+          </svg>
+        </span>
+        against
+        <span class="annotate" style="--annotate-delay: 0.9s">
+          <span class="lede-hl">natural hazard risk</span>
+          <svg class="annotate-mark annotate-mark-underline" viewBox="0 0 200 40" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M4,22 C50,10 150,28 196,16" />
+            <path d="M6,32 C60,22 140,36 194,26" />
+          </svg>
+        </span>.
+      </p>
 
       <div class="profile-container">
-        <!-- Left: Photo -->
+        <!-- Left: Photo + bio toggle (stacked so this column roughly matches the text column's height) -->
         <div class="profile-photo">
-          <img src="images/avatar.jpg" alt="Minho Kim">
+          <img id="profilePhotoAcademic" src="images/avatar.png" alt="Minho Kim">
+          <img id="profilePhotoCasual" src="images/profile_casual.jpg" alt="Minho Kim" style="display: none;">
+          <div class="bio-switch" id="bioSwitch">
+            <span class="bio-switch-label active" id="bioLabelAcademic">Academic</span>
+            <button class="bio-switch-track" id="bioSwitchTrack" role="switch" aria-checked="false" aria-label="Toggle between academic and casual bio">
+              <span class="bio-switch-thumb"></span>
+            </button>
+            <span class="bio-switch-label" id="bioLabelCasual">Casual</span>
+          </div>
         </div>
 
         <!-- Right: Text -->
         <div class="profile-text">
-          <p class="hero-description">
-            I’m a <span class="hand-underline">PhD candidate</span> in Environmental Planning at <b>UC Berkeley</b> advised by Professors <a href="https://scholar.google.com/citations?user=YAGjro8AAAAJ&hl=en">Marta C. Gonzalez</a> and <a href="https://ced.berkeley.edu/people/john-radke">John Radke</a>. 
-            My research focuses on building data-driven methods to model and predict natural hazard risks on our built and natural environment.
-            To this end, I use GeoAI methods, computational modeling, and spatially embedded networks to develop decision support tools that guide risk-informed decisions, improve risk management, and build resilience in complex socio-ecological systems like the Wildland Urban Interface.
-            <br><br>
-            I received my BS and MS degrees in Civil and Environmental Engineering at <b>Seoul National University</b>, where I was advised by Professor <a href="https://www.researchgate.net/profile/Yongil-Kim-2">Yongil Kim</a> and a member of the <a href="https://spins.snu.ac.kr">SPINS Lab</a>. 
-          </p>
+          <div id="bioAcademic">
+            <p class="hero-description hero-intro-mono">
 
+                I am a postdoctoral scholar in the <a href="https://urbanresilience.stanford.edu">Stanford Urban Resilience Initiative</a>, advised by Professor <a href="https://scholar.google.com/citations?user=im82jgIAAAAJ&hl=en&oi=ao"> Jack Baker</a>.
+                <br><br>
+
+                My research combines <span class="lede-hl-modeling">computational modeling</span> and <span class="lede-hl-geospatial">geospatial data science</span> to model natural hazard risk, which inform build <span class="lede-hl-decision">decision support</span> tools that guide more proactive, risk-informed approaches. During my PhD, I focused on wildfires and used fire spread simulations, remote sensing, and network science within a <emph>systems-thinking</emph> approach to understand how risk is complex and interconnected across the built and natural environment.
+                <!-- Together, these methods inform decision support tools that guide more proactive, risk-informed policies and build resilience in complex socio-ecological systems like the Wildland Urban Interface. -->
+
+                <br><br>
+                I received my PhD in Environmental Planning at UC Berkeley advised by Professors <a href="https://scholar.google.com/citations?user=YAGjro8AAAAJ&hl=en">Marta C. Gonzalez</a> and <a href="https://ced.berkeley.edu/people/john-radke">John Radke</a> as a member of the <a href="https://humnetlab.berkeley.edu">HumNet Lab</a>.
+                I received my BS and MS degrees in Civil and Environmental Engineering at Seoul National University, where I was advised by Professor <a href="https://www.researchgate.net/profile/Yongil-Kim-2">Yongil Kim</a> as a member of the <a href="https://spins.snu.ac.kr">SPINS Lab</a>.
+            </p>
+            <!-- <p class="hero-description">
+              Curious what I actually work on? See my <a href="research.html">Research</a> page for an overview of my work and the full list of publications.
+            </p> -->
+          </div>
+
+          <div id="bioCasual" style="display: none;">
+            <p class="hero-description">
+              I was born in Daegu, South Korea, but moved overseas to London, Ontario, and later lived briefly in London, UK. I love traveling around the world, from exploring pristine forests to finding the trendiest caf&eacute; or bakery in the city.
+            </p>
+            <p class="hero-description">
+              My path here started with a simple curiosity: I got into remote sensing because I wanted to see the unseen. That curiosity grew into mapping our multi-scale built and natural environment with AI, after noticing how complex and heterogeneous our landscapes and microclimates had become in Seoul's rapidly urbanizing megacity, where I spent my undergraduate and graduate years. But the more I looked, the more I realized how vulnerable these landscapes were to climate extremes and disturbances like wildfires. California, with its convergence of climate extremes, felt like the natural next step, and it's where I started studying wildfires in earnest. That work convinced me disaster management needs a systems thinking lens: fire behavior is never just about fire, it's about how people, environment, and technology interact on the landscape. To really understand that, I eventually made my way to Spain, fighting fires alongside crews and testing my models in real time, still the best way I know to understand fire as a process on a complex, living landscape.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -136,35 +202,19 @@
       <div class="profile-section">
         <h3>Education</h3>
         <ul>
-          <div>
-          <li><strong>PhD in Environmental Planning</strong>, UC Berkeley (2026 Expected)
-            <br><small>Dissertation: Data-Driven Planning for Resilience Against Natural Hazard Risks</small></li>
-          <li><strong>MS in Civil & Environmental Engineering</strong>, Seoul National University (2021)
+          <li><strong>PhD in Environmental Planning</strong>, UC Berkeley (Sep 2021 &ndash; May 2026)
+            <br><small>Dissertation: Data-Driven Planning for Natural Hazard Risk Management</small></li>
+          <li><strong>MS in Civil &amp; Environmental Engineering</strong>, Seoul National University (Mar 2017 &ndash; Feb 2021)
             <br><small>Thesis: <a href="https://s-space.snu.ac.kr/handle/10371/175090">Local Climate Zone Classification Using Multi-Scale Convolutional Networks</a></small>
-          </li> 
-          <li><strong>BS in Civil & Environmental Engineering</strong>, Seoul National University (2017)
-            <br><small>Thesis: Monitoring North Korea’s 4th Nuclear Test Site Using Sentinel-1A DInSAR</small></li>
+          </li>
+          <li><strong>BS in Civil &amp; Environmental Engineering</strong>, Seoul National University (Sep 2012 &ndash; Feb 2017)
+            <br><small>Thesis: Monitoring North Korea's 4th Nuclear Test Site Using Sentinel-1A DInSAR</small></li>
         </ul>
       </div>
-
-    <!-- Research Section -->
-    <div class="profile-section">
-      <h3>Research</h3>
-      <p class="hero-description">
-      As an environmental planner, civil engineer, and geospatial data scientist, my research centers on leveraging novel datasets and emerging technologies to protect and adapt our built and natural environments against natural hazard risks and system disruptions. 
-      I combine computational models (fire spread simulations), spatially embedded networks, and GeoAI methods to create scalable decision-support tools for risk management and to generate critical earth intelligence that informs strategic planning and policy. 
-      My aim is to translate complex data into actionable insights, fostering resilience and proactive adaptation in the face of mounting environmental challenges. My research is driven by three core themes:
-      <ul>  
-      <li><strong>(1) Developing computational models</strong> to simulate and predict natural hazard risk</li>
-      <li><strong>(2) Mapping earth informatics and intelligence</strong> through advanced geospatial data science and GeoAI</li> 
-      <li><strong>(3) Building intelligent decision-making support</strong> for complex systems under uncertainty.</li>
-      </ul>
-    </div>
 
       <!-- Awards Section -->
       <div class="profile-section">
         <h3>Awards</h3>
-        <p class="hero-description">
 
     <!-- Honors & Awards Dropdown -->
     <div class="dropdown-section">
@@ -172,12 +222,12 @@
         Honors & Awards <span class="dropdown-arrow">&#9654;</span>
       </div>
       <div class="dropdown-content">
-        <div class="award-entry"><strong>Outstanding Graduate Student Instructor Award (April 2024)</strong> <span class="scholarship-sponsor">UC Berkeley (GSI Teaching and Resource Center</span></div>
-        <div class="award-entry"><strong>ICE-KSCE Master’s Thesis Award (July 2021)</strong> <span class="scholarship-sponsor">UK Institute of Civil Engineers & Korean Society of Civil Engineers</span></div>
-        <div class="award-entry"><strong>Best Student Paper Award at ISRS (May 2021)</strong> <span class="scholarship-sponsor">Korean Society of Remote Sensing and Gaia3D</span></div>
-        <div class="award-entry"><strong>Environmental Geospatial Data Idea Contest Excellence Award (Nov 2020)</strong> <span class="scholarship-sponsor">Ministry of Environment, South Korea</span></div>
-        <div class="award-entry"><strong>SPINS Lab Outstanding Research Award (Mar 2020)</strong> <span class="scholarship-sponsor">Seoul National University</span></div>
-        <div class="award-entry"><strong>Meteorological Satellite Student Competition Research Award (Jan 2019)</strong> <span class="scholarship-sponsor">Korean Meteorological Administration</span></div>
+        <div class="award-entry"><strong>Outstanding Graduate Student Instructor Award (2024)</strong> <span class="scholarship-sponsor">UC Berkeley (GSI Teaching and Resource Center)</span></div>
+        <div class="award-entry"><strong>ICE-KSCE Master's Thesis Award (2021)</strong> <span class="scholarship-sponsor">Institution of Civil Engineers (UK) &amp; Korean Society of Civil Engineers</span></div>
+        <div class="award-entry"><strong>Best Student Paper Award at ISRS2021 (2021)</strong> <span class="scholarship-sponsor">Korean Society of Remote Sensing and Gaia3D</span></div>
+        <div class="award-entry"><strong>Environmental Geospatial Data Idea Contest, Excellence Award (2020)</strong> <span class="scholarship-sponsor">Ministry of Environment, South Korea</span></div>
+        <div class="award-entry"><strong>Outstanding Research Award (2020)</strong> <span class="scholarship-sponsor">SPINS Lab, Seoul National University</span></div>
+        <div class="award-entry"><strong>Research Award, Student Competition using Meteorological Satellites (2019)</strong> <span class="scholarship-sponsor">Korean Meteorological Administration</span></div>
       </div>
     </div>
 
@@ -187,32 +237,74 @@
         Scholarships <span class="dropdown-arrow">&#9654;</span>
       </div>
       <div class="dropdown-content">
-        <div class="scholarship-entry"><strong>Association of Environmental Planners San Francisco Bay Area Chapter Scholarship (July 2025)</strong> <span class="scholarship-sponsor">Association of Environmental Planners</span></div>
-        <div class="scholarship-entry"><strong>Beatrix C. Farrand Memorial Fellowship for Research (May 2024)</strong> <span class="scholarship-sponsor">UC Berkeley</span></div>
-        <div class="scholarship-entry"><strong>Beatrix C. Farrand Memorial Fellowship for Conference Travel (May 2023)</strong> <span class="scholarship-sponsor">UC Berkeley</span></div>
-        <div class="scholarship-entry"><strong>Robert N. Colwell Memorial Fellowship (Feb 2023)</strong> <span class="scholarship-sponsor">American Society of Photogrammetry and Remote Sensing (ASPRS)</span></div>
-        <div class="scholarship-entry"><strong>Brain Korea 21 Plus Scholarship (2019–2021)</strong> <span class="scholarship-sponsor">National Research Foundation (Korea)</span></div>
-        <div class="scholarship-entry"><strong>Merit-based Scholarship (2014–2017, 2019)</strong> <span class="scholarship-sponsor">Seoul National University</span></div>
-        <div class="scholarship-entry"><strong>National Scholarship for Science and Engineering (2013–2014)</strong> <span class="scholarship-sponsor">Korea Student Aid Foundation</span></div>
-        <div class="scholarship-entry"><strong>SNU Global Scholarship (2012–2013)</strong> <span class="scholarship-sponsor">Seoul National University</span></div>
+        <div class="scholarship-entry"><strong>AEP Student Scholarship (2025)</strong> <span class="scholarship-sponsor">Association of Environmental Professionals (AEP)</span></div>
+        <div class="scholarship-entry"><strong>Beatrix C. Farrand Memorial Fellowship for Research (2024, 2025)</strong> <span class="scholarship-sponsor">UC Berkeley, Dept. of Landscape Architecture &amp; Environmental Planning</span></div>
+        <div class="scholarship-entry"><strong>Beatrix C. Farrand Memorial Fellowship for Conference Travel (2023, 2025)</strong> <span class="scholarship-sponsor">UC Berkeley, Dept. of Landscape Architecture &amp; Environmental Planning</span></div>
+        <div class="scholarship-entry"><strong>Robert N. Colwell Memorial Fellowship (2023)</strong> <span class="scholarship-sponsor">The American Society for Photogrammetry and Remote Sensing</span></div>
+        <div class="scholarship-entry"><strong>Brain Korea 21 Plus Scholarship (2019&ndash;2021)</strong> <span class="scholarship-sponsor">National Research Foundation of Korea</span></div>
+        <div class="scholarship-entry"><strong>Merit-based Scholarship (2014&ndash;2017, 2019)</strong> <span class="scholarship-sponsor">Seoul National University</span></div>
+        <div class="scholarship-entry"><strong>National Scholarship for Science and Engineering (2013, 2014)</strong> <span class="scholarship-sponsor">Korea Student Aid Foundation</span></div>
+        <div class="scholarship-entry"><strong>SNU Global Scholarship (2012, 2013)</strong> <span class="scholarship-sponsor">Seoul National University</span></div>
       </div>
     </div>
+      </div>
 
-
+      <!-- Collaborations Section -->
+      <div class="profile-section">
+        <h3>Collaborations</h3>
+        <p class="hero-description">
+          I am fortunate to collaborate with academics, experts, practitioners from all around the world. Hover or click on a pin for details.
+        </p>
+        <div class="collab-layout">
+          <div class="collab-map-wrap">
+            <div class="collab-map-controls">
+              <button class="collab-zoom-btn" id="collabZoomOut" aria-label="Zoom out"><i class="fas fa-minus"></i></button>
+              <button class="collab-zoom-btn" id="collabZoomIn" aria-label="Zoom in"><i class="fas fa-plus"></i></button>
+              <button class="collab-zoom-btn" id="collabZoomReset" aria-label="Reset zoom and pan"><i class="fas fa-arrow-rotate-left"></i></button>
+            </div>
+            <div id="collaborationsMap"></div>
+          </div>
+          <div class="collab-info-panel" id="collabInfoPanel"></div>
+        </div>
+        <p class="collab-map-cta">
+          📍 Want to put your marker on this map? <a href="mailto:minhok@stanford.edu">Let's collaborate &mdash; email me</a>.
         </p>
       </div>
-      
+
     </div>
   </div>
 </main>
 
-  <script src="script.js"></script>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <nav class="footer-nav">
+        <a href="index.html" class="footer-nav-link">Home</a>
+        <a href="about.html" class="footer-nav-link">About</a>
+        <a href="news.html" class="footer-nav-link">News</a>
+        <a href="research.html" class="footer-nav-link">Research</a>
+        <a href="teaching.html" class="footer-nav-link">Teaching</a>
+        <a href="resources/cv_recent.pdf" class="footer-nav-link">CV</a>
+      </nav>
+      <div class="social-icons footer-social-icons">
+        <a href="mailto:minhok@stanford.edu" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a>
+        <a href="https://scholar.google.com/citations?user=VRVL4TYAAAAJ&hl=en" class="social-icon" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+        <a href="https://www.linkedin.com/in/minhokim93/" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://github.com/minhokim93" class="social-icon" title="Github"><i class="fab fa-github"></i></a>
+        <a href="https://www.researchgate.net/profile/Minho_Kim21" class="social-icon" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+        <a href="https://orcid.org/0000-0002-9504-5935" class="social-icon" title="ORCID"><i class="fab fa-orcid"></i></a>
+      </div>
+      <p>&copy; <span id="year"></span> Minho Kim. All rights reserved.</p>
+    </div>
+  </footer>
+
   <script>
-    function toggleDropdown(element) {
-      const section = element.parentElement;
-      section.classList.toggle('open');
-    }
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
-  
+  <script src="data/world-map-path.js"></script>
+  <script src="data/collaborations.js"></script>
+  <script src="js/collaborations-map.js"></script>
+  <script src="script.js"></script>
+
 </body>
 </html>

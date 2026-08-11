@@ -56,28 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// Create floating particles
-function createParticle() {
-  const particle = document.createElement('div');
-  particle.className = 'particle';
-  
-  const size = Math.random() * 10 + 5;
-  particle.style.width = size + 'px';
-  particle.style.height = size + 'px';
-  particle.style.left = Math.random() * 100 + '%';
-  particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
-  particle.style.animationDelay = Math.random() * 5 + 's';
-  
-  const particlesContainer = document.querySelector('.particles');
-  if (particlesContainer) {
-      particlesContainer.appendChild(particle);
-      setTimeout(() => particle.remove(), 25000);
-  }
-}
-
-// Create particles periodically
-setInterval(createParticle, 2000);
-
 // Header scroll effect
 window.addEventListener('scroll', () => {
   const header = document.querySelector('.header');
@@ -91,19 +69,6 @@ window.addEventListener('scroll', () => {
       }
   }
 });
-
-// Initialize particles container
-if (!document.querySelector('.particles')) {
-  document.body.insertAdjacentHTML('afterbegin', '<div class="particles"></div>');
-}
-
-// Photo placeholder click handler
-const heroPhoto = document.getElementById('heroPhoto');
-if (heroPhoto) {
-  heroPhoto.addEventListener('click', function() {
-      alert('Click here to upload your photo! Replace this placeholder with your actual photo.');
-  });
-}
 
 // Mobile menu toggle
 document.addEventListener("DOMContentLoaded", function () {
@@ -135,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     const currentPage = location.pathname.split('/').pop(); // get current filename
     const navLinks = document.querySelectorAll('.nav-link');
-  
+
     navLinks.forEach(link => {
       const href = link.getAttribute('href');
       if (href === currentPage || (currentPage === '' && href.includes('index.html'))) {
@@ -145,4 +110,53 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
-  
+
+// Collapsible section toggle (used by about.html's Awards/Scholarships and
+// teaching.html's per-institution sections).
+function toggleDropdown(element) {
+  const section = element.parentElement;
+  section.classList.toggle('open');
+}
+
+// Academic/Casual bio switch on about.html — a single connected on/off
+// control rather than two independent buttons.
+function setBioView(view) {
+  const academic = document.getElementById('bioAcademic');
+  const casual = document.getElementById('bioCasual');
+  if (!academic || !casual) return;
+  academic.style.display = view === 'academic' ? 'block' : 'none';
+  casual.style.display = view === 'casual' ? 'block' : 'none';
+
+  const photoAcademic = document.getElementById('profilePhotoAcademic');
+  const photoCasual = document.getElementById('profilePhotoCasual');
+  if (photoAcademic) photoAcademic.style.display = view === 'academic' ? 'block' : 'none';
+  if (photoCasual) photoCasual.style.display = view === 'casual' ? 'block' : 'none';
+
+  const switchEl = document.getElementById('bioSwitch');
+  if (switchEl) switchEl.classList.toggle('is-casual', view === 'casual');
+
+  const track = document.getElementById('bioSwitchTrack');
+  if (track) track.setAttribute('aria-checked', view === 'casual' ? 'true' : 'false');
+
+  const labelAcademic = document.getElementById('bioLabelAcademic');
+  const labelCasual = document.getElementById('bioLabelCasual');
+  if (labelAcademic) labelAcademic.classList.toggle('active', view === 'academic');
+  if (labelCasual) labelCasual.classList.toggle('active', view === 'casual');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const track = document.getElementById('bioSwitchTrack');
+  const labelAcademic = document.getElementById('bioLabelAcademic');
+  const labelCasual = document.getElementById('bioLabelCasual');
+  if (!track) return;
+
+  track.addEventListener('click', () => {
+    const isCasual = track.getAttribute('aria-checked') === 'true';
+    setBioView(isCasual ? 'academic' : 'casual');
+  });
+  // Clicking the label text directly (a much bigger target than the
+  // track alone) jumps straight to that state.
+  if (labelAcademic) labelAcademic.addEventListener('click', () => setBioView('academic'));
+  if (labelCasual) labelCasual.addEventListener('click', () => setBioView('casual'));
+});
+

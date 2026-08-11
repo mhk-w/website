@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,500;0,600;1,500&display=swap');
+
 /* ===== CSS CUSTOM PROPERTIES ===== */
 :root {
     --primary-color: #3366cc;
@@ -25,11 +27,15 @@
     padding: 0;
     box-sizing: border-box;
   }
-  
+
+  html {
+    scroll-padding-top: var(--header-height);
+  }
+
   body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background: url("images/background.jpg") no-repeat center center fixed;
-    background-size: cover;
+    font-weight: 300;
+    background: var(--bg-light);
     min-height: 100vh;
     color: var(--text-primary);
     line-height: 1.6;
@@ -37,17 +43,18 @@
   }
   
   h1, h2, h3, .hero-name, .section-title {
-    font-family: 'Orbitron', sans-serif;
-    letter-spacing: 1px;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.01em;
     line-height: 1.2;
   }
   
   .container {
-    max-width: 1200px;
+    max-width: 1500px;
     margin: 0 auto;
-    padding: 0 clamp(1rem, 4vw, 2rem);
+    padding: 0 clamp(1rem, 4vw, 2.5rem);
   }
-  
+
   /* ===== LINKS ===== */
   a {
     color: var(--primary-color);
@@ -97,7 +104,15 @@
     list-style: none;
     gap: clamp(1rem, 3vw, 2rem);
   }
-  
+
+  /* Hidden on desktop so it doesn't sit in the flex row as a phantom
+     third item (space-between was treating it as the flush-right
+     element, pushing the real nav menu off the right edge). The
+     @media (max-width: 768px) rules below switch it back to flex. */
+  .mobile-menu-toggle {
+    display: none;
+  }
+
   .nav-link {
     color: var(--text-primary);
     font-weight: 500;
@@ -109,8 +124,8 @@
   
   .nav-link:hover,
   .nav-link.active {
-    color: var(--primary-dark);
-    background: rgba(102, 126, 234, 0.1);
+    color: white;
+    background: var(--primary-color);
     transform: translateY(-2px);
   }
 
@@ -295,7 +310,72 @@
     color: var(--text-secondary);
     margin-bottom: 2rem;
   }
-  
+
+  /* A single large, serif "lede" sentence — the editorial-serif style used
+     by research lab sites like earthintelligence.mit.edu, in place of the
+     site's usual sans-serif body copy. */
+  .lede-text {
+    font-family: 'Lora', 'Georgia', 'Times New Roman', serif;
+    font-weight: 500;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    line-height: 1.45;
+    color: var(--text-primary);
+    margin: 0.5rem 0 1.75rem;
+    max-width: 60ch;
+  }
+
+  /* Three-card graphic showcasing Spatial / Systems / Critical Thinking,
+     replacing a plain bullet list on the Teaching page. */
+  .thinking-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin: 0 0 1.75rem;
+  }
+
+  .thinking-card {
+    text-align: center;
+    padding: 1.5rem 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    transition: var(--transition);
+  }
+
+  .thinking-card:hover {
+    box-shadow: var(--shadow-light);
+    transform: translateY(-3px);
+  }
+
+  .thinking-card-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin: 0 auto 1rem;
+  }
+
+  .thinking-card-title {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .thinking-card-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 768px) {
+    .thinking-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
   .cta-button {
     display: inline-flex;
     align-items: center;
@@ -385,7 +465,7 @@
     font-weight: 600;
     color: var(--text-primary);
     background: white;
-    border: 2px solid #ccc;
+    border: 2px solid var(--border-color);
     border-radius: 15px;
     cursor: pointer;
     transition: var(--transition);
@@ -472,8 +552,120 @@
   .research-tag.rs, .field-tag.rs { background: #217c39; }
   .research-tag.paper, .field-tag.paper,
   .research-tag.cpaper, .field-tag.cpaper,
-  .research-tag.ppaper, .field-tag.ppaper { background: #333; }
-  
+  .research-tag.preprint, .field-tag.preprint,
+  .research-tag.report, .field-tag.report { background: #333; }
+
+  .pub-note {
+    font-style: italic;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .results-info {
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ===== PUBLICATIONS TABLE (Airtable-style, moved here from the old =====
+     standalone Publications page) ===== */
+  .pub-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+  }
+
+  .pub-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  .pub-table thead th {
+    text-align: left;
+    padding: 0.6rem 0.9rem;
+    background: var(--bg-light);
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+  }
+
+  .pub-table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: background 0.15s ease;
+  }
+
+  .pub-table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .pub-table tbody tr:nth-child(even) {
+    background: rgba(0, 0, 0, 0.015);
+  }
+
+  .pub-table tbody tr:hover {
+    background: var(--bg-accent);
+  }
+
+  .pub-table td {
+    padding: 0.55rem 0.9rem;
+    vertical-align: top;
+    line-height: 1.4;
+  }
+
+  .pub-table .pub-col-year {
+    font-weight: 700;
+    color: var(--text-muted);
+    white-space: nowrap;
+    width: 4.5rem;
+  }
+
+  .pub-table .pub-col-title {
+    min-width: 260px;
+  }
+
+  .pub-table .pub-col-title a {
+    font-weight: 600;
+  }
+
+  .pub-table .pub-col-venue {
+    color: var(--text-secondary);
+    font-style: italic;
+    min-width: 180px;
+  }
+
+  .pub-table .pub-col-type,
+  .pub-table .pub-col-tags {
+    white-space: nowrap;
+  }
+
+  .pub-table .research-tag {
+    padding: 2px 8px;
+    font-size: 0.68rem;
+    margin: 0 0.2rem 0.2rem 0;
+    display: inline-block;
+  }
+
+  /* Type and Tags add real width (the tag list especially) that isn't
+     essential on a phone — dropping them lets Year/Title/Venue fit
+     without forcing the whole table into a side-scroll the user might
+     not notice is there. */
+  @media (max-width: 640px) {
+    .pub-table .pub-col-type,
+    .pub-table .pub-col-tags {
+      display: none;
+    }
+
+    .pub-table .pub-col-title,
+    .pub-table .pub-col-venue {
+      min-width: 0;
+    }
+  }
+
   /* ===== NEWS SECTION ===== */
   .scrollable-news {
     max-height: 400px;
@@ -539,35 +731,59 @@
   /* Dropdown */
   .dropdown-section {
     margin-top: 1rem;
+    border-radius: 14px;
+    transition: var(--transition);
   }
 
   .dropdown-header {
-    background-color: #f4f4f4;
-    padding: 0.75rem 1rem;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    background: var(--bg-light);
+    padding: 0.9rem 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 700;
     font-size: 1rem;
+    color: var(--text-primary);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: var(--transition);
+  }
+
+  .dropdown-header:hover {
+    border-color: var(--primary-color);
+    background: var(--bg-accent);
+    box-shadow: var(--shadow-light);
+  }
+
+  .dropdown-section.open .dropdown-header {
+    border-radius: 14px 14px 0 0;
+    border-color: var(--primary-color);
+    background: var(--bg-accent);
   }
 
   .dropdown-content {
-    padding: 0.5rem 1.25rem;
-    border: 1px solid #ddd;
+    padding: 0.25rem 1.25rem 0.25rem;
+    border: 1px solid var(--border-color);
     border-top: none;
-    border-radius: 0 0 6px 6px;
-    display: none;
-    background-color: #fff;
+    border-radius: 0 0 14px 14px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    display: block;
+    background: white;
+    transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.35s ease;
   }
 
   .dropdown-section.open .dropdown-content {
-    display: block;
+    max-height: 2000px;
+    opacity: 1;
+    padding: 1rem 1.25rem 1.1rem;
   }
 
   .dropdown-arrow {
+    color: var(--primary-color);
+    font-size: 0.8rem;
     transition: transform 0.3s ease;
   }
 
@@ -587,7 +803,7 @@
 
   .scholarship-sponsor {
     font-size: 0.95rem;
-    color: #666;
+    color: var(--text-muted);
     margin-top: 0.2rem;
   }
 
@@ -634,76 +850,192 @@
 
 .vertical-timeline {
     position: relative;
-    margin-left: 5rem;
-    border-left: 6px solid #333;
-    padding-left: 2rem;
+    border-left: 3px solid var(--border-color);
+    padding-left: 1.25rem;
 }
 
+/* Year sits inline as its own small flex column rather than absolutely
+   positioned in the outer margin — that relied on nothing ever clipping
+   it, which broke once timeline entries moved inside a collapsible
+   .dropdown-content (overflow: hidden, for the open/close animation). */
 .vt-item {
     position: relative;
-    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    margin-bottom: 0.9rem;
+    cursor: default;
+    border-radius: 8px;
+    padding: 0.35rem 0.5rem;
+    margin-left: -0.5rem;
+    transition: background 0.2s ease;
 }
 
 .vt-year {
-    position: absolute;
-    left: -8em;
-    width: 4rem;
+    flex: 0 0 auto;
+    width: 4.2rem;
     text-align: right;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #4a5568;
-    top: 0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--text-muted);
 }
 
 .vt-content {
-    margin-left: 0.25rem;
+    flex: 1;
+    min-width: 0;
 }
 
-.vt-title {
+/* One line per entry: role + course together, rather than stacked title/subtitle. */
+.vt-line {
     font-size: 1rem;
-    font-weight: 600;
     color: #2d3748;
     margin-bottom: 0.2rem;
 }
 
-.vt-subtitle {
-    color: #4a5568;
-    font-weight: 500;
-    margin-bottom: 0.2rem;
+.vt-line strong {
+    font-weight: 600;
 }
 
 .vt-content p {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #718096;
     line-height: 1.6;
 }
-  /* ===== TABLES ===== */
-  .research-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
+
+.vt-item:hover {
+    background: var(--bg-accent);
+}
+
+.timeline-institution {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 1.5rem 0 0.75rem;
+}
+
+/* Collapsible per-institution grouping within the teaching timeline —
+   reuses toggleDropdown()/.dropdown-section/.open from script.js, styled
+   to sit inline with the timeline instead of the boxy Awards look. */
+.timeline-institution-group {
+    margin-top: 1.25rem;
+}
+
+.timeline-institution-group .dropdown-header,
+.timeline-institution-group.open .dropdown-header {
+    display: inline-flex;
+    align-items: center;
+    background: transparent;
+    border: none;
+    padding: 0.25rem 0;
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    gap: 0.4rem;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.timeline-institution-group .dropdown-header:hover {
+    color: var(--primary-color);
+}
+
+.timeline-institution-group .dropdown-arrow {
+    font-size: 0.6rem;
+}
+
+.timeline-institution-group .dropdown-content {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+}
+
+.timeline-institution-group.open .dropdown-content {
+    padding: 0;
+}
+
+/* ===== TEACHING PAGE: TWO-COLUMN LAYOUT (timeline + field icons) ===== */
+.teaching-columns {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+.field-icon-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    position: sticky;
+    top: calc(var(--header-height) + 1.5rem);
+}
+
+.field-icon-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.4rem 0.6rem;
     border-radius: 8px;
-    overflow: hidden;
-    box-shadow: var(--shadow-light);
-  }
-  
-  .research-table th {
-    background: linear-gradient(0deg, #ffffff, #eaeaea);
-    color: var(--text-primary);
-    padding: 1rem;
-    text-align: left;
+    transition: var(--transition);
+}
+
+.field-icon-item-icon {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    transition: var(--transition);
+}
+
+.field-icon-item-title {
+    font-size: 0.85rem;
     font-weight: 600;
-  }
-  
-  .research-table td {
-    padding: 1rem;
-    border-bottom: 1px solid var(--border-color);
-  }
-  
-  .research-table tr:hover {
-    background: var(--bg-light);
-  }
-  
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+
+.field-icon-item.active {
+    background: var(--bg-accent);
+}
+
+.field-icon-item.active .field-icon-item-icon {
+    box-shadow: 0 0 0 4px var(--bg-accent), var(--shadow-light);
+    transform: scale(1.12);
+}
+
+.field-icon-item.active .field-icon-item-title {
+    color: var(--primary-dark);
+}
+
+@media (max-width: 768px) {
+    .teaching-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .field-icon-list {
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .field-icon-item-title {
+        display: none;
+    }
+}
+
   /* ===== UTILITIES ===== */
   .see-more-link {
     text-align: center;
@@ -725,40 +1057,7 @@
     transform: translateY(-2px);
   }
   
-  .hand-underline {
-    position: relative;
-    display: inline-block;
-    font-weight: bold;
-  }
-  
-  .hand-underline::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -0.2em;
-    width: 100%;
-    height: 17px;
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='20' viewBox='0 0 400 20'><path d='M5 15 Q 25 5, 45 15 T 85 15 T 125 15 T 165 15 T 205 15 T 245 15 T 285 15 T 325 15 T 365 15 T 395 15' stroke='%23e63946' stroke-width='6' fill='none' stroke-linecap='round'/></svg>") no-repeat;
-    background-size: 100% 100%;
-    pointer-events: none;
-  }
-  
   /* ===== ANIMATIONS ===== */
-  .particle {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(102, 126, 234, 0.1);
-    animation: float 20s infinite linear;
-    pointer-events: none;
-  }
-  
-  @keyframes float {
-    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
-  }
-  
   /* ===== RESPONSIVE BREAKPOINTS ===== */
   
   /* Tablet styles */
@@ -787,16 +1086,7 @@
     
     
     .vertical-timeline {
-      margin-left: 2rem;
-      padding-left: 1.5rem;
-    }
-    
-    .vt-year {
-      position: static;
-      text-align: left;
-      width: auto;
-      margin-bottom: 0.5rem;
-      font-size: 1.1rem;
+      padding-left: 1rem;
     }
   }
   
@@ -910,15 +1200,6 @@
       object-fit: contain;
     }
 
-    .research-table {
-      font-size: 0.8rem;
-    }
-    
-    .research-table th,
-    .research-table td {
-      padding: 0.6rem 0.4rem;
-    }
-    
     .vertical-timeline {
       margin-left: 1rem;
       padding-left: 1rem;
@@ -963,7 +1244,15 @@
     body {
       font-size: 0.8rem;
     }
-  
+
+    /* The clamp() floor (1.4rem) doesn't shrink further on very narrow
+       phones, and a circled/underlined phrase can't wrap (see .annotate's
+       white-space: nowrap) — so on the smallest screens it needs a
+       smaller floor to avoid overflowing the page. */
+    .lede-text {
+      font-size: 1.05rem;
+    }
+
     .container {
       padding: 0 0.75rem;
     }
@@ -1012,15 +1301,6 @@
       width: 36px;
       height: 36px;
       font-size: 0.9rem;
-    }
-    
-    .research-table {
-      font-size: 0.7rem;
-    }
-    
-    .research-table th,
-    .research-table td {
-      padding: 0.4rem 0.25rem;
     }
     
     .news-item,
@@ -1147,18 +1427,961 @@
       transform: rotate(-45deg) translate(6px, -6px);
     }
   }
-  
+
+
   .site-footer {
     background-color: rgba(255, 255, 255, 0.95);
-    color: #333;
+    color: var(--text-secondary);
     text-align: center;
     padding: 1rem 0;
     margin-top: 3rem;
     font-size: 0.9rem;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--border-color);
   }
   
   .site-footer p {
     margin: 0.3rem 0;
   }
-  
+
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .footer-nav-link {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .footer-nav-link:hover {
+    color: var(--primary-color);
+  }
+
+  .footer-social-icons {
+    margin-bottom: 0;
+  }
+
+  /* ===== RESEARCH PAGE: BODY TEXT + DIAGRAM SIDE BY SIDE ===== */
+  .research-body-row {
+    display: grid;
+    grid-template-columns: minmax(260px, 380px) 1fr;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .research-body-text .hero-description:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .research-body-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Academic/Casual bio switch on about.html — a single connected on/off
+     control (track + sliding thumb) rather than two independent buttons. */
+  .bio-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+
+  .bio-switch-label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .bio-switch-label.active {
+    color: var(--primary-color);
+  }
+
+  .bio-switch-track {
+    position: relative;
+    width: 46px;
+    height: 25px;
+    border-radius: 14px;
+    border: none;
+    background: var(--border-color);
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.25s ease;
+    flex-shrink: 0;
+  }
+
+  .bio-switch.is-casual .bio-switch-track {
+    background: var(--primary-color);
+  }
+
+  .bio-switch-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: var(--shadow-light);
+    transition: transform 0.25s ease;
+  }
+
+  .bio-switch.is-casual .bio-switch-thumb {
+    transform: translateX(21px);
+  }
+
+  /* Highlighted mentions of the three research areas within the Research
+     page's intro paragraph — colors match their diagram counterparts. */
+  .rp-hl {
+    font-weight: 800;
+  }
+
+  .rp-hl-human { color: #3366cc; }
+  .rp-hl-environment { color: #5559b7; }
+  .rp-hl-technology { color: #764ba2; }
+
+  /* Single-tone keyword highlight for lede sentences that don't split into
+     the three research areas (Teaching page, Research page's new lede). */
+  .lede-hl {
+    color: var(--primary-color);
+    font-weight: 800;
+  }
+
+  /* Home page bio: each research-area mention colored to match its own
+     area (see .home-area-icon-*), rather than one uniform blue. */
+  .lede-hl-modeling {
+    color: #3366cc;
+    font-weight: 800;
+  }
+
+  .lede-hl-geospatial {
+    color: #3366cc;
+    font-weight: 800;
+  }
+
+  .lede-hl-decision {
+    color: #3366cc;
+    font-weight: 800;
+  }
+
+  /* Scoped to the home page's bio paragraph: with the three research-area
+     terms carrying their own color, the surrounding links recede to plain
+     text so those three phrases are the only color in the paragraph. */
+  .hero-intro-mono a {
+    color: var(--text-primary);
+  }
+
+  .hero-intro-mono a:hover {
+    text-decoration: underline;
+  }
+
+  /* ===== RESEARCH NETWORK DIAGRAM (mechanics ported from protopolis.is's =====
+     src/components/WorkAreas.jsx: hand-drawn breathing blobs, drifting
+     keyword nodes, a dynamic proximity-based mesh — reimplemented in plain
+     SVG + vanilla JS. Clusters sit close enough that a few "bridge" nodes
+     fall within range of two clusters at once, and colors are chosen per
+     topic (ember/fire, indigo/network, teal/earth) rather than a uniform
+     palette or protopolis's own per-area rainbow. */
+  .network-diagram {
+    position: relative;
+    width: 100%;
+    height: 680px;
+    margin: 1rem 0 0.5rem;
+    overflow: hidden;
+  }
+
+  .network-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .area-blob-path {
+    opacity: 0.08;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+
+  .area-blob-path:hover,
+  .area-blob-path.active {
+    opacity: 0.16;
+  }
+
+  .area-anchor {
+    cursor: pointer;
+  }
+
+  .area-anchor .anchor-dot {
+    transition: r 0.25s ease, filter 0.25s ease;
+  }
+
+  .area-anchor:hover .anchor-dot,
+  .area-anchor.active .anchor-dot {
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.25));
+  }
+
+  /* Fill is set inline per-node (area.color) to match the cluster and
+     the rp-hl-* highlight colors in the intro paragraph. */
+  .area-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.02rem;
+    font-weight: 800;
+  }
+
+  .keyword-node {
+    cursor: pointer;
+  }
+
+  /* A soft blurred halo, only on labeled nodes — unlabeled "future
+     research" nodes stay plain and dim, reinforcing that they're
+     placeholders rather than something to click. */
+  .keyword-node .kw-glow {
+    opacity: 0.16;
+    filter: blur(3px);
+    transition: opacity 0.25s ease;
+  }
+
+  .keyword-node .kw-dot {
+    transition: r 0.25s ease;
+  }
+
+  .keyword-node .kw-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    fill: var(--text-muted);
+    pointer-events: none;
+    user-select: none;
+    transition: fill 0.25s ease, font-weight 0.25s ease;
+  }
+
+  .keyword-node:hover .kw-label,
+  .keyword-node.active .kw-label {
+    fill: var(--text-primary);
+    font-weight: 700;
+  }
+
+  .keyword-node.active .kw-dot {
+    r: 6;
+  }
+
+  .keyword-node.active .kw-glow {
+    opacity: 0.35;
+  }
+
+  .keyword-node.dimmed {
+    opacity: 0.25;
+  }
+
+  /* Unlabeled placeholder nodes: no glow, no label, not clickable —
+     small dim dots representing open-ended future research directions. */
+  .keyword-node.unlabeled {
+    cursor: default;
+    opacity: 0.45;
+  }
+
+  .keyword-node.unlabeled .kw-dot {
+    opacity: 0.6;
+  }
+
+  /* Bridge/shared nodes: rendered as a two-tone dot (one half-color per
+     connected cluster) with an italic label, since they belong to both. */
+  .keyword-node.shared-node .kw-label {
+    font-style: italic;
+  }
+
+  .network-diagram-hint {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+
+  /* ===== RESEARCH PAGE: LIST VIEW ===== */
+  .area-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 2rem 0 0.5rem;
+  }
+
+  .area-list-card {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.5rem 1.75rem;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .area-list-card:hover {
+    box-shadow: var(--shadow-light);
+    transform: translateY(-2px);
+  }
+
+  .area-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .area-list-header h3 {
+    display: inline;
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+  }
+
+  .area-number {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .area-list-card.area-human .area-number, .area-list-card.area-human h3 { color: #3366cc; }
+  .area-list-card.area-environment .area-number, .area-list-card.area-environment h3 { color: #5559b7; }
+  .area-list-card.area-technology .area-number, .area-list-card.area-technology h3 { color: #764ba2; }
+
+  .area-list-chevron {
+    color: var(--text-muted);
+  }
+
+  .area-list-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0.75rem 0 1rem;
+  }
+
+  .area-list-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag-pill {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 0.25rem 0.7rem;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    color: var(--text-secondary);
+  }
+
+  /* ===== RESEARCH PAGE: SIDE DETAIL PANEL ===== */
+  .side-panel-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1999;
+  }
+
+  .side-panel-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .side-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: min(440px, 92vw);
+    background: white;
+    box-shadow: -12px 0 40px rgba(0, 0, 0, 0.18);
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 2000;
+    overflow-y: auto;
+    padding: 2rem;
+  }
+
+  .side-panel.open {
+    transform: translateX(0);
+  }
+
+  .side-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .side-panel-number {
+    display: block;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .side-panel-header h3 {
+    font-size: 1.4rem;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .side-panel-close {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: white;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+  }
+
+  .side-panel-close:hover {
+    color: var(--text-primary);
+    border-color: var(--text-muted);
+  }
+
+  .side-panel-desc {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .side-panel-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .panel-figure {
+    margin-bottom: 1.5rem;
+  }
+
+  .panel-figure img {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    display: block;
+  }
+
+  .panel-figure figcaption {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-top: 0.5rem;
+  }
+
+  .panel-pub {
+    border-left: 3px solid var(--border-color);
+    padding: 0 0 0 0.9rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .panel-pub-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+
+  .panel-pub-title a {
+    color: var(--primary-dark);
+  }
+
+  .panel-pub-title i {
+    font-size: 0.7rem;
+    margin-left: 0.2rem;
+  }
+
+  .panel-pub-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+  }
+
+  @media (max-width: 768px) {
+    .network-diagram {
+      height: 920px;
+    }
+
+    .area-title {
+      font-size: 0.85rem;
+    }
+
+    .keyword-node .kw-label {
+      font-size: 0.55rem;
+    }
+  }
+
+/* ===== ABOUT PAGE: COLLABORATIONS MAP ===== */
+.collab-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.collab-map-wrap {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.collab-map-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.25s ease;
+  transform-origin: center center;
+}
+
+.collab-map-controls {
+  position: absolute;
+  bottom: 0.6rem;
+  left: 0.6rem;
+  display: flex;
+  gap: 0.35rem;
+  z-index: 5;
+}
+
+.collab-zoom-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.collab-zoom-btn:hover:not(:disabled) {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.collab-zoom-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.collab-map-svg.dragging {
+  transition: none;
+}
+
+.collab-map-land {
+  fill: #c3cee0;
+  stroke: #9fb0c9;
+  stroke-width: 0.6;
+}
+
+.collab-pin {
+  cursor: pointer;
+}
+
+.collab-pin-hit {
+  fill: transparent;
+}
+
+/* All pins share one size — only color (and the "active" ring) tells
+   the current location apart from everywhere else. */
+.collab-pin-emoji {
+  font-size: 18px;
+  text-anchor: middle;
+  transition: var(--transition);
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+/* Previous/other locations render in greyscale; only "me" (current
+   location) keeps the pin's natural red. */
+.collab-pin-collaborator .collab-pin-emoji {
+  filter: grayscale(1) brightness(0.85);
+}
+
+/* Hover/focus/active feedback that never displaces the pin itself — a
+   moving marker made it hard to tell where the actual location was. */
+.collab-pin:hover .collab-pin-emoji,
+.collab-pin:focus .collab-pin-emoji,
+.collab-pin.active .collab-pin-emoji {
+  filter: drop-shadow(0 0 5px rgba(51, 102, 204, 0.7));
+}
+
+.collab-pin-collaborator:hover .collab-pin-emoji,
+.collab-pin-collaborator:focus .collab-pin-emoji,
+.collab-pin-collaborator.active .collab-pin-emoji {
+  filter: grayscale(1) brightness(0.85) drop-shadow(0 0 5px rgba(51, 102, 204, 0.7));
+}
+
+/* Info panel: a fixed home for whatever the popup used to show, so a
+   location with several collaborators stays readable instead of
+   crowding a floating tooltip. */
+.collab-info-panel {
+  flex: 0 0 260px;
+  min-height: 220px;
+  background: var(--bg-light);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 1.1rem 1.25rem;
+}
+
+.collab-panel-location {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.collab-panel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.collab-panel-item-name {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.collab-panel-item-assoc {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin-top: 0.1rem;
+}
+
+@media (max-width: 700px) {
+  .collab-layout {
+    flex-direction: column;
+  }
+
+  .collab-info-panel {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+}
+
+.collab-map-cta {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.collab-map-cta a {
+  font-weight: 600;
+}
+
+/* ===== HAND-DRAWN EMPHASIS ANNOTATIONS (lede keyword circles/underlines) ===== */
+.annotate {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* The circle mark overhangs its text on both sides (see
+   .annotate-mark-circle below) — a bit of breathing room keeps it from
+   overlapping the word before/after. The underline mark sits below the
+   baseline and doesn't need this. */
+.annotate:has(.annotate-mark-circle) {
+  margin: 0 0.45em;
+}
+
+.annotate-mark {
+  position: absolute;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.annotate-mark path {
+  fill: none;
+  stroke: var(--annotate-color, var(--primary-color));
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* Comfortably longer than any of the annotation paths (the circle's
+     main loop measures ~450 units) so the whole stroke is one "dash"
+     that finishes drawing before running into its own gap. */
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  opacity: 0.55;
+  animation: annotate-draw 0.8s ease-out forwards;
+  animation-delay: var(--annotate-delay, 0.3s);
+}
+
+.annotate-mark path:nth-child(2) {
+  animation-delay: calc(var(--annotate-delay, 0.3s) + 0.35s);
+}
+
+@keyframes annotate-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.annotate-mark-circle {
+  left: -10%;
+  top: -23%;
+  width: 120%;
+  height: 146%;
+}
+
+.annotate-mark-underline {
+  left: -5%;
+  bottom: -0.3em;
+  width: 110%;
+  height: 0.6em;
+}
+
+/* On narrow screens a circled phrase often spans nearly the full width
+   of its container, so the circle's normal overhang can push past the
+   edge of the page. Pull it in to stay clear of the viewport. */
+@media (max-width: 480px) {
+  .annotate-mark-circle {
+    left: -2%;
+    width: 104%;
+  }
+
+  .annotate-mark-underline {
+    left: -1%;
+    width: 102%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .annotate-mark path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ===== HOME PAGE: THREE RESEARCH AREA PANELS ===== */
+.home-areas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.home-area-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.75rem 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.home-area-card:hover {
+  box-shadow: var(--shadow-light);
+  transform: translateY(-4px);
+}
+
+.home-area-icon {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 1.1rem;
+}
+
+.home-area-icon-modeling {
+  background: linear-gradient(135deg, #3366cc, #6c8ee8);
+}
+
+.home-area-icon-geospatial {
+  background: linear-gradient(135deg, #1f9d5a, #5cd394);
+}
+
+.home-area-icon-decision {
+  background: linear-gradient(135deg, #b8891f, #e0b64f);
+}
+
+.home-area-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.home-area-card p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+  flex: 1;
+}
+
+.home-area-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 25px;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  background: white;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.home-area-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.home-area-btn i {
+  font-size: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .home-areas-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== HOME PAGE: HAND-DRAWN VENN DIAGRAM ===== */
+.venn-wrap {
+  max-width: 620px;
+  margin: 2rem auto 0;
+}
+
+.venn-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+  cursor: pointer;
+}
+
+.venn-svg:focus {
+  outline: none;
+}
+
+.venn-svg:focus .venn-circle {
+  filter: drop-shadow(0 0 3px rgba(51, 102, 204, 0.5));
+}
+
+.venn-circle-group {
+  transition: transform 0.6s ease;
+}
+
+.venn-circle-group[data-area="modeling"].drift {
+  transform: translate(-9px, -6px);
+}
+
+.venn-circle-group[data-area="geospatial"].drift {
+  transform: translate(9px, -6px);
+}
+
+.venn-circle-group[data-area="decision"].drift {
+  transform: translate(0, 11px);
+}
+
+.venn-circle {
+  fill-opacity: 0.1;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.8;
+}
+
+.venn-circle-group[data-area="modeling"] .venn-circle {
+  fill: #3366cc;
+  stroke: #3366cc;
+}
+
+.venn-circle-group[data-area="geospatial"] .venn-circle {
+  fill: #1f9d5a;
+  stroke: #1f9d5a;
+}
+
+.venn-circle-group[data-area="decision"] .venn-circle {
+  fill: #b8891f;
+  stroke: #b8891f;
+}
+
+.venn-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  text-anchor: middle;
+  fill: var(--text-primary);
+}
+
+.venn-network {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.venn-network.active {
+  opacity: 1;
+}
+
+.venn-network line {
+  stroke-width: 1.6;
+  opacity: 0.6;
+}
+
+.venn-network circle {
+  stroke: white;
+  stroke-width: 1.5;
+}
+
+.venn-network-hub {
+  fill: var(--text-primary);
+}
+
+.venn-caption {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .venn-circle-group {
+    transition: none;
+  }
+}

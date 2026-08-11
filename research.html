@@ -6,186 +6,8 @@
   <title>Research - Minho Kim</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
   <link rel="stylesheet" href="styles.css"/>
-  <style>
-    .publication-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .publication-item {
-      background: white;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.06);
-      border-left: 6px solid #3366cc;
-    }
-
-    .publication-item:hover {
-      transform: translateY(-2px);
-      transition: 0.3s ease;
-      box-shadow: 0 12px 25px rgba(0,0,0,0.1);
-    }
-
-    .publication-item p {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #333;
-      margin-bottom: 0.5rem;
-    }
-
-    .publication-item a {
-      color: #3366cc;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .publication-item a:hover {
-      text-decoration: underline;
-    }
-
-    /* .filter-btns {
-      margin-bottom: 2rem;
-    }
-
-    .filter-btns strong {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-      color: #333;
-    } */
-
-    /* .year-btn, .tag-btn {
-      margin: 0.25rem;
-      padding: 0.4rem 0.9rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #333;
-      background: white;
-      border: 2px solid #ccc;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .year-btn:hover, .tag-btn:hover {
-      background: #3366cc;
-      color: white;
-      border-color: #3366cc;
-    }
-
-    .year-btn.active, .tag-btn.active {
-      background: #3366cc;
-      color: white;
-      border-color: #3366cc;
-    } */
-
-    .tag-container {
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    .tag-label {
-      margin-top: 0.5rem;
-    }
-
-    .pagination-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-    background: #f8f9fa;
-    border-radius: 10px;
-  }
-
-  .items-per-page {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .items-per-page select {
-    padding: 0.5rem;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    background: white;
-    font-size: 0.9rem;
-  }
-
-  .results-info {
-    font-weight: 600;
-    color: #666;
-  }
-
-  /* ===== PUBLICATION LIST ===== */
-  .publication-container {
-    max-height: 800px;
-    overflow-y: auto;
-    padding-right: 10px;
-  }
-
-  .publication-container::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  .publication-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-  }
-
-  .publication-container::-webkit-scrollbar-thumb {
-    background: #3366cc;
-    border-radius: 10px;
-  }
-
-  .publication-container::-webkit-scrollbar-thumb:hover {
-    background: #2851a3;
-  }
-
-  .publication-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .publication-item {
-    background: white;
-    border-radius: 15px;
-    padding: 1.5rem;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    border-left: 6px solid #3366cc;
-    transition: all 0.3s ease;
-  }
-
-  .publication-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-  }
-
-  .publication-item p {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: #333;
-    margin-bottom: 1rem;
-  }
-
-  .publication-item a {
-    color: #3366cc;
-    font-weight: 600;
-    text-decoration: none;
-  }
-
-  .publication-item a:hover {
-    text-decoration: underline;
-  }
-
-  </style>
 </head>
 <body>
-  <!-- Floating particles -->
-  <div class="particles"></div>
-
   <!-- Header -->
   <header class="header">
     <div class="container nav-container">
@@ -193,10 +15,10 @@
 
       <nav>
         <ul class="nav-menu" id="nav-menu">
-          <li><a href="index.html" class="nav-link active">Home</a></li>
-          <li><a href="about.html" class="nav-link">About Me</a></li>
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
           <li><a href="news.html" class="nav-link">News</a></li>
-          <li><a href="research.html" class="nav-link">Research</a></li>
+          <li><a href="research.html" class="nav-link active">Research</a></li>
           <li><a href="teaching.html" class="nav-link">Teaching</a></li>
           <li><a href="resources/cv_recent.pdf" class="nav-link">CV</a></li>
         </ul>
@@ -215,7 +37,7 @@
     <div class="sidebar-menu" id="sidebar-menu">
         <ul>
           <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="about.html" class="nav-link">About Me</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
           <li><a href="news.html" class="nav-link">News</a></li>
           <li><a href="research.html" class="nav-link">Research</a></li>
           <li><a href="teaching.html" class="nav-link">Teaching</a></li>
@@ -226,491 +48,138 @@
   <!-- Main -->
   <main class="main-content">
     <div class="container">
+
       <div class="content-card">
+        <h2 class="section-title">Research</h2>
+
+        <p class="lede-text">
+          My research turns the complexity of
+          <span class="annotate" style="--annotate-delay: 0.3s">
+            <span class="lede-hl">natural hazard risk</span>
+            <svg class="annotate-mark annotate-mark-circle" viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M14,52 C10,24 48,6 100,6 C155,6 191,22 190,54 C189,84 148,95 99,95 C46,95 12,82 16,50" />
+              <path d="M28,18 C55,2 112,-2 142,9" />
+            </svg>
+          </span>
+          into
+          <span class="annotate" style="--annotate-delay: 0.9s">
+            <span class="lede-hl">actionable insights</span>
+            <svg class="annotate-mark annotate-mark-underline" viewBox="0 0 200 40" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M4,22 C50,10 150,28 196,16" />
+              <path d="M6,32 C60,22 140,36 194,26" />
+            </svg>
+          </span> for sustainable, resilient communities and environments.
+        </p>
+
+        <div class="research-body-row">
+          <div class="research-body-text">
+            <p class="hero-description">
+              I adopt a systems-based view encompassing:
+              <span class="rp-hl rp-hl-human">Human</span>,
+              <span class="rp-hl rp-hl-environment">Environment</span>, and
+              <span class="rp-hl rp-hl-technology">Technology</span>.
+            </p>
+            <p class="hero-description">
+              I examine how risk can be complex -- it can be interconnected, dynamic, and shared from networks of fire suppression at regional-scale to the shared connections between neighbors based on one's responsibility to mitigate hazards in the wildland urban interface.
+              I use geospatial data science and GeoAI methods to map, build, and extract the high-resolution data and key insights needed to characterize risk. I also use computational models to simulate fire behavior, wildfire propagation, and compounding weather extremes.
+              Integrated together, my research aims to advance our understanding of the natural hazard risk on the socio-environmental-technical systems in our built and natural environments.
+            </p>
+          </div>
+
+          <div class="research-body-diagram">
+            <!-- Network view -->
+            <div class="network-diagram" id="networkDiagram">
+              <svg class="network-svg" id="networkSvg"></svg>
+            </div>
+            <!-- <p class="network-diagram-hint" id="networkDiagramHint">Click an area above to see how it connects to my publications.</p> -->
+          </div>
+        </div>
+
+        <!-- List view: always visible below the diagram -->
+        <div class="area-list" id="areaList"></div>
+      </div>
+
+      <!-- Publications (moved here from the old standalone Publications page) -->
+      <div class="content-card" id="publications">
         <h2 class="section-title">Publications</h2>
 
-        <div class="filter-controls">
-          <div class="filter-row">
-            <strong>Filter by Year:</strong>
-            <div class="filter-btns">
-              <button class="year-btn active" data-year="all">All</button>
-              <button class="year-btn" data-year="2025">2025</button>
-              <button class="year-btn" data-year="2024">2024</button>
-              <button class="year-btn" data-year="2023">2023</button>
-              <button class="year-btn" data-year="2022">2022</button>
-              <button class="year-btn" data-year="2021">2021</button>
-              <button class="year-btn" data-year="2020">2020</button>
-            </div>
-          </div>
-        
-          <div class="filter-row">
-            <strong>Filter by Type:</strong>
-            <div class="filter-btns">
-              <button class="type-btn active" data-type="all">All</button>
-              <button class="type-btn" data-type="paper">Paper</button>
-              <button class="type-btn" data-type="cpaper">Conference</button>
-              <button class="type-btn" data-type="ppaper">Preprint</button>
-            </div>
-          </div>
-
-          <div class="filter-row">
-            <strong>Filter by Field:</strong>
-            <div class="filter-btns">
-              <button class="tag-btn active" data-tag="all">All</button>
-              <button class="tag-btn" data-tag="rs">Remote Sensing</button>
-              <button class="tag-btn" data-tag="wildfire">Wildfire</button>
-              <button class="tag-btn" data-tag="netsci">Network Science</button>
-              <button class="tag-btn" data-tag="ml">Machine Learning</button>
-              <button class="tag-btn" data-tag="nathaz">Natural Hazards</button>
-              <button class="tag-btn" data-tag="urban">Urban</button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="pagination-controls">
-          <div class="items-per-page">
-            <label for="itemsPerPage">Show:</label>
-            <select id="itemsPerPage">
-              <option value="5">5</option>
-              <option value="10" selected>10</option>
-              <option value="20">20</option>
-              <option value="all">All</option>
-            </select>
-            <span>items</span>
-          </div>
-          <div class="results-info" id="resultsInfo">
-            Showing <span id="showingCount">0</span> of <span id="totalCount">0</span>
-          </div>
+        <div class="filter-controls" id="filterControls">
+          <!-- Filter buttons are generated by js/publications-render.js from data/publications.js -->
         </div>
 
-        <!-- Publications -->
-        <div class="publication-list">
-          <div class="publication-item" data-year="2025" data-type="paper" data-tags="Wildfire,NatHaz,netsci">
-            <p><strong>Minho Kim</strong>, Castellnou, M. & Gonzalez, M. C. (2025). <a href="https://www.sciencedirect.com/science/article/pii/S2212420925006776">Modeling potential fire spread polygons and networks for suppression strategies</a>. <i>International Journal of Disaster Risk Reduction</i></p>
-            <span class="research-tag paper">Paper</span>
-            <span class="research-tag nathaz">Natural Hazards</span>
-            <span class="research-tag wildfire">Wildfire</span>
-            <span class="research-tag wildfire">Network Science</span>
-          </div>
+        <div class="results-info" id="resultsInfo"></div>
 
-          <div class="publication-item" data-year="2025" data-type="paper" data-tags="Wildfire,NatHaz">
-            <p><strong>Minho Kim</strong>, Pais, C., & Gonzalez, M. C. (2025). <a href="https://doi.org/10.1038/s41598-025-05706-6">Fire Spread Simulations Using Cell2Fire on Synthetic and Real Landscapes</a>. <i>Scientific Reports</i></p>
-            <span class="research-tag paper">Paper</span>
-            <span class="research-tag nathaz">Natural Hazards</span>
-            <span class="research-tag wildfire">Wildfire</span>
-          </div>
-
-          <!-- Yao, X., Kim, M., Dronova, I., McBride, J. R., Kondolf, G. M., & Radke, J. D. (2025). Community-scale microclimate simulation using Airborne Laser Scanning and object-based urban tree classification. Landscape and Urban Planning, 263, 105420. -->
-          <div class="publication-item" data-year="2025" data-type="paper" data-tags="Urban,ML">
-            <p>Yao, X., <strong>Minho Kim</strong>, Dronova, I., et al. (2025). <a href="https://doi.org/10.1016/j.landurbplan.2025.105420">Community-scale microclimate simulation using Airborne Laser Scanning and object-based urban tree classification</a>. <i>Landscape and Urban Planning</i>, 263, 105420</p>
-            <span class="research-tag paper">Paper</span>
-            <span class="research-tag ml">Machine Learning</span>
-            <span class="research-tag rs">Remote Sensing</span>
-            <span class="research-tag urban">Urban</span>
-          </div>
-
-          <div class="publication-item" data-year="2024" data-type="ppaper" data-tags="nathaz,wildfire">
-            <p>Pais, C., <strong>Minho Kim</strong>, Xu, Y., Radke, J., Gonzalez, M. (2024). <a href="https://arxiv.org/abs/2407.07270">An interdisciplinary data-science approach to managing natural hazards risk</a>. <i>arxiv</i>, 2407.07270</p>
-            <span class="research-tag ppaper">Preprint</span>
-            <span class="research-tag nathaz">Natural Hazard</span>
-            <span class="research-tag wildfire">Wildfire</span>
-          </div>
-
-          <div class="publication-item" data-year="2023" data-type="cpaper" data-tags="ml,RS,urban">
-            <p>Yao, X., <strong>Minho Kim</strong>. (2023). <a href="https://doi.org/10.1109/IGARSS52108.2023.10282088">A Lidar-based Method for 3D Urban Forest Evaluation and Microclimate Assessment, a Case Study in Portland, Oregon, USA</a>. <i>2023 AGU</i>, San Francisco, CA, USA.</p>
-            <span class="research-tag cpaper">Conference</span>
-            <span class="research-tag ml">Machine Learning</span>
-            <span class="research-tag rs">Remote Sensing</span>
-            <span class="research-tag urban">Urban</span>
-          </div>          
-
-          <div class="publication-item" data-year="2023" data-type="cpaper" data-tags="ml,RS,urban">
-            <p>Yao, X., <strong>Minho Kim</strong>. (2023). <a href="#">Exploratory remote sensing data analysis and clustering of urban vegetation and land surface temperature in Portland, Oregon</a>. <i>2023 IGARSS</i>, Pasadena, CA, USA.</p>
-            <span class="research-tag cpaper">Conference</span>
-            <span class="research-tag ml">Machine Learning</span>
-            <span class="research-tag rs">Remote Sensing</span>
-            <span class="research-tag urban">Urban</span>
-          </div>          
-
-          <div class="publication-item" data-year="2021" data-type="cpaper" data-tags="ml,RS">
-            <p><strong>Minho Kim</strong>, Dronova, I., Radke, J. (2023). <a href="https://doi.org/10.1109/IGARSS52108.2023.10282737">Semantic Segmentation of Enhanced Landform Maps Using High Resolution Satellite Images</a>. <i>2023 IGARSS</i>, Pasadena, CA, USA.</p>
-            <span class="research-tag cpaper">Conference</span>
-            <span class="research-tag ml">Machine Learning</span>
-            <span class="research-tag rs">Remote Sensing</span>
-          </div>          
-
-          <!-- Kim, M., Jeong, D., & Kim, Y. (2021). Local climate zone classification using a multi-scale, multi-level attention network. ISPRS Journal of Photogrammetry and Remote Sensing, 181, 345-366.  -->
-          <div class="publication-item" data-year="2021" data-type="paper" data-tags="RS,Urban,ML">
-            <p><strong>Minho Kim</strong>, Jeong, D., Kim, Y. (2021). <a href="https://doi.org/10.1016/j.isprsjprs.2021.09.015">Local climate zone classification using a multi-scale, multi-level attention network</a>. <i>ISPRS Journal of Photogrammetry and Remote Sensing</i>, 181, 345-366.</p>
-            <span class="research-tag paper">Paper</span>
-            <span class="research-tag ml">Machine Learning</span>
-            <span class="research-tag rs">Remote Sensing</span>
-            <span class="research-tag urban">Urban</span>
-          </div>
-
-          <div class="publication-item" data-year="2021" data-type="cpaper" data-tags="ml,RS,urban">
-            <p><strong>Minho Kim</strong>, Cho, K., Kim, H., Kim, Y. (2021). <a href="#">Mapping inaccessible areas using deep learning based semantic segmentation of VHR satellite images with OpenStreetMap data</a>. <i>2021 ISRS</i>, Online.</p>
-            <span class="research-tag cpaper">Conference</span>
-            <span class="research-tag ml">Machine Learning</span>
-            <span class="research-tag rs">Remote Sensing</span>
-            <span class="research-tag urban">Urban</span>
-          </div>          
-
-          <!-- Kim, M., Song, H., & Kim, Y. (2020). Direct short-term forecast of photovoltaic power through a comparative study between COMS and Himawari-8 meteorological satellite images in a deep neural network. Remote Sensing, 12(15), 2357. -->
-          <div class="publication-item" data-year="2020" data-type="paper" data-tags="RS,ml">
-            <p><strong>Minho Kim</strong>, Song, H., & Kim, Y. (2020). <a href="https://doi.org/10.3390/rs12152357">Direct short-term forecast of photovoltaic power through a comparative study between COMS and Himawari-8 meteorological satellite images in a deep neural network</a>. <i>Remote Sensing</i>, 12(15), 2357.</p>
-            <span class="research-tag paper">Paper</span>
-            <span class="research-tag ml">Machine Learning</span>
-            <span class="research-tag rs">Remote Sensing</span>
-          </div>
-
-          <!-- Kim, M., Jung, M., & Kim, Y. (2019). Histogram matching of Sentinel-2 spectral information to enhance Planetscope imagery for effective wildfire damage assessment. Korean Journal of Remote Sensing, 35(4), 517-534. -->
-          <div class="publication-item" data-year="2019" data-type="paper" data-tags="RS,Wildfire">
-            <p><strong>Minho Kim</strong>, Jung, M., Kim, Y. (2019). <a href="https://doi.org/10.7780/kjrs.2019.35.4.3">Histogram matching of Sentinel-2 spectral information to enhance Planetscope imagery for effective wildfire damage assessment</a>. <i>KJRS</i>, 35(4), 517-534.</p>
-            <span class="research-tag paper">Paper</span>
-            <span class="research-tag nathaz">Natural Hazards</span>
-            <span class="research-tag rs">Remote Sensing</span>
-            <span class="research-tag wildfire">Wildfire</span>
-          </div>
-
-          <!-- Kim, M., Cho, K., Kim, H., & Kim, Y. (2020). Spatiotemporal Fusion of High Resolution Land Surface Temperature Using Thermal Sharpened Images from Regression-based Urban Indices. ISPRS Annals of the Photogrammetry, Remote Sensing and Spatial Information Sciences, 3, 247-254. -->
-          <div class="publication-item" data-year="2019" data-type="cpaper" data-tags="RS,urban">
-            <p><strong>Minho Kim</strong>, Cho, K., Kim, H., Kim, Y. (2019). <a href="https://doi.org/10.5194/isprs-annals-V-3-2020-247-2020">Fusion of High Resolution Land Surface Temperature Using Thermal Sharpened Images from Regression-based Urban Indices</a>. <i>2020 ISPRS Congress</i>, Nice, France.</p>
-            <span class="research-tag cpaper">Conference</span>
-            <span class="research-tag rs">Remote Sensing</span>
-            <span class="research-tag urban">Urban</span>
-          </div>          
-
-          <!-- Multimodal Merging of Satellite Imagery with Meteorological and Power Plant Data in Deep Convolutional Neural Network for Short-Term Solar Energy Prediction -->
-          <div class="publication-item" data-year="2019" data-type="cpaper" data-tags="nathaz,RS,Wildfire">
-            <p>Kim, G.,Song, H., <strong>Minho Kim</strong>, Kim, Y. (2019). <a href="#">Multimodal Merging of Satellite Imagery with Meteorological and Power Plant Data in Deep Convolutional Neural Network for Short-Term Solar Energy Prediction</a>. <i>2019 ACRS</i>, Daejeon, South Korea.</p>
-            <span class="research-tag cpaper">Conference</span>
-            <span class="research-tag nathaz">Natural Hazards</span>
-            <span class="research-tag rs">Remote Sensing</span>
-            <span class="research-tag wildfire">Wildfire</span>
-          </div>
-
-          <!-- Kim, M., Jung, M., & Kim, Y. (2019). Integration of Sentinel-2 Spectral Information with High Spatial Resolution Planetscope Imagery for Wildfire Damage Assessment. -->
-          <div class="publication-item" data-year="2019" data-type="cpaper" data-tags="RS,Wildfire">
-            <p><strong>Minho Kim</strong>, Kim, Y. (2019). <a href="#">Integration of Sentinel-2 Spectral Information with High Spatial Resolution Planetscope Imagery for Wildfire Damage Assessment</a>. <i>2019 ACRS</i>, Daejeon, South Korea.</p>
-            <span class="research-tag cpaper">Conference</span>
-            <span class="research-tag nathaz">Natural Hazards</span>
-            <span class="research-tag rs">Remote Sensing</span>
-            <span class="research-tag wildfire">Wildfire</span>
-          </div>
-          
-          <!-- Short-Term Forecasting of Photovoltaic Power Integrating Multi-Temporal Meteorological Satellite Imagery in Deep Neural Network -->
-          <div class="publication-item" data-year="2019" data-type="cpaper" data-tags="ml,RS">
-            <p>Song, H., Kim, G.,<strong>Minho Kim</strong>, Kim, Y. (2019). <a href="#">Short-Term Forecasting of Photovoltaic Power Integrating Multi-Temporal Meteorological Satellite Imagery in Deep Neural Network</a>. <i>2019 IEEE APPEEC</i>, Macao.</p>
-            <span class="research-tag cpaper">Conference</span>
-            <span class="research-tag ml">Machine Learning</span>
-            <span class="research-tag rs">Remote Sensing</span>
-          </div>
-          
-          <!-- Kim, M., Jung, M., & Kim, Y. (2019). Monitoring the Catastrophic 2018 Mendocino Complex Wildfire Using the Sentinel Constellation -->
-          <div class="publication-item" data-year="2019" data-type="cpaper" data-tags="RS,Wildfire">
-            <p><strong>Minho Kim</strong>, Kim, Y. (2019). <a href="#">Monitoring the Catastrophic 2018 Mendocino Complex Wildfire Using the Sentinel Constellation</a>. <i>ISRS 2019</i>, Taiwan.</p>
-            <span class="research-tag cpaper">Conference</span>
-            <span class="research-tag nathaz">Natural Hazards</span>
-            <span class="research-tag rs">Remote Sensing</span>
-            <span class="research-tag wildfire">Wildfire</span>
-          </div>          
-
-          <!-- Kim, Y., Kim, M., Choi, J., & Kim, Y. (2017). Image fusion of spectrally nonoverlapping imagery using SPCA and MTF-based filters. IEEE Geoscience and Remote Sensing Letters, 14(12), 2295-2299. -->
-          <div class="publication-item" data-year="2017" data-type="paper" data-tags="RS, Geospatial">
-            <p>Kim, Y., <strong>Minho Kim</strong>, Choi, J., Kim, Y. (2017). <a href="https://doi.org/10.1109/LGRS.2017.2762427">Image fusion of spectrally nonoverlapping imagery using SPCA and MTF-based filters</a>. <i>IEEE GRSL</i>, 14(12), 2295-2299.</p>
-            <span class="research-tag paper">Paper</span>
-            <span class="research-tag rs">Remote Sensing</span>
-            <!-- <span class="research-tag geospatial">Geospatial</span> -->
-          </div>
-          
+        <div class="pub-table-wrap">
+          <table class="pub-table">
+            <thead>
+              <tr>
+                <th class="pub-col-year">Year</th>
+                <th class="pub-col-title">Title</th>
+                <th class="pub-col-venue">Venue</th>
+                <th class="pub-col-type">Type</th>
+                <th class="pub-col-tags">Tags</th>
+              </tr>
+            </thead>
+            <tbody id="publicationTableBody"></tbody>
+          </table>
         </div>
       </div>
 
-
-    <!-- </div> -->
-    <!-- <div class="content-card">
-    <div class="research-section">
-        <h2 class="section-title">Projects</h2> -->
-        
-        <!-- Filter Controls -->
-        <!-- <div class="filter-controls">
-            <div class="filter-group">
-                <label for="field-filter">Filter by Field:</label>
-                <select id="field-filter" class="filter-select">
-                    <option value="">All Fields</option>
-                    <option value="Natural Hazards">Natural Hazards</option>
-                    <option value="GeoAI">GeoAI</option>
-                    <option value="Urban Planning">Urban Planning</option>
-                    <option value="Network Science">Network Science</option>
-                    <option value="ML/DL">ML/DL</option>
-                    <option value="Remote Sensing">Remote Sensing</option>
-                    <option value="Coastal">Coastal</option>
-                    <option value="Geopolitical">Geopolitical</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label for="status-filter">Filter by Status:</label>
-                <select id="status-filter" class="filter-select">
-                    <option value="">All Status</option>
-                    <option value="Ongoing">Ongoing</option>
-                    <option value="Completed">Completed</option>
-                    <option value="In Progress">In Progress</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <input type="text" id="search-input" placeholder="Search projects..." class="search-input">
-            </div>
-            <button id="clear-filters" class="clear-btn">Clear Filters</button>
-        </div> -->
-
-        <!-- <table class="research-table" id="projects-table">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Research Field</th>
-                    <th>Status</th>
-                    <th>Year</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr data-fields="Natural Hazards,GeoAI" data-status="Ongoing">
-                    <td>GeoAI for Natural Hazard Prediction</td>
-                    <td><span class="research-tag">Natural Hazards</span><span class="research-tag">GeoAI</span></td>
-                    <td>Ongoing</td>
-                    <td>2021-Present</td>
-                </tr>
-                <tr data-fields="Urban Planning,Network Science" data-status="Ongoing">
-                    <td>Urban Resilience Network Analysis</td>
-                    <td><span class="research-tag">Urban Planning</span><span class="research-tag">Network Science</span></td>
-                    <td>Ongoing</td>
-                    <td>2022-Present</td>
-                </tr>
-                <tr data-fields="Urban,ML/DL" data-status="Completed">
-                    <td>Local Climate Zone Classification</td>
-                    <td><span class="research-tag">Urban</span><span class="research-tag">ML/DL</span></td>
-                    <td>Completed</td>
-                    <td>2019-2021</td>
-                </tr>
-                <tr data-fields="Remote Sensing,Geopolitical" data-status="Completed">
-                    <td>DInSAR Nuclear Test Site Detection</td>
-                    <td><span class="research-tag">Remote Sensing</span><span class="research-tag">Geopolitical</span></td>
-                    <td>Completed</td>
-                    <td>2017</td>
-                </tr>
-                <tr data-fields="Natural Hazards,Coastal" data-status="In Progress">
-                    <td>Coastal Flood Risk Modeling</td>
-                    <td><span class="research-tag">Natural Hazards</span><span class="research-tag">Coastal</span></td>
-                    <td>In Progress</td>
-                    <td>2023-Present</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
-  </div>
-</div>
-</div>
-</main>     -->
-    
   </main>
 
-  <!-- Filter Script -->
+  <!-- Side detail panel -->
+  <div class="side-panel-overlay" id="sidePanelOverlay"></div>
+  <div class="side-panel" id="sidePanel">
+    <div class="side-panel-header">
+      <div>
+        <span class="side-panel-number" id="panelNumber"></span>
+        <h3 id="panelTitle"></h3>
+      </div>
+      <button class="side-panel-close" id="panelClose" aria-label="Close panel"><i class="fas fa-times"></i></button>
+    </div>
+    <p class="side-panel-desc" id="panelDesc"></p>
+    <div id="panelFigure"></div>
+    <div class="side-panel-label">Selected Works</div>
+    <div id="panelPubs"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <nav class="footer-nav">
+        <a href="index.html" class="footer-nav-link">Home</a>
+        <a href="about.html" class="footer-nav-link">About</a>
+        <a href="news.html" class="footer-nav-link">News</a>
+        <a href="research.html" class="footer-nav-link">Research</a>
+        <a href="teaching.html" class="footer-nav-link">Teaching</a>
+        <a href="resources/cv_recent.pdf" class="footer-nav-link">CV</a>
+      </nav>
+      <div class="social-icons footer-social-icons">
+        <a href="mailto:minhok@stanford.edu" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a>
+        <a href="https://scholar.google.com/citations?user=VRVL4TYAAAAJ&hl=en" class="social-icon" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+        <a href="https://www.linkedin.com/in/minhokim93/" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://github.com/minhokim93" class="social-icon" title="Github"><i class="fab fa-github"></i></a>
+        <a href="https://www.researchgate.net/profile/Minho_Kim21" class="social-icon" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+        <a href="https://orcid.org/0000-0002-9504-5935" class="social-icon" title="ORCID"><i class="fab fa-orcid"></i></a>
+      </div>
+      <p>&copy; <span id="year"></span> Minho Kim. All rights reserved.</p>
+    </div>
+  </footer>
+
   <script>
-    class PublicationFilter {
-      constructor() {
-        this.allPublications = Array.from(document.querySelectorAll('.publication-item'));
-        this.filteredPublications = [...this.allPublications];
-        this.currentPage = 1;
-        this.itemsPerPage = 10;
-        
-        this.selectedYears = new Set(['all']);
-        this.selectedTypes = new Set(['all']);
-        this.selectedTags = new Set(['all']);
-        
-        this.initializeEventListeners();
-        this.updateDisplay();
-      }
-      
-      initializeEventListeners() {
-        // Year filter buttons
-        document.querySelectorAll('.year-btn').forEach(btn => {
-          btn.addEventListener('click', (e) => this.handleYearFilter(e));
-        });
-        
-        // Type filter buttons
-        document.querySelectorAll('.type-btn').forEach(btn => {
-          btn.addEventListener('click', (e) => this.handleTypeFilter(e));
-        });
-        
-        // Tag filter buttons
-        document.querySelectorAll('.tag-btn').forEach(btn => {
-          btn.addEventListener('click', (e) => this.handleTagFilter(e));
-        });
-        
-        // Items per page selector
-        document.getElementById('itemsPerPage').addEventListener('change', (e) => {
-          this.itemsPerPage = e.target.value === 'all' ? this.filteredPublications.length : parseInt(e.target.value);
-          this.currentPage = 1;
-          this.updateDisplay();
-        });
-      }
-      
-      handleYearFilter(e) {
-        const year = e.target.dataset.year;
-        
-        if (year === 'all') {
-          this.selectedYears.clear();
-          this.selectedYears.add('all');
-        } else {
-          if (this.selectedYears.has('all')) {
-            this.selectedYears.clear();
-          }
-          
-          if (this.selectedYears.has(year)) {
-            this.selectedYears.delete(year);
-          } else {
-            this.selectedYears.add(year);
-          }
-          
-          if (this.selectedYears.size === 0) {
-            this.selectedYears.add('all');
-          }
-        }
-        
-        this.updateFilters();
-      }
-      
-      handleTypeFilter(e) {
-        const type = e.target.dataset.type;
-        
-        if (type === 'all') {
-          this.selectedTypes.clear();
-          this.selectedTypes.add('all');
-        } else {
-          if (this.selectedTypes.has('all')) {
-            this.selectedTypes.clear();
-          }
-          
-          if (this.selectedTypes.has(type)) {
-            this.selectedTypes.delete(type);
-          } else {
-            this.selectedTypes.add(type);
-          }
-          
-          if (this.selectedTypes.size === 0) {
-            this.selectedTypes.add('all');
-          }
-        }
-        
-        this.updateFilters();
-      }
-      
-      handleTagFilter(e) {
-        const tag = e.target.dataset.tag;
-        
-        if (tag === 'all') {
-          this.selectedTags.clear();
-          this.selectedTags.add('all');
-        } else {
-          if (this.selectedTags.has('all')) {
-            this.selectedTags.clear();
-          }
-          
-          if (this.selectedTags.has(tag)) {
-            this.selectedTags.delete(tag);
-          } else {
-            this.selectedTags.add(tag);
-          }
-          
-          if (this.selectedTags.size === 0) {
-            this.selectedTags.add('all');
-          }
-        }
-        
-        this.updateFilters();
-      }
-      
-      updateFilters() {
-        this.filteredPublications = this.allPublications.filter(pub => {
-          const pubYear = pub.dataset.year;
-          const pubType = pub.dataset.type;
-          const pubTags = pub.dataset.tags ? pub.dataset.tags.toLowerCase().split(',') : [];
-          
-          // Check year filter
-          const yearMatch = this.selectedYears.has('all') || this.selectedYears.has(pubYear);
-          
-          // Check type filter
-          const typeMatch = this.selectedTypes.has('all') || this.selectedTypes.has(pubType);
-          
-          // Check tag filter
-          const tagMatch = this.selectedTags.has('all') || 
-            pubTags.some(tag => this.selectedTags.has(tag.trim()));
-          
-          return yearMatch && typeMatch && tagMatch;
-        });
-        
-        this.currentPage = 1;
-        this.updateButtonStates();
-        this.updateDisplay();
-      }
-      
-      updateButtonStates() {
-        // Update year buttons
-        document.querySelectorAll('.year-btn').forEach(btn => {
-          const year = btn.dataset.year;
-          btn.classList.toggle('active', this.selectedYears.has(year));
-        });
-        
-        // Update type buttons
-        document.querySelectorAll('.type-btn').forEach(btn => {
-          const type = btn.dataset.type;
-          btn.classList.toggle('active', this.selectedTypes.has(type));
-        });
-        
-        // Update tag buttons
-        document.querySelectorAll('.tag-btn').forEach(btn => {
-          const tag = btn.dataset.tag;
-          btn.classList.toggle('active', this.selectedTags.has(tag));
-        });
-      }
-      
-      updateDisplay() {
-        // Hide all publications first
-        this.allPublications.forEach(pub => {
-          pub.style.display = 'none';
-        });
-        
-        // Calculate pagination
-        const totalItems = this.filteredPublications.length;
-        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-        const endIndex = this.itemsPerPage === totalItems ? totalItems : 
-          Math.min(startIndex + this.itemsPerPage, totalItems);
-        
-        // Show filtered publications for current page
-        const itemsToShow = this.filteredPublications.slice(startIndex, endIndex);
-        itemsToShow.forEach(pub => {
-          pub.style.display = 'block';
-        });
-        
-        // Update results info
-        document.getElementById('showingCount').textContent = itemsToShow.length;
-        document.getElementById('totalCount').textContent = totalItems;
-        
-        // Update items per page selector
-        const itemsPerPageSelect = document.getElementById('itemsPerPage');
-        if (this.itemsPerPage === totalItems && totalItems > 0) {
-          itemsPerPageSelect.value = 'all';
-        }
-      }
-    }
-    
-    // Initialize the filter system when the page loads
-    document.addEventListener('DOMContentLoaded', () => {
-      new PublicationFilter();
-    });
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 
+  <script src="data/publications.js"></script>
+  <script src="js/publications-render.js"></script>
+  <script src="js/research-network.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPublicationTable('#publicationTableBody', '#filterControls');
+    });
+  </script>
   <script src="script.js"></script>
-  
+
 </body>
 </html>
