@@ -10,18 +10,21 @@ const RESEARCH_AREAS = [
     number: '01',
     title: 'Human',
     description: '',
-    tags: ['netsci', 'urban', 'planning'],
+    tags: ['urban', 'planning'],
     color: '#3366cc',
     cx: 0.26, cy: 0.33,
     keywords: [
-      { tag: 'netsci', label: 'Network Science' },
+      { tag: 'planning', label: 'Decision-Making' },
       { label: 'Community Resilience',
         pubIds: ['c15-homeowner-responsibility', 'w1-mapping-responsibility'],
         description: 'Spatial metrics that map shared responsibility for risk mitigation among neighboring homeowners in the Wildland Urban Interface.' },
-      { label: 'Complex Systems',
+      { label: 'Shared Responsibility',
+        pubIds: ['c15-homeowner-responsibility', 'w1-mapping-responsibility'],
+        description: 'Mapping how responsibility for wildfire risk mitigation is shared and distributed among neighboring homeowners.' },
+      { tag: 'planning', label: 'Planning' },
+      { label: 'Governance',
         pubIds: ['w3-catastrophic-risk', 'o3-catastrophic-governance'],
         description: 'Modeling cascading risk and governance in complex adaptive systems with the Center for Catastrophic Risk Management.' },
-      { tag: 'planning', label: 'Planning & Policy' },
     ],
   },
   {
@@ -33,20 +36,8 @@ const RESEARCH_AREAS = [
     color: '#5559b7',
     cx: 0.74, cy: 0.33,
     keywords: [
-      { tag: 'wildfire', label: 'Wildfire Behavior' },
-      { label: 'Fire Spread',
-        pubIds: ['p6-cell2fire', 'c13-cell2fire-synthetic'],
-        description: 'A cellular-automata fire growth model, rooted in semi-empirical fire physics, simulated across landscapes in the U.S., Canada, Chile, and Spain.' },
-      { label: 'Cell2Fire',
-        pubIds: ['p6-cell2fire', 'c13-cell2fire-synthetic'],
-        description: 'A cellular-automata fire growth model, rooted in semi-empirical fire physics, simulated across landscapes in the U.S., Canada, Chile, and Spain.' },
-      { label: 'Cascading Hazards',
-        pubIds: ['w2-debris-flows', 'c14-flood-after-fires', 'o2-sediment-bulking'],
-        description: 'Data-driven frameworks for post-fire debris flow risk, developed with Caltrans to protect transportation and water infrastructure networks.' },
+      { tag: 'wildfire', label: 'Wildfires' },
       { label: 'Fire Weather',
-        pubIds: ['w5-pyromes', 'w4-korea-fire'],
-        description: 'Characterizing dynamic global pyromes and unprecedented fire behavior driven by compounding climate extremes.' },
-      { label: 'Climate Extremes',
         pubIds: ['w5-pyromes', 'w4-korea-fire'],
         description: 'Characterizing dynamic global pyromes and unprecedented fire behavior driven by compounding climate extremes.' },
       { label: 'Land Cover',
@@ -54,7 +45,11 @@ const RESEARCH_AREAS = [
         description: 'High-resolution local climate zone, landform, and land cover mapping to monitor urban development and mitigate urban heat.' },
       { label: 'LCZ Mapping',
         pubIds: ['p4-lcz-attention', 'c10-landform-segmentation', 'c6-lst-fusion'],
-        description: 'High-resolution local climate zone, landform, and land cover mapping to monitor urban development and mitigate urban heat.' },
+        description: 'High-resolution local climate zone mapping to monitor urban development and mitigate urban heat.' },
+      { label: 'Climate Extreme',
+        pubIds: ['w5-pyromes', 'w4-korea-fire'],
+        description: 'Characterizing dynamic global pyromes and unprecedented fire behavior driven by compounding climate extremes.' },
+      { tag: 'nathaz', label: 'Natural Hazard' },
     ],
   },
   {
@@ -62,7 +57,7 @@ const RESEARCH_AREAS = [
     number: '03',
     title: 'Technology',
     description: '',
-    tags: ['rs', 'ml', 'geospatial'],
+    tags: ['rs', 'ml', 'geospatial', 'netsci'],
     color: '#764ba2',
     cx: 0.50, cy: 0.60,
     keywords: [
@@ -70,11 +65,13 @@ const RESEARCH_AREAS = [
       { label: 'GeoAI',
         pubIds: ['c8-inaccessible-areas', 'p4-lcz-attention', 'c7-lcz-training-samples'],
         description: 'Applying AI to geospatial problems, from semantic segmentation to attention-based deep learning for satellite imagery.' },
+      { tag: 'geospatial', label: 'GIS' },
       { label: 'Computer Vision',
         pubIds: ['c8-inaccessible-areas', 'p4-lcz-attention', 'c7-lcz-training-samples'],
         description: 'Image classification and segmentation models for extracting information from satellite and aerial imagery at high resolution.' },
-      { tag: 'geospatial', label: 'Geospatial Data' },
       { tag: 'geospatial', label: 'Data Science' },
+      { tag: 'rs', label: 'Remote Sensing' },
+      { tag: 'netsci', label: 'Network Science' },
     ],
   },
 ];
@@ -103,7 +100,7 @@ const SHARED_NODES = [
   },
   {
     id: 'bridge-environment-technology',
-    label: 'Remote Sensing',
+    label: 'Fire Sensing',
     areaIds: ['environment', 'technology'],
     pubIds: ['p2-histogram-matching', 'c3-sentinel-planetscope', 'c1-mendocino-wildfire'],
     description: 'Calibrating and monitoring wildfire behavior against satellite-derived fire perimeters and multispectral imagery.',
@@ -144,17 +141,17 @@ const SHARED_NODES = [
   },
 ];
 
-const UNLABELED_PER_AREA = 3;
-const INTERSTITIAL_PER_PAIR = 3;
+const UNLABELED_PER_AREA = 2;
+const INTERSTITIAL_PER_PAIR = 2;
 
 // Physics/layout constants.
-const KEYWORD_SPREAD_MIN = 95;
-const KEYWORD_SPREAD_MAX = 150;
+const KEYWORD_SPREAD_MIN = 130;
+const KEYWORD_SPREAD_MAX = 180;
 const BRIDGE_JITTER = 22;
 const BLOB_RADIUS = 190;
 const CONNECTION_DIST = 125;
 const BRIDGE_CONNECTION_DIST = 130;
-const DRIFT_SPEED = 0.2;
+const DRIFT_SPEED = 0.4;
 const TICK_MS = 55;
 
 let svgEl = null;
@@ -235,7 +232,7 @@ function buildNodes() {
     // A few small, unlabeled nodes per area — open-ended future directions.
     for (let i = 0; i < UNLABELED_PER_AREA; i++) {
       const angle = Math.random() * Math.PI * 2;
-      const radius = KEYWORD_SPREAD_MIN * 0.5 + Math.random() * KEYWORD_SPREAD_MAX * 0.9;
+      const radius = KEYWORD_SPREAD_MIN * 0.5 + Math.random() * KEYWORD_SPREAD_MAX * 0.75;
       nodes.push({
         id: `${area.id}-future-${i}`,
         areaId: area.id,

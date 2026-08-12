@@ -70,28 +70,29 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// Mobile menu toggle
+// Mobile menu toggle — expands the same nav-menu used on desktop as a
+// full-width dropdown, rather than a separate sidebar drawer.
 document.addEventListener("DOMContentLoaded", function () {
   const menuToggle = document.getElementById('mobile-menu-toggle');
-  const sidebarMenu = document.getElementById('sidebar-menu');
+  const navMenu = document.getElementById('nav-menu');
 
-  if (!menuToggle || !sidebarMenu) return;
+  if (!menuToggle || !navMenu) return;
 
   menuToggle.addEventListener('click', () => {
       menuToggle.classList.toggle('active');
-      sidebarMenu.classList.toggle('active');
+      navMenu.classList.toggle('active');
   });
 
-  sidebarMenu.querySelectorAll('a').forEach(link => {
+  navMenu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
-          sidebarMenu.classList.remove('active');
+          navMenu.classList.remove('active');
           menuToggle.classList.remove('active');
       });
   });
 
   document.addEventListener('click', (e) => {
-      if (!sidebarMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-          sidebarMenu.classList.remove('active');
+      if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+          navMenu.classList.remove('active');
           menuToggle.classList.remove('active');
       }
   });

@@ -177,6 +177,12 @@ function initZoomControls(svg, wrap) {
   window.addEventListener('mousemove', (e) => dragMove(e.clientX, e.clientY));
   window.addEventListener('mouseup', dragEnd);
 
+  // Mouse wheel/trackpad scroll zooms the map in and out, like a real map.
+  svg.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    setZoom(zoom + (e.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP));
+  }, { passive: false });
+
   // Touch: one finger pans, two fingers pinch-to-zoom.
   let pinchStartDist = null;
   let pinchStartZoom = 1;
