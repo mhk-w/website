@@ -103,13 +103,26 @@ const SHARED_NODES = [
 const UNLABELED_PER_AREA = 2;
 const INTERSTITIAL_PER_PAIR = 3;
 
-// Physics/layout constants.
-const KEYWORD_SPREAD_MIN = 105;
-const KEYWORD_SPREAD_MAX = 145;
-const BRIDGE_JITTER = 22;
-const BLOB_RADIUS = 160;
-const CONNECTION_DIST = 160;
-const BRIDGE_CONNECTION_DIST = 170;
+// Physics/layout constants, tuned for a ~600px-wide desktop diagram.
+// Below that width these are scaled down in measureDiagram() (see
+// SPREAD_SCALE) so the mesh doesn't spill past a narrow mobile
+// container's edges -- desktop-width diagrams get scale 1, i.e. no
+// change from these base values.
+const KEYWORD_SPREAD_MIN_BASE = 105;
+const KEYWORD_SPREAD_MAX_BASE = 145;
+const BRIDGE_JITTER_BASE = 22;
+const BLOB_RADIUS_BASE = 160;
+const CONNECTION_DIST_BASE = 160;
+const BRIDGE_CONNECTION_DIST_BASE = 170;
+const SPREAD_REFERENCE_WIDTH = 600;
+
+let KEYWORD_SPREAD_MIN = KEYWORD_SPREAD_MIN_BASE;
+let KEYWORD_SPREAD_MAX = KEYWORD_SPREAD_MAX_BASE;
+let BRIDGE_JITTER = BRIDGE_JITTER_BASE;
+let BLOB_RADIUS = BLOB_RADIUS_BASE;
+let CONNECTION_DIST = CONNECTION_DIST_BASE;
+let BRIDGE_CONNECTION_DIST = BRIDGE_CONNECTION_DIST_BASE;
+
 const DRIFT_SPEED = 0.4;
 const TICK_MS = 55;
 
@@ -364,6 +377,30 @@ function measureDiagram() {
   const rect = el.getBoundingClientRect();
   if (rect.width === 0 || rect.height === 0) return false;
   diagramSize = { w: rect.width, h: rect.height };
+
+  const scale = Math.max(0.35, Math.min(1, diagramSize.w / SPREAD_REFERENCE_WIDTH));
+  KEYWORD_SPREAD_MIN = KEYWORD_SPREAD_MIN_BASE * scale;
+  KEYWORD_SPREAD_MAX = KEYWORD_SPREAD_MAX_BASE * scale;
+  BRIDGE_JITTER = BRIDGE_JITTER_BASE * scale;
+  BLOB_RADIUS = BLOB_RADIUS_BASE * scale;
+  CONNECTION_DIST = CONNECTION_DIST_BASE * scale;
+  BRIDGE_CONNECTION_DIST = BRIDGE_CONNECTION_DIST_BASE * scale;
+
+  // The keyword-spread shrink alone isn't enough on narrow screens --
+  // the area centers themselves (cx: 0.21/0.79 for Humans/Environment)
+  // are spaced for a wide desktop diagram and push labels past the
+  // container's edges even with a tight spread. Pull each area's center
+  // toward the middle by the same scale, so at scale 1 (desktop) nothing
+  // changes, and at smaller scales the three areas sit closer together.
+  RESEARCH_AREAS.forEach((area) => {
+    if (area.cxBase === undefined) {
+      area.cxBase = area.cx;
+      area.cyBase = area.cy;
+    }
+    area.cx = 0.5 + (area.cxBase - 0.5) * scale;
+    area.cy = 0.5 + (area.cyBase - 0.5) * scale;
+  });
+
   return true;
 }
 

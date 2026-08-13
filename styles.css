@@ -3391,8 +3391,10 @@
    edge of the page. Pull it in to stay clear of the viewport. */
 @media (max-width: 480px) {
   .annotate-mark-circle {
-    left: -3%;
-    width: 106%;
+    left: -8%;
+    top: -26%;
+    width: 118%;
+    height: 152%;
   }
 
   .annotate-mark-underline {
@@ -3603,5 +3605,138 @@
 @media (prefers-reduced-motion: reduce) {
   .venn-circle-group {
     transition: none;
+  }
+}
+
+/* ============================================================================
+   MOBILE-ONLY REFINEMENTS (round 2) -- everything in this section is scoped
+   to @media (max-width: 640px) and placed last in the file so it wins the
+   cascade over earlier desktop/tablet rules at that width. None of it
+   applies above 640px, so desktop/tablet rendering is unchanged.
+   ============================================================================ */
+@media (max-width: 640px) {
+  /* --- Home page: drop the typing animation, left-align hero text --- */
+  #typewriter {
+    display: none;
+  }
+
+  .hero-name {
+    justify-content: flex-start;
+  }
+
+  .hero-right,
+  .hero-right .hero-name,
+  .hero-right .hero-description {
+    text-align: left;
+  }
+
+  /* --- Home page: three research-area cards in one compact row --- */
+  .home-areas-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .home-area-card {
+    padding: 0.6rem 0.35rem;
+  }
+
+  .home-area-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .home-area-card h3 {
+    font-size: 0.66rem;
+    line-height: 1.25;
+    margin-bottom: 0;
+  }
+
+  /* The full description doesn't fit at this size -- keep icon + title
+     only, matching the same compact treatment as the Teaching page's
+     thinking-cards below. */
+  .home-area-card p {
+    display: none;
+  }
+
+  /* --- About page: secondary/sponsor text smaller --- */
+  .scholarship-sponsor {
+    font-size: 0.8rem;
+  }
+
+  /* --- About page: tighten the bio's Read More clamp so the second
+     paragraph ("My research combines...") doesn't visibly peek through
+     before the toggle -- 3 lines lands right after the first sentence. */
+  #bioAcademic .mobile-collapse,
+  #bioCasual .mobile-collapse {
+    -webkit-line-clamp: 3;
+  }
+
+  /* --- About page: slightly larger, still-centered profile photo --- */
+  .profile-photo img {
+    width: 190px;
+    height: 240px;
+  }
+
+  /* --- Teaching page: three thinking-cards in one compact row, same
+     treatment as the home-area-cards above --- */
+  .thinking-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .thinking-card {
+    padding: 0.6rem 0.35rem;
+  }
+
+  .thinking-card-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .thinking-card-title {
+    font-size: 0.66rem;
+    line-height: 1.25;
+    margin-bottom: 0;
+  }
+
+  /* Dropping the description pulls "See it in class" up right under the
+     title instead of it sitting far down a tall card. */
+  .thinking-card-desc {
+    display: none;
+  }
+
+  .thinking-card-cta {
+    margin-top: 0.4rem;
+    font-size: 0.6rem;
+  }
+
+  /* --- Teaching page: tighten story-paragraph Read More clamps, same as
+     the About page bio --- */
+  .feedback-story-text .mobile-collapse {
+    -webkit-line-clamp: 3;
+  }
+
+  /* --- Secondary/meta text smaller throughout Teaching --- */
+  .timeline-institution,
+  .vt-line,
+  .vt-eval-n {
+    font-size: 0.78rem;
+  }
+
+  /* --- Research page: network diagram area titles smaller, so
+     "Humans"/"Environment" don't collide once their centers are pulled
+     closer together for a narrow container (see measureDiagram's
+     center-compression in research-network.js) --- */
+  .area-title {
+    font-size: 0.68rem;
+  }
+
+  .keyword-node .kw-label {
+    font-size: 0.48rem;
   }
 }

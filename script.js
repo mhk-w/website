@@ -119,6 +119,18 @@ function toggleDropdown(element) {
   section.classList.toggle('open');
 }
 
+// These sections ship marked up as "open" (expanded by default) for
+// desktop. On mobile there isn't room to show everything at once, so
+// collapse them by default there instead -- still expandable via the
+// same toggleDropdown click handler. Desktop is untouched: this only
+// runs below the mobile breakpoint, once, at load.
+document.addEventListener('DOMContentLoaded', () => {
+  if (!window.matchMedia('(max-width: 640px)').matches) return;
+  document.querySelectorAll('.dropdown-section.open').forEach((section) => {
+    section.classList.remove('open');
+  });
+});
+
 // Academic/Casual bio switch on about.html — a single connected on/off
 // control rather than two independent buttons.
 function setBioView(view) {
