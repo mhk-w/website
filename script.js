@@ -127,6 +127,9 @@ function setBioView(view) {
   if (!academic || !casual) return;
   academic.style.display = view === 'academic' ? 'block' : 'none';
   casual.style.display = view === 'casual' ? 'block' : 'none';
+  // Whichever bio just became visible may contain a .mobile-collapse
+  // block that couldn't be measured for overflow while display:none.
+  initMobileCollapsibleText();
 
   const photoAcademic = document.getElementById('profilePhotoAcademic');
   const photoCasual = document.getElementById('profilePhotoCasual');
@@ -160,4 +163,36 @@ document.addEventListener('DOMContentLoaded', () => {
   if (labelAcademic) labelAcademic.addEventListener('click', () => setBioView('academic'));
   if (labelCasual) labelCasual.addEventListener('click', () => setBioView('casual'));
 });
+
+// Mobile-only "Read more" collapsing for long text blocks (.mobile-collapse,
+// clamped to a few lines via CSS only under the max-width: 640px media
+// query -- desktop always renders these in full, untouched). Only elements
+// that actually overflow their clamp get a toggle button; short ones are
+// left alone. Re-run after anything that reveals a previously-hidden
+// .mobile-collapse block (e.g. the About page's bio switch) so it can be
+// measured once visible.
+function initMobileCollapsibleText() {
+  if (!window.matchMedia('(max-width: 640px)').matches) return;
+
+  document.querySelectorAll('.mobile-collapse').forEach((el) => {
+    if (el.dataset.collapseInit) return;
+    if (el.scrollHeight <= el.clientHeight + 2) return;
+    el.dataset.collapseInit = '1';
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'mobile-collapse-toggle';
+    btn.innerHTML = 'Read more <i class="fas fa-chevron-down"></i>';
+    btn.addEventListener('click', () => {
+      const expanded = el.classList.toggle('expanded');
+      btn.innerHTML = expanded
+        ? 'Read less <i class="fas fa-chevron-up"></i>'
+        : 'Read more <i class="fas fa-chevron-down"></i>';
+      if (!expanded) el.scrollIntoView({ block: 'nearest' });
+    });
+    el.insertAdjacentElement('afterend', btn);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initMobileCollapsibleText);
 

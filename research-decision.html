@@ -53,14 +53,14 @@
                 </div>
 
                 <h2 class="section-title" style="margin-top: 1.5rem;">Overview</h2>
-                <p class="hero-description">
+                <p class="hero-description mobile-collapse">
                     Decision support is where the modeling and the data meet the people who actually have to act on wildfire risk. A key part of my research is bridging policy with science to create actionable solutions: decision-support tools and software that help facilitate risk mitigation, improve pre-disaster preparedness, enhance risk communication, and elicit a more proactive response from decision-makers.
                 </p>
 
                 <h2 class="section-title" style="margin-top: 2rem;">My Work</h2>
 
                 <h3 class="area-subheading">Post-Fire Debris Flow Risk</h3>
-                <p class="hero-description">
+                <p class="hero-description mobile-collapse">
                     In California, the increasing frequency and severity of wildfires has amplified the risk of cascading hazards like post-fire debris flows (PFDF), which threaten to damage critical infrastructure and nearby communities. Current risk management relies heavily on engineering judgment, without a standardized way to assess this evolving risk. Working with the California Department of Transportation (Caltrans), I developed a data-driven framework that streamlines data collection and estimates a bulking factor (BF), pulling basin, soil, terrain, and flowline data from USGS and USDA sources, that can then be adjusted to a site's design requirements and local environment. Applied statewide, the framework flags PFDF risk across 5,220 road segments, 13,201 bridges, and 243,387 culverts, helping infrastructure managers prioritize where to reinforce transportation and water infrastructure.
                 </p>
                 <figure class="panel-figure" style="max-width: 780px;">
@@ -69,14 +69,14 @@
                 </figure>
 
                 <h3 class="area-subheading">Homeowner Spatial Responsibility</h3>
-                <p class="hero-description">
+                <p class="hero-description mobile-collapse">
                     For high-risk communities in the Wildland Urban Interface (WUI), &ldquo;defensible space&rdquo; is a policy that requires homeowners to clear flammable hazards within a set buffer distance around their home. But as WUI communities grow denser, those buffers overlap: a hazard on one property can expose a neighbor to risk, often without anyone realizing who is actually responsible for mitigating it. To address this, I developed three spatial metrics, Personal, Shared, and Owed Responsibility, that quantify how much wildfire risk a homeowner carries alone versus shares with or owes to their neighbors, and used them to build directed spatial responsibility networks across a real WUI neighborhood.
                 </p>
                 <figure class="panel-figure" style="max-width: 900px;">
                     <img src="images/responsibility-concept.jpg" alt="Diagram showing Personal, Shared, and Owed Responsibility as overlapping defensible-space buffers between neighboring homes">
                     <figcaption>Rethinking defensible space as overlapping buffers between neighbors: Personal Responsibility (a homeowner's own buffer), Shared Responsibility (buffers that overlap with one neighbor), and Owed Responsibility (risk passed along a chain of neighbors). Kim, Raine, Radke, &amp; Gonz&aacute;lez (2025), under review at <em>Landscape and Urban Planning</em>.</figcaption>
                 </figure>
-                <p class="hero-description">
+                <p class="hero-description mobile-collapse">
                     Shared-responsibility networks tend to form small sub-networks, while owed-responsibility networks concentrate into high-risk clusters, information that helps flag which properties and neighbor groups carry outsized risk. Simulating random, localized, and targeted mitigation scenarios by iteratively removing the highest-responsibility links showed that a targeted strategy reduces total neighborhood risk fastest and fragments the network into smaller, more manageable pieces. Looking ahead, my research is extending toward disaster justice, adopting an environmental justice lens to assess how wildfire risk is disproportionately distributed across socially vulnerable communities, and to identify the barriers, such as evacuation potential, accessibility, and adaptive capacity, that amplify it.
                 </p>
                 <figure class="panel-figure" style="max-width: 780px;">
@@ -93,14 +93,14 @@
                 </div>
 
                 <h3 class="area-subheading">Spatial Networks for Fire Spread</h3>
-                <p class="hero-description">
+                <p class="hero-description mobile-collapse">
                     Fire potential polygons, the spatial units fire managers use to plan suppression, are typically drawn manually by analysts: tedious, expertise-intensive, and prone to bias. I developed an automatic method that adapts hydrological basin-delineation techniques to fire spread simulations, treating fire spread time like a &ldquo;reversed basin&rdquo; (water flows from high elevation to low elevation; fire spreads from low time-since-ignition to high) to segment a landscape into fire potential polygons.
                 </p>
                 <figure class="panel-figure" style="max-width: 900px;">
                     <img src="images/hydrology-fpp-method.jpg" alt="Method diagram showing elapsed time, spread direction, cumulative fire spread cells, and resulting fire potential polygons">
                     <figcaption>Hydrology-inspired fire potential polygons: fire spread time is processed like basin flow accumulation (D8 algorithm) to derive spread direction and cumulative spread cells, from which watershed-like polygons (FPP) are delineated. Kim, Castellnou, &amp; Gonz&aacute;lez (2025), <em>International Journal of Disaster Risk Reduction</em>, 130, 105853.</figcaption>
                 </figure>
-                <p class="hero-description">
+                <p class="hero-description mobile-collapse">
                     These polygons are connected into a spatial network weighted by penetration rate of spread, a novel metric that captures how fire is expected to move between them, used to identify critical fire pathways and suppression opportunities. I tested this method in the field during two major wildfires in Catalonia, Spain (2024 fire season) with the Catalan Fire Service: in the wind-driven Ciutadilla fire, the resulting high-risk polygons and fire pathways closely matched real suppression actions taken on the ground, and in the Vilanova de Mei&agrave; fire, simulated scenarios showed that proactive tactics and prescribed burns significantly delayed fire progression, while reactive tactics provided minimal benefit. This automates a process fire analysts have historically drawn by hand, and helps fire managers shift toward more proactive, risk-informed suppression decisions.
                 </p>
                 <figure class="panel-figure" style="max-width: 900px;">

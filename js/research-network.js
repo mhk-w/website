@@ -744,7 +744,12 @@ function renderResearchSlide(index) {
       imgEl.src = slide.src;
       imgEl.alt = slide.alt || '';
       imgEl.style.display = '';
-      imgEl.style.height = slide.imgHeight || '';
+      // A per-slide custom height (imgHeight) is tuned for desktop --
+      // below 768px, let the mobile CSS height rule apply instead, since
+      // a fixed desktop-sized inline height would otherwise win out over
+      // any media query (inline styles beat class-based CSS regardless
+      // of breakpoint).
+      imgEl.style.height = window.innerWidth > 768 ? (slide.imgHeight || '') : '';
     }
   }
 
