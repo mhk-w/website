@@ -585,7 +585,7 @@ function renderListView() {
   container.innerHTML = RESEARCH_AREAS.map((area) => `
     <div class="area-list-card area-${area.id}" data-area="${area.id}">
       <div class="area-list-header">
-        <div><span class="area-number">[${area.number}]</span><h3>${area.title}</h3></div>
+        <div class="area-list-title-zone"><span class="area-number">[${area.number}]</span><h3>${area.title}</h3></div>
         <i class="fas fa-chevron-down area-list-chevron"></i>
       </div>
       <p>${area.description}</p>
@@ -596,16 +596,23 @@ function renderListView() {
     </div>
   `).join('');
 
+  // Split so the two actions don't always happen together: clicking the
+  // title (area number + name) opens the side panel, while clicking
+  // anywhere else on the card (the chevron, in particular) only
+  // expands/collapses the tag pills -- mobile-only in effect (see
+  // .area-list-tags in styles.css), a harmless no-op on desktop where
+  // tags are always visible regardless of this class.
   container.querySelectorAll('.area-list-card').forEach((card) => {
     card.addEventListener('click', () => {
-      selectArea(card.dataset.area);
-      // Mobile-only in effect (see .area-list-tags in styles.css) --
-      // the tag pills start collapsed under the area title there, and
-      // this same click both highlights the area in the diagram and
-      // reveals its tags. Harmless no-op on desktop, where the tags
-      // are always visible regardless of this class.
       card.classList.toggle('expanded');
     });
+    const titleZone = card.querySelector('.area-list-title-zone');
+    if (titleZone) {
+      titleZone.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selectArea(card.dataset.area);
+      });
+    }
   });
 }
 

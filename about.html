@@ -117,21 +117,24 @@
        small circular photo so its height roughly matches the text
        column instead of dominating it. */
     @media (max-width: 640px) {
-      /* Photo top-left, lede sentence beside it, switch+Read-More on
-         the next row, and the rest of the bio spanning full width
-         below (revealed by Read More). .profile-photo/.profile-text
-         and whichever of #bioAcademic/#bioCasual is visible all
-         unwrap via display: contents so their children can be placed
-         directly by this grid instead of nesting three levels deep. */
+      /* Photo top-left (spanning both rows), lede sentence beside it,
+         then the switch and Read More side by side directly below the
+         lede, and the rest of the bio spanning full width below
+         (revealed by Read More). .profile-photo/.profile-text and
+         whichever of #bioAcademic/#bioCasual is visible all unwrap via
+         display: contents so their children can be placed directly by
+         this grid instead of nesting three levels deep. A third column
+         (auto) exists purely so switch/readmore can sit side by side
+         under the lede without needing an extra wrapper element. */
       .profile-container {
         display: grid;
-        grid-template-columns: auto 1fr;
+        grid-template-columns: auto auto 1fr;
         grid-template-areas:
-          "photo lede"
-          "switch readmore"
-          "rest rest";
-        row-gap: 0.4rem;
-        column-gap: 1rem;
+          "photo lede     lede"
+          "photo switch   readmore"
+          "rest  rest     rest";
+        row-gap: 0.6rem;
+        column-gap: 0.75rem;
         align-items: start;
         text-align: left;
       }
@@ -149,9 +152,15 @@
         grid-area: photo;
       }
 
-      .bio-switch {
+      .bio-switch,
+      .profile-photo .bio-switch {
         grid-area: switch;
         align-self: start;
+        /* Overrides the desktop .profile-photo .bio-switch rule above
+           (margin: 1.5rem auto 0) -- same 2-class specificity, so it
+           only wins here because this block comes later in the file. */
+        width: fit-content;
+        margin: 0;
       }
 
       /* Hidden on mobile only -- kept for desktop/tablet. */

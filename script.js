@@ -263,10 +263,64 @@ function initBackToTop() {
   });
   document.body.appendChild(btn);
 
+  // Bottom-center means it would otherwise sit right on top of the
+  // footer's own (also centered) social icon row on a short page --
+  // hide it once the footer scrolls into view.
+  const footer = document.querySelector('.site-footer');
+
   window.addEventListener('scroll', () => {
-    btn.classList.toggle('visible', window.scrollY > 400);
-  });
+    const footerVisible = footer && footer.getBoundingClientRect().top < window.innerHeight;
+    btn.classList.toggle('visible', window.scrollY > 400 && !footerVisible);
+  }, { passive: true });
 }
 
 document.addEventListener('DOMContentLoaded', initBackToTop);
+
+// Mobile-only: fade in each top-level block of a page's content-card(s)
+// as it scrolls into view, instead of everything just being there at
+// once. Class-gated (.fade-in-section only exists in CSS under the
+// mobile media query, and is only ever added here) so a JS failure
+// just leaves the page in its normal, fully-visible state rather than
+// permanently hiding content.
+function initScrollFadeIn() {
+  if (!window.matchMedia('(max-width: 640px)').matches) return;
+  if (!('IntersectionObserver' in window)) return;
+
+  const targets = document.querySelectorAll('.content-card > *');
+  if (!targets.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('fade-in-visible');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  targets.forEach((el) => {
+    el.classList.add('fade-in-section');
+    observer.observe(el);
+  });
+
+  // Safety net: a fast flick-scroll can jump straight from "below the
+  // viewport" to "above it" without the browser ever painting a frame
+  // where an element was actually onscreen, so the observer above has
+  // nothing to fire on. Once scrolling settles, sweep for anything
+  // that's already been scrolled past and reveal it directly, so
+  // nothing is ever left permanently invisible.
+  let sweepTimer = null;
+  window.addEventListener('scroll', () => {
+    clearTimeout(sweepTimer);
+    sweepTimer = setTimeout(() => {
+      document.querySelectorAll('.fade-in-section:not(.fade-in-visible)').forEach((el) => {
+        if (el.getBoundingClientRect().top < window.innerHeight) {
+          el.classList.add('fade-in-visible');
+          observer.unobserve(el);
+        }
+      });
+    }, 200);
+  }, { passive: true });
+}
+
+document.addEventListener('DOMContentLoaded', initScrollFadeIn);
 

@@ -3200,15 +3200,29 @@
      areas end up stretched far apart with mostly empty space between
      them -- rather than the compact, roughly-square arrangement that
      makes the mesh readable. */
+  /* .research-slide-img (the sets.png / complex_adaptive_system.png
+     slides) needs to match .network-diagram's height exactly at each of
+     these breakpoints -- otherwise switching between the diagram slide
+     and an image slide changes .research-body-diagram's height, which
+     shifts the area-list/publications content below it and makes the
+     whole page appear to jump when the prev/next arrows are clicked. */
   @media (max-width: 640px) {
     .network-diagram {
       height: 420px;
       margin: 0.5rem 0;
     }
+
+    .research-slide-img {
+      height: 420px;
+    }
   }
 
   @media (max-width: 420px) {
     .network-diagram {
+      height: 380px;
+    }
+
+    .research-slide-img {
       height: 380px;
     }
   }
@@ -3448,9 +3462,9 @@
    edge of the page. Pull it in to stay clear of the viewport. */
 @media (max-width: 480px) {
   .annotate-mark-circle {
-    left: -14%;
+    left: -11%;
     top: -26%;
-    width: 118%;
+    width: 124%;
     height: 152%;
   }
 
@@ -3848,16 +3862,23 @@
     order: 3;
   }
 
+  /* Matches the paragraph-to-paragraph gap below exactly: .hero-main's
+     own 0.5rem (8px) gap between flattened items, plus this margin,
+     needs to equal the same total as one blank <br><br> line. */
   .hero-left .compact-content-card {
     order: 4;
-    margin-top: 0.35rem;
+    margin-top: 0.75rem;
   }
 
   /* The paragraph breaks in the bio are plain <br><br>, so there's no
      element to target directly -- shrinking the line-height shrinks
-     those gaps proportionally along with normal line spacing. */
+     those gaps proportionally along with normal line spacing. Zeroing
+     the paragraph's own trailing margin means the gap before the
+     "Read more" card below is controlled by that card's margin-top
+     alone (plus .hero-main's gap), instead of stacking on top of it. */
   .hero-right .hero-description.hero-intro-mono {
-    line-height: 1.5;
+    line-height: 1.35;
+    margin-bottom: 0;
   }
 
   /* --- Lede text (the big serif intro sentence) a little smaller so it
@@ -3983,20 +4004,55 @@
     display: none;
   }
 
+  /* --- News entries: date sits above the title on mobile (flex-
+     direction: column, set at 768px), but that swap inherits the
+     desktop rule's 1.25rem gap, meant for horizontal date/body spacing
+     -- much too tall once stacked vertically. --- */
+  .news-item {
+    gap: 0.3rem;
+  }
+
+  /* --- News page: "Filter by " dropped (just "Year:"/"Category:"),
+     and the pills start right on the same row instead of below it, to
+     use the width the label's own column used to reserve. --- */
+  .filter-by-prefix {
+    display: none;
+  }
+
+  #newsFilterControls .filter-row {
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  #newsFilterControls .filter-row strong {
+    min-width: auto;
+    flex-shrink: 0;
+    padding-top: 0.35rem;
+  }
+
+  #newsFilterControls .filter-btns {
+    flex: 1;
+  }
+
   /* --- News page & Recent News widget: filter pills stretch to fill
-     each row's full width instead of leaving empty space on the right
-     of a wrapped row (buttons were content-sized before). --- */
+     the row's remaining width instead of leaving empty space on the
+     right of a wrapped row (buttons were content-sized before). --- */
   #newsFilterControls .filter-btns,
   #recentNewsFilter .filter-btns {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
     gap: 0.4rem;
+  }
+
+  /* Recent News has no label sharing the row, so its pills grid is
+     alone on the row -- .filter-row is align-items: flex-start there,
+     which shrinks flex children to content size by default, so this
+     needs to stretch to the row's full width itself or auto-fit has
+     nothing to measure against and collapses to a single column. */
+  #recentNewsFilter .filter-btns {
     width: 100%;
-    /* .filter-row is align-items: flex-start at this width, which
-       shrinks flex children to their content size by default -- this
-       grid needs to stretch to the row's full width instead, or
-       auto-fit has nothing to measure against and collapses to a
-       single 72px column. */
     align-self: stretch;
   }
 
@@ -4089,11 +4145,27 @@
     white-space: nowrap;
   }
 
-  /* --- Back-to-top button (injected by script.js) --- */
+  /* --- Fade-in-on-scroll (class added by initScrollFadeIn in
+     script.js) --- */
+  .fade-in-section {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .fade-in-section.fade-in-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* --- Back-to-top button (injected by script.js) -- bottom-center on
+     every page, matching the same position convention as the Research
+     page's slide prev/next controls below the diagram. --- */
   .back-to-top-btn {
     position: fixed;
-    right: 1rem;
+    left: 50%;
     bottom: 1rem;
+    transform: translate(-50%, 8px);
     width: 42px;
     height: 42px;
     border-radius: 50%;
@@ -4108,13 +4180,12 @@
     z-index: 500;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(8px);
     transition: opacity 0.25s ease, transform 0.25s ease;
   }
 
   .back-to-top-btn.visible {
     opacity: 1;
     pointer-events: auto;
-    transform: translateY(0);
+    transform: translate(-50%, 0);
   }
 }

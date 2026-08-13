@@ -89,14 +89,14 @@ function initNewsArchiveFilters(filterSelector, years, categories, state, applyF
 
   filterEl.innerHTML = `
     <div class="filter-row">
-      <strong>Filter by Year:</strong>
+      <strong><span class="filter-by-prefix">Filter by </span>Year:</strong>
       <div class="filter-btns">
         <button class="year-btn active" data-year="all">All</button>
         ${yearBtns}
       </div>
     </div>
     <div class="filter-row">
-      <strong>Filter by Category:</strong>
+      <strong><span class="filter-by-prefix">Filter by </span>Category:</strong>
       <div class="filter-btns">
         <button class="cat-btn active" data-cat="all">All</button>
         ${catBtns}
