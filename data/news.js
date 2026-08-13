@@ -18,11 +18,11 @@ const NEWS_ITEMS = [
     title: 'I started as a <b>Postdoctoral Scholar</b> in the Stanford Urban Resilience Initiative, Dept. of Civil and Environmental Engineering, working with Professor <a href="https://scholar.google.com/citations?user=im82jgIAAAAJ&hl=en&oi=ao">Jack Baker</a>!',
   },
   {
-    date: 'July 2026', sort: '2026-07', year: 2026, type: 'Talk',
+    date: 'Jul 2026', sort: '2026-07', year: 2026, type: 'Talk',
     title: 'I gave an invited seminar, &ldquo;Multiscale analysis of wildfire risk in the built and natural environments,&rdquo; at the <b>Center for Catastrophic Risk Management</b>, UC Berkeley.',
   },
   {
-    date: 'May 2026', sort: '2026-05-b', year: 2026, type: 'PhD',
+    date: 'May 2026', sort: '2026-05-b', year: 2026, type: 'Career',
     title: 'I completed my <b>PhD in Environmental Planning</b> at UC Berkeley! My dissertation: &ldquo;Data-Driven Planning for Natural Hazard Risk Management.&rdquo;',
   },
   {
@@ -67,16 +67,16 @@ const NEWS_ITEMS = [
     title: 'I was invited to present my research on wildfires and decision-making tools at the <b>Ecological Sensing AI Lab</b> in <b>Seoul National University</b>.',
   },
   {
-    date: 'July 2025', sort: '2025-07', year: 2025, type: 'Award',
+    date: 'Jul 2025', sort: '2025-07', year: 2025, type: 'Award',
     title: 'I was awarded the <b>AEP Student Scholarship</b> by the Association of Environmental Professionals!',
   },
   {
-    date: 'June 2025', sort: '2025-06-b', year: 2025, type: 'Paper',
+    date: 'Jun 2025', sort: '2025-06-b', year: 2025, type: 'Paper',
     title: 'Our paper on "Community-scale microclimate simulation and object-based urban tree classification" was published in <em>Landscape and Urban Planning</em>.',
     links: [{ icon: 'fa-file-alt', label: 'Paper', url: 'https://doi.org/10.1016/j.landurbplan.2025.105420' }],
   },
   {
-    date: 'June 2025', sort: '2025-06-a', year: 2025, type: 'Paper',
+    date: 'Jun 2025', sort: '2025-06-a', year: 2025, type: 'Paper',
     title: 'Our paper on "Fire Spread Simulations Using Cell2Fire on Synthetic and Real Landscapes" was accepted to <em>Scientific Reports</em>.',
     links: [{ icon: 'fa-file-alt', label: 'Paper', url: 'https://doi.org/10.1038/s41598-025-05706-6' }],
   },
@@ -86,24 +86,24 @@ const NEWS_ITEMS = [
     links: [{ icon: 'fa-graduation-cap', label: 'News', url: 'https://ced.berkeley.edu/news/ced-awards-seed-grants-for-climate-research' }],
   },
   {
-    date: 'September 2024', sort: '2024-09', year: 2024, type: 'Research',
+    date: 'Sep 2024', sort: '2024-09', year: 2024, type: 'Research',
     title: 'We released the final report for our project with CalTrans on estimating bulking factors to protect critical infrastructure from post-fire debris flow risks.',
     links: [{ icon: 'fa-file-alt', label: 'Report', url: 'https://rosap.ntl.bts.gov/view/dot/82348' }],
   },
   {
-    date: 'August 2024', sort: '2024-08', year: 2024, type: 'Talk',
+    date: 'Aug 2024', sort: '2024-08', year: 2024, type: 'Talk',
     title: 'I was invited to present on WUI risk modeling and fire suppression strategies at the <b>Pau Costa Foundation</b>.',
   },
   {
-    date: 'July 2024', sort: '2024-07-c', year: 2024, type: 'Talk',
+    date: 'Jul 2024', sort: '2024-07-c', year: 2024, type: 'Talk',
     title: 'I was invited to present on WUI risk modeling and fire suppression strategies at the <b>Catalan Fire Service (Spain)</b>.',
   },
   {
-    date: 'July 2024', sort: '2024-07-b', year: 2024, type: 'Talk',
+    date: 'Jul 2024', sort: '2024-07-b', year: 2024, type: 'Talk',
     title: 'I was invited to present on fire spread modeling and fire suppression strategies at <b>Wageningen University</b>.',
   },
   {
-    date: 'July 2024', sort: '2024-07-a', year: 2024, type: 'Research',
+    date: 'Jul 2024', sort: '2024-07-a', year: 2024, type: 'Research',
     title: 'I am visiting the <b>Catalan Fire Service</b> (headquarters in Universitat Aut&ograve;noma de Barcelona) to research and gain field experience with the generous support of the GRAF (Group of Support to Forest Actions) team and Pau Costa Foundation.',
   },
   {
@@ -111,7 +111,7 @@ const NEWS_ITEMS = [
     title: 'I received the <b>Beatrix C. Farrand Memorial Fellowship</b> for Research.',
   },
   {
-    date: 'April 2024', sort: '2024-04', year: 2024, type: 'Award',
+    date: 'Apr 2024', sort: '2024-04', year: 2024, type: 'Award',
     title: 'I received the <b>2024 Outstanding Graduate Student Instructor Award</b> from UC Berkeley.',
   },
   {
@@ -119,11 +119,11 @@ const NEWS_ITEMS = [
     title: 'I was invited to present a guest lecture on data-driven planning and fire spread modeling at <b>Georgia Tech</b> for CP4190: Introduction to Climate Change Planning.',
   },
   {
-    date: 'Jan 2024', sort: '2024-01', year: 2024, type: 'PhD',
+    date: 'Jan 2024', sort: '2024-01', year: 2024, type: 'Career',
     title: 'I will be the Graduate Student Instructor for LDARCH/ESPM C289: Applied Remote Sensing, taught by Prof. <a href="https://scholar.google.com/citations?user=qDUBrUMAAAAJ&hl=en">Iryna Dronova</a>. Looking forward to sharing remote sensing with all the students!',
   },
   {
-    date: 'July 2023', sort: '2023-07', year: 2023, type: 'Conference',
+    date: 'Jul 2023', sort: '2023-07', year: 2023, type: 'Conference',
     title: 'I attended <b>IGARSS 2023</b> in Pasadena, CA and presented an oral presentation on semantic segmentation of lifeforms. Honored to serve as <b>Session Chair</b> for the Session on Image Analysis for Land Cover Mapping.',
     links: [
       { icon: 'fa-file-alt', label: 'Paper', url: 'https://doi.org/10.1109/IGARSS52108.2023.10282737' },
@@ -131,7 +131,7 @@ const NEWS_ITEMS = [
     ],
   },
   {
-    date: 'May 2023', sort: '2023-05-b', year: 2023, type: 'PhD',
+    date: 'May 2023', sort: '2023-05-b', year: 2023, type: 'Career',
     title: 'I <b>successfully passed my qualifying exam</b>. Thank you to my committee members: <a href="https://ced.berkeley.edu/people/john-radke">John Radke</a>, <a href="https://scholar.google.com/citations?user=YAGjro8AAAAJ&hl=en">Marta C. Gonzalez</a>, <a href="https://scholar.google.com/citations?user=qDUBrUMAAAAJ&hl=en">Iryna Dronova</a>, and <a href="https://scholar.google.com/citations?user=1QlLPcEAAAAJ&hl=en">Solomon Hsiang</a>.',
   },
   {

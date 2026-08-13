@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geospatial Data Science - Minho Kim</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">Minho Kim</a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="news.html" class="nav-link">News</a></li>
+          <li><a href="research.html" class="nav-link">Research</a></li>
+          <li><a href="teaching.html" class="nav-link">Teaching</a></li>
+          <li><a href="resources/cv_recent.pdf" class="nav-link">CV</a></li>
+        </ul>
+      </nav>
+
+      <!-- Mobile Hamburger Menu -->
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="content-card">
+                <div class="area-detail-topbar">
+                    <a href="index.html" class="area-detail-back"><i class="fas fa-arrow-left"></i> Back to Home</a>
+                    <div class="area-nav-icons">
+                        <span class="area-nav-label">Navigate:</span>
+                        <a href="research-modeling.html" class="area-nav-icon area-nav-icon-modeling" title="Computational Modeling"><i class="fas fa-network-wired"></i></a>
+                        <a href="research-geospatial.html" class="area-nav-icon active area-nav-icon-geospatial" title="Geospatial Data Science"><i class="fas fa-satellite-dish"></i></a>
+                        <a href="research-decision.html" class="area-nav-icon area-nav-icon-decision" title="Decision Support"><i class="fas fa-chart-line"></i></a>
+                    </div>
+                </div>
+
+                <div class="area-detail-heading" style="align-items: center;">
+                    <div class="home-area-icon home-area-icon-geospatial" style="width: 56px; height: 56px; font-size: 1.4rem; margin-bottom: 0;"><i class="fas fa-satellite-dish"></i></div>
+                    <h1>Geospatial Data Science</h1>
+                </div>
+
+                <h2 class="section-title" style="margin-top: 1.5rem;">Overview</h2>
+                <p class="hero-description">
+                    Geospatial data science is how I build the high-resolution maps that models and policy both depend on. My work spans two application areas: <strong>Urban</strong>, mapping the built environment and its climate impacts, and <strong>Natural Hazards</strong>, mapping the fuels, terrain, and severity that shape wildfire risk. Methodologically, I'm advancing image processing and sensing, pushing satellite and aerial imagery, deep learning, and computer vision toward higher-resolution, more reliable maps for disaster risk management and sustainable development.
+                </p>
+
+                <h2 class="section-title" style="margin-top: 2rem;">My Work</h2>
+
+                <h3 class="area-subheading">Urban</h3>
+                <p class="hero-description">
+                    Land cover features like roads and buildings are fundamental to any mapping platform, but in inaccessible areas, crowdsourced maps like OpenStreetMap are often incomplete and outdated. I built a deep learning pipeline that generates high-resolution land cover maps directly from very-high-resolution (&lt;50cm) satellite imagery, tested on North Korea's infrastructure, letting users fill in and update outdated maps with the roads, buildings, vegetation, and water that existing platforms miss.
+                </p>
+                <figure class="panel-figure" style="max-width: 780px;">
+                    <img src="images/osm-omission-compare.jpg" alt="Satellite image of a dense urban area next to the same area on OpenStreetMap, which shows almost no buildings or roads">
+                    <figcaption>The problem: OpenStreetMap omits most buildings and roads in areas it hasn't mapped in detail, even where high-resolution satellite imagery clearly shows them. Kim, Kwak, Jung, &amp; Kim (2021), <em>International Symposium of Remote Sensing</em>.</figcaption>
+                </figure>
+                <figure class="panel-figure" style="max-width: 620px;">
+                    <img src="images/nk-landcover-map.jpg" alt="High-resolution land cover map of a North Korean city showing roads, buildings, vegetation, and water generated from deep learning semantic segmentation">
+                    <figcaption>The result: a high-resolution land cover map generated by semantic segmentation of VHR satellite imagery, filling in the roads and buildings existing maps miss. Kim, Kwak, Jung, &amp; Kim (2021), <em>International Symposium of Remote Sensing</em>.</figcaption>
+                </figure>
+                <p class="hero-description">
+                    I built the same kind of high-resolution mapping for urban climate: MSMLA-Net, a multi-scale, multi-level attention network (see the interactive architecture on the <a href="research-modeling.html">Computational Modeling</a> page), classifies Local Climate Zones, a standardized scheme for characterizing urban form and heterogeneity, from Sentinel-2 imagery. Tested across six South Korean cities, it outperformed three state-of-the-art models and, notably, still exceeded 70% built-up accuracy on cities it had never seen during training, evidence that it generalizes rather than just memorizing individual cities.
+                </p>
+                <figure class="panel-figure" style="max-width: 780px;">
+                    <img src="images/lcz-city-maps.jpg" alt="Local Climate Zone maps generated by MSMLA-Net for six South Korean cities">
+                    <figcaption>LCZ maps generated by MSMLA-Net for six South Korean cities from Sentinel-2 imagery: Busan, Daegu, Daejeon, Gwangju, Incheon, and Seoul. Kim, Jeong, &amp; Kim (2021), <em>ISPRS Journal of Photogrammetry and Remote Sensing</em>, 181, 345&ndash;366.</figcaption>
+                </figure>
+
+                <h3 class="area-subheading">Natural Hazards</h3>
+                <p class="hero-description">
+                    Communities in the Wildland Urban Interface are at growing risk of devastation from higher-severity, more frequent fires. Using historic data from past wildfires, I trained a machine learning model to predict burn severity in California, using local "patches" of data rather than individual pixels since WUI landscapes are so heterogeneous, and compared feature importance to find that burn severity is driven mostly by fuels and topography rather than raw spectral bands. I also use semantic segmentation to map high-resolution enhanced landforms and surface fuel models, a direct input to the fire spread simulations discussed on the <a href="research-modeling.html">Computational Modeling</a> page, work being developed further in collaboration with Interlinked, an early-stage startup building an AI-powered platform for disaster response, to map fuel models at a state-wide scale. Looking ahead, I'm extending this toward forecasting real-time wildfire risk with geospatial AI, building a fire-weather forecasting system with the Catalan Fire Service that uses self-supervised deep learning to answer a simple, operationally useful question: what is today's fire weather forecast most similar to, and what did that day's fire behavior look like?
+                </p>
+                <figure class="panel-figure" style="max-width: 680px;">
+                    <img src="images/burn-severity-map.jpg" alt="Map of California showing the Wildland Urban Interface and soil burn severity from past wildfires, with a zoomed sample area of high burn severity">
+                    <figcaption>Soil burn severity from 37 past California wildfires (USDA Burn Area Emergency Response data), mapped against the Wildland Urban Interface to identify high-risk communities. Kim, Hua, &amp; Gonz&aacute;lez (2025), final project for CYPLAN 257, UC Berkeley.</figcaption>
+                </figure>
+
+                <h2 class="section-title" style="margin-top: 2rem;">Related Publications</h2>
+                <div id="areaPubs"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+          <nav class="footer-nav">
+            <a href="index.html" class="footer-nav-link">Home</a>
+            <a href="about.html" class="footer-nav-link">About</a>
+            <a href="news.html" class="footer-nav-link">News</a>
+            <a href="research.html" class="footer-nav-link">Research</a>
+            <a href="teaching.html" class="footer-nav-link">Teaching</a>
+            <a href="resources/cv_recent.pdf" class="footer-nav-link">CV</a>
+          </nav>
+          <div class="social-icons footer-social-icons">
+            <a href="mailto:minhok@stanford.edu" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a>
+            <a href="https://scholar.google.com/citations?user=VRVL4TYAAAAJ&hl=en" class="social-icon" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+            <a href="https://www.linkedin.com/in/minhokim93/" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://github.com/minhokim93" class="social-icon" title="Github"><i class="fab fa-github"></i></a>
+            <a href="https://www.researchgate.net/profile/Minho_Kim21" class="social-icon" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+            <a href="https://orcid.org/0000-0002-9504-5935" class="social-icon" title="ORCID"><i class="fab fa-orcid"></i></a>
+          </div>
+          <p>&copy; <span id="year"></span> Minho Kim. All rights reserved.</p>
+        </div>
+      </footer>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+    <script src="data/publications.js"></script>
+    <script src="js/publications-render.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        renderPubList('#areaPubs', [
+          'p4-lcz-attention', 'c7-lcz-training-samples', 'c10-landform-segmentation',
+          'c8-inaccessible-areas', 'c6-lst-fusion', 'p5-microclimate',
+          'c9-urban-vegetation-lst', 'c11-lidar-urban-forest', 'p1-image-fusion',
+        ]);
+      });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

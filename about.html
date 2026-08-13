@@ -8,31 +8,49 @@
   <link rel="stylesheet" href="styles.css" />
   <style>
     /* Mirrors .hero-main / .hero-left / .hero-photo / .hero-right on the
-       Home page, so the photo+text presentation matches exactly. */
+       Home page, so the photo+text presentation matches exactly -- except
+       the photo column stretches to match the text column's full height
+       (the text length varies with the Academic/Casual toggle), with the
+       photo itself growing to fill the space above the fixed-size
+       Academic/Casual switch. */
     .profile-container {
       display: grid;
       grid-template-columns: auto 1fr;
-      align-items: start;
+      align-items: stretch;
       gap: clamp(2rem, 6vw, 4rem);
     }
 
     .profile-photo {
+      width: clamp(200px, 32vw, 280px);
       text-align: center;
-      min-width: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
     }
 
+    /* Fixed height (not flex-stretched to the text column) so the photo
+       is the same size whether the Academic or Casual bio is showing --
+       their text lengths differ, which previously changed the photo's
+       height along with them. Same hover interaction as .hero-photo on
+       the home page. */
     .profile-photo img {
-      width: clamp(200px, 32vw, 280px);
-      height: clamp(260px, 42vw, 360px);
+      width: 100%;
+      height: 320px;
       object-fit: cover;
       border-radius: 14px;
-      margin: 0 auto;
       display: block;
       box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+      transition: var(--transition);
+    }
+
+    .profile-photo img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 20px 50px rgba(102, 126, 234, 0.3);
     }
 
     .profile-photo .bio-switch {
       width: fit-content;
+      flex: none;
       margin: 1.5rem auto 0;
     }
 
@@ -77,12 +95,18 @@
         gap: 2rem;
       }
       .profile-photo {
-        min-width: auto;
+        width: clamp(200px, 50vw, 280px);
+        margin: 0 auto;
+      }
+      .profile-photo img {
+        flex: none;
+        height: 320px;
       }
     }
 
     @media (max-width: 480px) {
       .profile-photo img {
+        flex: none;
         width: 160px;
         height: 210px;
       }
@@ -171,6 +195,13 @@
                 I received my PhD in Environmental Planning at UC Berkeley advised by Professors <a href="https://scholar.google.com/citations?user=YAGjro8AAAAJ&hl=en">Marta C. Gonzalez</a> and <a href="https://ced.berkeley.edu/people/john-radke">John Radke</a> as a member of the <a href="https://humnetlab.berkeley.edu">HumNet Lab</a>.
                 I received my BS and MS degrees in Civil and Environmental Engineering at Seoul National University, where I was advised by Professor <a href="https://www.researchgate.net/profile/Yongil-Kim-2">Yongil Kim</a> as a member of the <a href="https://spins.snu.ac.kr">SPINS Lab</a>.
             </p>
+
+            <div class="profile-links">
+              <a class="profile-link-btn" href="https://profiles.stanford.edu/minho-kim" target="_blank" rel="noopener">
+                Stanford Profile <i class="fas fa-arrow-up-right-from-square"></i>
+              </a>
+            </div>
+
             <!-- <p class="hero-description">
               Curious what I actually work on? See my <a href="research.html">Research</a> page for an overview of my work and the full list of publications.
             </p> -->
@@ -178,11 +209,16 @@
 
           <div id="bioCasual" style="display: none;">
             <p class="hero-description">
-              I was born in Daegu, South Korea, and grew up on the move: first to London, Ontario, then to London, UK. These days, travel is still one of my favorite things. Give me a pristine forest to wander through, or a good caf&eacute; or bakery to hunt down in a new city, and I'm happy.
-            </p>
-            <p class="hero-description">
-              My path here actually started with a pretty simple curiosity: I wanted to see the unseen, which is what pulled me into remote sensing in the first place. That curiosity grew into mapping our built and natural environment with AI, especially after watching Seoul turn into an incredibly complex, rapidly urbanizing megacity during my undergrad and grad years there. The more I looked at these landscapes, the more I realized how vulnerable they were to climate extremes and disasters like wildfires. California, with its own intense mix of climate extremes, felt like the natural next step, and that's where I really started digging into wildfires. That work convinced me disaster management needs a systems-thinking lens: fire behavior is never just about fire, it's about how people, environment, and technology interact on the landscape. Eventually, to understand that firsthand, I made my way to Spain, fighting fires alongside real crews and testing my models in real time, still one of the best ways I know to understand fire as a living process on the landscape.
-            </p>
+              I was born in South Korea and moved when I was five years old to the <i>Forest City</i> of Canada -- London, Ontario.
+              I've also been fortunate to live in many more beautiful places including London (UK), Seoul, and now, California.
+              Naturally, I fell in love with traveling to experience the various wonders of our world: from hiking the Dolomites in Northern Italy, to venturing through the Arabian desert, to sleeping under the stars in Mongolia.
+              Nowadays, you will probably catch me reading papers and sipping coffee in trendy local cafes or waiting in line for the newest pastries in town.
+
+              <br><br>
+              My academic path started with a simple curiosity: to explore and uncover the unseen, first with my own eyes, then a phone camera, and eventually satellites.
+              The more I looked, the more I realized how complex and unpredictable our planet really is, especially when it comes to natural hazards like wildfires, which never stay contained to just the land. They ripple out to touch people, infrastructure, and entire communities in ways that are hard to untangle.
+              That's ultimately why I care so much about this work: understanding these tangled, high-stakes systems is the first step toward actually protecting the people and places caught in them.
+              </p>
           </div>
         </div>
       </div>
@@ -206,12 +242,12 @@
         <h3>Awards</h3>
 
     <!-- Honors & Awards Dropdown -->
-    <div class="dropdown-section">
+    <div class="dropdown-section open">
       <div class="dropdown-header" onclick="toggleDropdown(this)">
         Honors & Awards <span class="dropdown-arrow">&#9654;</span>
       </div>
       <div class="dropdown-content">
-        <div class="award-entry"><strong>Outstanding Graduate Student Instructor Award (2024)</strong> <span class="scholarship-sponsor">UC Berkeley (GSI Teaching and Resource Center)</span></div>
+        <div class="award-entry"><strong>Outstanding Graduate Student Instructor Award (2024)</strong> <span class="scholarship-sponsor">UC Berkeley</span></div>
         <div class="award-entry"><strong>ICE-KSCE Master's Thesis Award (2021)</strong> <span class="scholarship-sponsor">Institution of Civil Engineers (UK) &amp; Korean Society of Civil Engineers</span></div>
         <div class="award-entry"><strong>Best Student Paper Award at ISRS2021 (2021)</strong> <span class="scholarship-sponsor">Korean Society of Remote Sensing and Gaia3D</span></div>
         <div class="award-entry"><strong>Environmental Geospatial Data Idea Contest, Excellence Award (2020)</strong> <span class="scholarship-sponsor">Ministry of Environment, South Korea</span></div>
@@ -221,7 +257,7 @@
     </div>
 
     <!-- Scholarships Dropdown -->
-    <div class="dropdown-section">
+    <div class="dropdown-section open">
       <div class="dropdown-header" onclick="toggleDropdown(this)">
         Scholarships <span class="dropdown-arrow">&#9654;</span>
       </div>
@@ -236,6 +272,17 @@
         <div class="scholarship-entry"><strong>SNU Global Scholarship (2012, 2013)</strong> <span class="scholarship-sponsor">Seoul National University</span></div>
       </div>
     </div>
+      </div>
+
+      <!-- Services Section -->
+      <div class="profile-section">
+        <h3>Services</h3>
+        <div class="award-entry"><strong>Journal Reviewer</strong> <span class="scholarship-sponsor">Remote Sensing (22), GIScience &amp; Remote Sensing (3), Forecasting (3), Agronomy (3), Fire (2), Applied Sciences (2), Geospatial Information Science (2), IEEE JSTARS (2), International Journal of Digital Earth (2), ISPRS International Journal of Geo-Information (2), Land (2), Sustainability (2), European Journal of Remote Sensing (1), and Geocarto International (1)</span></div>
+        <div class="award-entry"><strong>Society Memberships</strong> <span class="scholarship-sponsor">American Association of Geographers, Association for Fire Ecology, American Geophysical Union, International Association of Wildland Fire, Association of Environmental Professionals, IEEE Geoscience and Remote Sensing Society, American Society for Photogrammetry and Remote Sensing, Korean-American Scientists and Engineers Association, Korean Graduate Student Association, ISPRS Student Consortium, Korean Society of Civil Engineers</span></div>
+        <div class="award-entry"><strong>Student Committee, Stanford Urban Resilience Initiative (2026)</strong></div>
+        <div class="award-entry"><strong>Student Committee, California Fire Science Consortium (2025)</strong></div>
+        <div class="award-entry"><strong>Session Chair, Image Analysis for Land Cover Mapping (IGARSS 2023)</strong></div>
+        <div class="award-entry"><strong>Geospatial Data Support, Investigative Reporting Program, UC Berkeley (2022)</strong> <span class="scholarship-sponsor">Advised journalists on GIS tools and mapped deforestation and human activity in Brazil using satellite data, nighttime light imagery, and GIS data for the J298 OSINT Seminar</span></div>
       </div>
 
       <!-- Collaborations Section -->

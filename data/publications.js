@@ -77,6 +77,8 @@ const PUBLICATIONS = [
     highlighted: true,
     image: 'papers/2025-lup/featured.png',
     highlightTitle: 'Redefining defensible spaces using spatial responsibility of wildfire mitigation',
+    shortTitle: 'Shared Responsibility',
+    highlightOrder: 1,
     blurb: 'Developed novel spatial metrics (shared &amp; owed responsibility) to mitigate at individual homeowner scale and built spatial networks to simulate mitigation scenarios in the wildland urban interface.',
   },
 
@@ -93,6 +95,8 @@ const PUBLICATIONS = [
     highlighted: true,
     image: 'papers/2025-ijdrr/featured.png',
     highlightTitle: 'Fire potential polygons and suppression networks',
+    shortTitle: 'Fire Suppression Networks',
+    highlightOrder: 2,
     blurb: 'Hydrology-inspired risk management method to create decision support networks for more effective, proactive suppression strategies.',
   },
   {
@@ -107,6 +111,8 @@ const PUBLICATIONS = [
     highlighted: true,
     image: 'papers/2025-scirep/featured.png',
     highlightTitle: 'Fire spread simulations in synthetic and real landscapes',
+    shortTitle: 'Fire Spread Simulations',
+    highlightOrder: 3,
     blurb: 'Comprehensive analysis of a cellular automata fire spread simulator on synthetic and real landscapes in Canada, US, and Chile with optimization to improve simulation accuracy.',
   },
   {
@@ -131,6 +137,8 @@ const PUBLICATIONS = [
     highlighted: true,
     image: 'papers/2021-isprs/featured.png',
     highlightTitle: 'Mapping high resolution local climate zones using multi-scale attention models',
+    shortTitle: 'High-Res Local Climate Zones',
+    highlightOrder: 4,
     blurb: 'Developed a novel multi-scale, multi-layer attention model to classify high resolution local climate zones in South Korea using multispectral satellite imagery, building information, and terrain data.',
   },
   {
@@ -145,6 +153,8 @@ const PUBLICATIONS = [
     highlighted: true,
     image: 'papers/2020-mdpi/featured.png',
     highlightTitle: 'Forecasting solar power using deep learning and geostationary satellite data',
+    shortTitle: 'Forecasting Solar Power with ML',
+    highlightOrder: 6,
     blurb: 'Short-term forecast (1 to 3-day ahead) of photovoltaic power using deep learning with COMS and Himawari-8 geostationary satellite images.',
   },
   {
@@ -273,6 +283,8 @@ const PUBLICATIONS = [
     highlighted: true,
     image: 'papers/2020-nips/featured.png',
     highlightTitle: 'Mapping local climate zones with deep learning',
+    shortTitle: 'Local Climate Zones with DL',
+    highlightOrder: 5,
     blurb: 'Developed a multi-scale module in a feedforward neural network to map local climate zones in Seoul, South Korea (presented at NeurIPS 2020: AI4Earth).',
     video: 'https://slideslive.com/38941720/developing-high-quality-training-samples-for-deep-learning-based-local-climate-classification-in-korea',
   },

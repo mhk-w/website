@@ -41,38 +41,28 @@
       <div class="content-card">
         <h2 class="section-title">Research</h2>
 
-        <p class="lede-text">
-          My research turns the complexity of
+        <p class="lede-text lede-tight">
+          My research focuses on mapping and modeling
           <span class="annotate" style="--annotate-delay: 0.3s">
-            <span class="lede-hl">natural hazard risk</span>
+            <span class="lede-hl">natural hazards</span>
             <svg class="annotate-mark annotate-mark-circle" viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true">
               <path d="M14,52 C10,24 48,6 100,6 C155,6 191,22 190,54 C189,84 148,95 99,95 C46,95 12,82 16,50" />
               <path d="M28,18 C55,2 112,-2 142,9" />
             </svg>
           </span>
-          into
+          to translate risk information into
           <span class="annotate" style="--annotate-delay: 0.9s">
             <span class="lede-hl">actionable insights</span>
             <svg class="annotate-mark annotate-mark-underline" viewBox="0 0 200 40" preserveAspectRatio="none" aria-hidden="true">
               <path d="M4,22 C50,10 150,28 196,16" />
               <path d="M6,32 C60,22 140,36 194,26" />
             </svg>
-          </span> for sustainable, resilient communities and environments.
+          </span> that can empower decision-making.
         </p>
-
         <div class="research-body-row">
-          <div class="research-body-text">
-            <p class="hero-description">
-              I adopt a systems-based view encompassing:
-              <span class="rp-hl rp-hl-human">Human</span>,
-              <span class="rp-hl rp-hl-environment">Environment</span>, and
-              <span class="rp-hl rp-hl-technology">Technology</span>.
-            </p>
-            <p class="hero-description">
-              I examine how risk can be complex -- it can be interconnected, dynamic, and shared from networks of fire suppression at regional-scale to the shared connections between neighbors based on one's responsibility to mitigate hazards in the wildland urban interface.
-              I use geospatial data science and GeoAI methods to map, build, and extract the high-resolution data and key insights needed to characterize risk. I also use computational models to simulate fire behavior, wildfire propagation, and compounding weather extremes.
-              Integrated together, my research aims to advance our understanding of the natural hazard risk on the socio-environmental-technical systems in our built and natural environments.
-            </p>
+          <div class="research-body-text research-panel">
+            <div id="researchSlideDesc"></div>
+            <div class="area-list area-list-compact" id="areaList"></div>
           </div>
 
           <div class="research-body-diagram">
@@ -80,12 +70,15 @@
             <div class="network-diagram" id="networkDiagram">
               <svg class="network-svg" id="networkSvg"></svg>
             </div>
-            <!-- <p class="network-diagram-hint" id="networkDiagramHint">Click an area above to see how it connects to my publications.</p> -->
+            <img class="research-slide-img" id="researchSlideImg" alt="" style="display: none;">
+
+            <div class="research-slide-controls">
+              <button class="slide-arrow-btn" id="slidePrevBtn" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+              <div class="slide-dots" id="slideDots"></div>
+              <button class="slide-arrow-btn" id="slideNextBtn" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+            </div>
           </div>
         </div>
-
-        <!-- List view: always visible below the diagram -->
-        <div class="area-list" id="areaList"></div>
       </div>
 
       <!-- Publications (moved here from the old standalone Publications page) -->
@@ -106,7 +99,7 @@
                 <th class="pub-col-title">Title</th>
                 <th class="pub-col-venue">Venue</th>
                 <th class="pub-col-type">Type</th>
-                <th class="pub-col-tags">Tags</th>
+                <th class="pub-col-tags">Topic</th>
               </tr>
             </thead>
             <tbody id="publicationTableBody"></tbody>
@@ -129,6 +122,7 @@
     </div>
     <p class="side-panel-desc" id="panelDesc"></p>
     <div id="panelFigure"></div>
+    <div id="panelTry"></div>
     <div class="side-panel-label">Selected Works</div>
     <div id="panelPubs"></div>
   </div>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Support - Minho Kim</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">Minho Kim</a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="news.html" class="nav-link">News</a></li>
+          <li><a href="research.html" class="nav-link">Research</a></li>
+          <li><a href="teaching.html" class="nav-link">Teaching</a></li>
+          <li><a href="resources/cv_recent.pdf" class="nav-link">CV</a></li>
+        </ul>
+      </nav>
+
+      <!-- Mobile Hamburger Menu -->
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="content-card">
+                <div class="area-detail-topbar">
+                    <a href="index.html" class="area-detail-back"><i class="fas fa-arrow-left"></i> Back to Home</a>
+                    <div class="area-nav-icons">
+                        <span class="area-nav-label">Navigate:</span>
+                        <a href="research-modeling.html" class="area-nav-icon area-nav-icon-modeling" title="Computational Modeling"><i class="fas fa-network-wired"></i></a>
+                        <a href="research-geospatial.html" class="area-nav-icon area-nav-icon-geospatial" title="Geospatial Data Science"><i class="fas fa-satellite-dish"></i></a>
+                        <a href="research-decision.html" class="area-nav-icon active area-nav-icon-decision" title="Decision Support"><i class="fas fa-chart-line"></i></a>
+                    </div>
+                </div>
+
+                <div class="area-detail-heading" style="align-items: center;">
+                    <div class="home-area-icon home-area-icon-decision" style="width: 56px; height: 56px; font-size: 1.4rem; margin-bottom: 0;"><i class="fas fa-chart-line"></i></div>
+                    <h1>Decision Support</h1>
+                </div>
+
+                <h2 class="section-title" style="margin-top: 1.5rem;">Overview</h2>
+                <p class="hero-description">
+                    Decision support is where the modeling and the data meet the people who actually have to act on wildfire risk. A key part of my research is bridging policy with science to create actionable solutions: decision-support tools and software that help facilitate risk mitigation, improve pre-disaster preparedness, enhance risk communication, and elicit a more proactive response from decision-makers.
+                </p>
+
+                <h2 class="section-title" style="margin-top: 2rem;">My Work</h2>
+
+                <h3 class="area-subheading">Post-Fire Debris Flow Risk</h3>
+                <p class="hero-description">
+                    In California, the increasing frequency and severity of wildfires has amplified the risk of cascading hazards like post-fire debris flows (PFDF), which threaten to damage critical infrastructure and nearby communities. Current risk management relies heavily on engineering judgment, without a standardized way to assess this evolving risk. Working with the California Department of Transportation (Caltrans), I developed a data-driven framework that streamlines data collection and estimates a bulking factor (BF), pulling basin, soil, terrain, and flowline data from USGS and USDA sources, that can then be adjusted to a site's design requirements and local environment. Applied statewide, the framework flags PFDF risk across 5,220 road segments, 13,201 bridges, and 243,387 culverts, helping infrastructure managers prioritize where to reinforce transportation and water infrastructure.
+                </p>
+                <figure class="panel-figure" style="max-width: 780px;">
+                    <img src="images/pfdf-risk-maps.jpg" alt="Maps of California showing roads, bridges, culverts, and post-fire debris flow risk">
+                    <figcaption>Roads, bridges, and culverts across California mapped against basin-level post-fire debris flow risk, informing where infrastructure managers should prioritize mitigation. Kim, Dodd, Radke, Ulyashin, Serra-Llobet, Falzone, &amp; Kondolf (2025), <em>AGU25</em>.</figcaption>
+                </figure>
+
+                <h3 class="area-subheading">Homeowner Spatial Responsibility</h3>
+                <p class="hero-description">
+                    For high-risk communities in the Wildland Urban Interface (WUI), &ldquo;defensible space&rdquo; is a policy that requires homeowners to clear flammable hazards within a set buffer distance around their home. But as WUI communities grow denser, those buffers overlap: a hazard on one property can expose a neighbor to risk, often without anyone realizing who is actually responsible for mitigating it. To address this, I developed three spatial metrics, Personal, Shared, and Owed Responsibility, that quantify how much wildfire risk a homeowner carries alone versus shares with or owes to their neighbors, and used them to build directed spatial responsibility networks across a real WUI neighborhood.
+                </p>
+                <figure class="panel-figure" style="max-width: 900px;">
+                    <img src="images/responsibility-concept.jpg" alt="Diagram showing Personal, Shared, and Owed Responsibility as overlapping defensible-space buffers between neighboring homes">
+                    <figcaption>Rethinking defensible space as overlapping buffers between neighbors: Personal Responsibility (a homeowner's own buffer), Shared Responsibility (buffers that overlap with one neighbor), and Owed Responsibility (risk passed along a chain of neighbors). Kim, Raine, Radke, &amp; Gonz&aacute;lez (2025), under review at <em>Landscape and Urban Planning</em>.</figcaption>
+                </figure>
+                <p class="hero-description">
+                    Shared-responsibility networks tend to form small sub-networks, while owed-responsibility networks concentrate into high-risk clusters, information that helps flag which properties and neighbor groups carry outsized risk. Simulating random, localized, and targeted mitigation scenarios by iteratively removing the highest-responsibility links showed that a targeted strategy reduces total neighborhood risk fastest and fragments the network into smaller, more manageable pieces. Looking ahead, my research is extending toward disaster justice, adopting an environmental justice lens to assess how wildfire risk is disproportionately distributed across socially vulnerable communities, and to identify the barriers, such as evacuation potential, accessibility, and adaptive capacity, that amplify it.
+                </p>
+                <figure class="panel-figure" style="max-width: 780px;">
+                    <img src="images/responsibility-dismantling.jpg" alt="Comparison of random, localized, and targeted network dismantling strategies for wildfire risk mitigation, showing targeted removal reduces total responsibility fastest">
+                    <figcaption>Simulating random, localized, and targeted mitigation strategies by iteratively removing the highest-responsibility links: targeted removal reduces total shared responsibility fastest (AUC 0.338 vs. 0.517&ndash;0.578). Kim, Raine, Radke, &amp; Gonz&aacute;lez (2025), under review at <em>Landscape and Urban Planning</em>.</figcaption>
+                </figure>
+
+                <h3 class="feedback-subheading">Interactive Tool</h3>
+                <p class="hero-description">
+                    Explore the parcel-level responsibility network directly below, or <a href="https://minhokim93.github.io/spatial-responsibility/" target="_blank" rel="noopener">open it in a new tab <i class="fas fa-arrow-up-right-from-square"></i></a> for a larger view.
+                </p>
+                <div class="panel-iframe-wrap">
+                    <iframe class="panel-iframe" src="https://minhokim93.github.io/spatial-responsibility/" title="Spatial Responsibility in Wildfire Risk Mitigation, interactive viewer" loading="lazy"></iframe>
+                </div>
+
+                <h3 class="area-subheading">Spatial Networks for Fire Spread</h3>
+                <p class="hero-description">
+                    Fire potential polygons, the spatial units fire managers use to plan suppression, are typically drawn manually by analysts: tedious, expertise-intensive, and prone to bias. I developed an automatic method that adapts hydrological basin-delineation techniques to fire spread simulations, treating fire spread time like a &ldquo;reversed basin&rdquo; (water flows from high elevation to low elevation; fire spreads from low time-since-ignition to high) to segment a landscape into fire potential polygons.
+                </p>
+                <figure class="panel-figure" style="max-width: 900px;">
+                    <img src="images/hydrology-fpp-method.jpg" alt="Method diagram showing elapsed time, spread direction, cumulative fire spread cells, and resulting fire potential polygons">
+                    <figcaption>Hydrology-inspired fire potential polygons: fire spread time is processed like basin flow accumulation (D8 algorithm) to derive spread direction and cumulative spread cells, from which watershed-like polygons (FPP) are delineated. Kim, Castellnou, &amp; Gonz&aacute;lez (2025), <em>International Journal of Disaster Risk Reduction</em>, 130, 105853.</figcaption>
+                </figure>
+                <p class="hero-description">
+                    These polygons are connected into a spatial network weighted by penetration rate of spread, a novel metric that captures how fire is expected to move between them, used to identify critical fire pathways and suppression opportunities. I tested this method in the field during two major wildfires in Catalonia, Spain (2024 fire season) with the Catalan Fire Service: in the wind-driven Ciutadilla fire, the resulting high-risk polygons and fire pathways closely matched real suppression actions taken on the ground, and in the Vilanova de Mei&agrave; fire, simulated scenarios showed that proactive tactics and prescribed burns significantly delayed fire progression, while reactive tactics provided minimal benefit. This automates a process fire analysts have historically drawn by hand, and helps fire managers shift toward more proactive, risk-informed suppression decisions.
+                </p>
+                <figure class="panel-figure" style="max-width: 900px;">
+                    <img src="images/ciutadilla-network.jpg" alt="Fire potential network for the Ciutadilla fire alongside real field photos of prescribed burns and suppression tactics with the Catalan Fire Service">
+                    <figcaption>The Ciutadilla fire's potential network (nodes colored by elapsed time), with real suppression tactics mapped onto the pathways they targeted: a fastest-spreading path met with prescribed burn, aerial retardant slowing westward spread, and tractors plowing fire breaks to protect the worst-case direction. Kim, Castellnou, &amp; Gonz&aacute;lez (2025), <em>International Journal of Disaster Risk Reduction</em>, 130, 105853.</figcaption>
+                </figure>
+
+                <h2 class="section-title" style="margin-top: 2rem;">Related Publications</h2>
+                <div id="areaPubs"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+          <nav class="footer-nav">
+            <a href="index.html" class="footer-nav-link">Home</a>
+            <a href="about.html" class="footer-nav-link">About</a>
+            <a href="news.html" class="footer-nav-link">News</a>
+            <a href="research.html" class="footer-nav-link">Research</a>
+            <a href="teaching.html" class="footer-nav-link">Teaching</a>
+            <a href="resources/cv_recent.pdf" class="footer-nav-link">CV</a>
+          </nav>
+          <div class="social-icons footer-social-icons">
+            <a href="mailto:minhok@stanford.edu" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a>
+            <a href="https://scholar.google.com/citations?user=VRVL4TYAAAAJ&hl=en" class="social-icon" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+            <a href="https://www.linkedin.com/in/minhokim93/" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://github.com/minhokim93" class="social-icon" title="Github"><i class="fab fa-github"></i></a>
+            <a href="https://www.researchgate.net/profile/Minho_Kim21" class="social-icon" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+            <a href="https://orcid.org/0000-0002-9504-5935" class="social-icon" title="ORCID"><i class="fab fa-orcid"></i></a>
+          </div>
+          <p>&copy; <span id="year"></span> Minho Kim. All rights reserved.</p>
+        </div>
+      </footer>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+    <script src="data/publications.js"></script>
+    <script src="js/publications-render.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        renderPubList('#areaPubs', [
+          'w1-mapping-responsibility', 'p7-fire-spread-polygons', 'w2-debris-flows',
+          'c14-flood-after-fires', 'c15-homeowner-responsibility', 'o2-sediment-bulking',
+          'o3-catastrophic-governance', 'o1-interdisciplinary-approach',
+        ]);
+      });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

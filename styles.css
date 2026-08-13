@@ -84,25 +84,28 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem clamp(1rem, 4vw, 2rem);
+    /* Horizontal padding matches .container's exactly (this element
+       carries both classes) so the logo lines up with the page content
+       below it instead of sitting further out at wide viewports. */
+    padding: 1rem clamp(1rem, 4vw, 2.5rem);
     position: relative;
   }
-  
+
   .logo {
     font-size: clamp(1.25rem, 3vw, 1.5rem);
     font-weight: 700;
     color: var(--text-primary);
     transition: var(--transition);
   }
-  
+
   .logo:hover {
     color: var(--primary-dark);
   }
-  
+
   .nav-menu {
     display: flex;
     list-style: none;
-    gap: clamp(1rem, 3vw, 2rem);
+    gap: clamp(0.5rem, 1.5vw, 1.25rem);
   }
 
   /* Hidden on desktop so it doesn't sit in the flex row as a phantom
@@ -174,6 +177,50 @@
     margin-bottom: 2rem;
     position: relative;
     padding-bottom: 1rem;
+  }
+
+  .section-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .section-title-row .section-title {
+    margin-bottom: 0;
+  }
+
+  .layout-toggle {
+    display: flex;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  .layout-toggle-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border-color);
+    background: white;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+  }
+
+  .layout-toggle-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+
+  .layout-toggle-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
   }
   
   .section-title::after {
@@ -324,48 +371,89 @@
     max-width: 60ch;
   }
 
+  /* Research page: the lede sits directly above the panel+diagram row
+     rather than a separate paragraph, so it needs a bit less trailing
+     space than other pages' ledes -- but still enough that the circled/
+     underlined annotation strokes (which overhang the text) don't read
+     as touching the panel below. */
+  .lede-text.lede-tight {
+    margin-bottom: 1.25rem;
+  }
+
   /* Three-card graphic showcasing Spatial / Systems / Critical Thinking,
-     replacing a plain bullet list on the Teaching page. */
+     replacing a plain bullet list on the Teaching page -- styled to
+     match the "Highlighted Research Areas" cards on the home page
+     (.home-area-card), minus their "Learn More" button. */
   .thinking-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
+    gap: 1.5rem;
     margin: 0 0 1.75rem;
   }
 
   .thinking-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    padding: 1.5rem 1.25rem;
+    padding: 1.75rem 1.5rem;
     border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
     transition: var(--transition);
   }
 
   .thinking-card:hover {
     box-shadow: var(--shadow-light);
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+  }
+
+  .thinking-card.active {
+    border-color: var(--primary-color);
+    background: var(--bg-accent);
+    box-shadow: var(--shadow-light);
+  }
+
+  .thinking-card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.9rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--primary-color);
+  }
+
+  .thinking-card-cta i {
+    font-size: 0.65rem;
+    transition: transform 0.2s ease;
+  }
+
+  .thinking-card.active .thinking-card-cta i {
+    transform: rotate(90deg);
   }
 
   .thinking-card-icon {
-    width: 56px;
-    height: 56px;
+    width: 84px;
+    height: 84px;
     border-radius: 50%;
-    background: var(--gradient-primary);
+    background: linear-gradient(135deg, #3366cc, #6c8ee8);
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
-    margin: 0 auto 1rem;
+    font-size: 2rem;
+    margin-bottom: 1.1rem;
   }
 
   .thinking-card-title {
-    font-size: 1rem;
-    margin-bottom: 0.4rem;
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
   }
 
   .thinking-card-desc {
-    font-size: 0.85rem;
+    font-size: 0.88rem;
     color: var(--text-secondary);
     line-height: 1.55;
   }
@@ -373,6 +461,140 @@
   @media (max-width: 768px) {
     .thinking-grid {
       grid-template-columns: 1fr;
+    }
+  }
+
+  /* Revealed when a thinking-card is clicked -- a concrete classroom
+     example for that mode of thinking, drawn from the teaching statement. */
+  .thinking-demo {
+    background: var(--bg-accent);
+    border-left: 4px solid var(--primary-color);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    padding: 1.5rem 1.75rem;
+    margin: -0.5rem 0 1.75rem;
+  }
+
+  .thinking-demo-title {
+    font-size: 1rem;
+    color: var(--primary-dark);
+    margin-bottom: 0.6rem;
+  }
+
+  .thinking-demo-text {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ===== RESEARCH AREA PAGES: SUBSECTION HEADINGS ===== */
+  .area-subheading {
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    margin: 2rem 0 0.85rem;
+    padding-left: 0.75rem;
+    border-left: 4px solid var(--primary-color);
+  }
+
+  /* ===== INTERACTIVE MODEL ARCHITECTURE DIAGRAM ===== */
+  .arch-flow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 1.25rem 0 0.5rem;
+  }
+
+  .arch-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    width: 118px;
+    padding: 0.9rem 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .arch-stage:hover {
+    box-shadow: var(--shadow-light);
+    transform: translateY(-3px);
+  }
+
+  .arch-stage.active {
+    border-color: var(--primary-color);
+    background: var(--bg-accent);
+    box-shadow: var(--shadow-light);
+  }
+
+  .arch-stage-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+  }
+
+  .arch-stage-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    line-height: 1.3;
+  }
+
+  .arch-stage.active .arch-stage-label {
+    color: var(--primary-dark);
+  }
+
+  .arch-arrow {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .arch-demo {
+    background: var(--bg-accent);
+    border-left: 4px solid var(--primary-color);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    padding: 1.25rem 1.5rem;
+    margin: 0.5rem 0 1.75rem;
+  }
+
+  .arch-demo-title {
+    font-size: 0.98rem;
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .arch-demo-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .arch-flow {
+      flex-direction: column;
+    }
+
+    .arch-stage {
+      width: 100%;
+      flex-direction: row;
+      justify-content: flex-start;
+      text-align: left;
+    }
+
+    .arch-arrow {
+      transform: rotate(90deg);
+      align-self: center;
     }
   }
 
@@ -434,18 +656,30 @@
   }
   
   /* ===== FILTER BUTTONS ===== */
+  .filter-controls {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
   .filter-row {
     display: flex;
-    align-items: flex-start;
-    /* gap: 0 rem; */
+    align-items: center;
+    gap: 0.75rem;
     flex-wrap: wrap;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
   }
-  
+
+  .filter-row:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Wide enough for the longest label ("Filter by Category:") so every
+     filter row's buttons start at the same x position. */
   .filter-row strong {
     font-size: 1rem;
     color: var(--text-primary);
-    min-width: 130px;
+    min-width: 155px;
     flex-shrink: 0;
   }
   
@@ -456,7 +690,7 @@
     flex: 1;
   }
   
-  .year-btn, .type-btn, .tag-btn {
+  .year-btn, .type-btn, .tag-btn, .cat-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -472,19 +706,107 @@
     min-width: 50px;
     text-align: center;
   }
-  
+
   .year-btn:hover,
   .type-btn:hover,
   .tag-btn:hover,
+  .cat-btn:hover,
   .year-btn.active,
   .type-btn.active,
-  .tag-btn.active {
+  .tag-btn.active,
+  .cat-btn.active {
     background: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
     transform: translateY(-1px);
   }
-  
+
+  /* Slider-styled timeline for the Publications year filter: a thick,
+     rounded rail with one handle-like tick per year, plus a separate
+     "All" pill to reset. Ticks reuse .year-btn for click wiring (see
+     initPublicationFilter), but reset its pill styling entirely so
+     they read as slider handles rather than buttons. */
+  .year-slider-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    flex: 1;
+  }
+
+  .year-all-btn {
+    flex-shrink: 0;
+  }
+
+  .year-timeline {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    padding-top: 9px;
+  }
+
+  .year-timeline-track {
+    position: absolute;
+    top: 15px;
+    left: 7px;
+    right: 7px;
+    height: 5px;
+    background: var(--border-color);
+    border-radius: 3px;
+    z-index: 0;
+  }
+
+  .year-tick {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0;
+    min-width: auto;
+    background: none;
+    border: none;
+    border-radius: 0;
+  }
+
+  .year-tick,
+  .year-tick:hover,
+  .year-tick.active {
+    background: none;
+    transform: none;
+  }
+
+  .year-tick-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: var(--transition);
+  }
+
+  .year-tick-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: var(--transition);
+  }
+
+  .year-tick:hover .year-tick-dot,
+  .year-tick.active .year-tick-dot {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: scale(1.35);
+    box-shadow: 0 2px 6px rgba(51, 102, 204, 0.4);
+  }
+
+  .year-tick:hover .year-tick-label,
+  .year-tick.active .year-tick-label {
+    color: var(--primary-color);
+  }
+
   /* ===== RESEARCH HIGHLIGHTS ===== */
   .research-highlight {
     display: grid;
@@ -512,20 +834,91 @@
     border: 1px solid var(--border-color);
     max-height: 200px; /* Optional: restrict height if too tall */
   }
-  
-  
+
+  /* "Panel" layout for Highlighted Research (the default) -- a grid of
+     self-contained project panels, each with a framed image, a type
+     badge, a title, and a short blurb, in place of the compact
+     thumbnail-and-text list. */
+  .research-highlight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .research-highlight-card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+    transition: var(--transition);
+  }
+
+  .research-highlight-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
+  }
+
+  /* Images are framed rather than cropped -- object-fit: contain on a
+     fixed-height, padded backdrop, so a wide diagram or a near-square
+     figure both sit fully visible instead of being zoomed/cropped by
+     object-fit: cover (which badly over-crops the wider figures). */
+  .research-highlight-card-media {
+    width: 100%;
+    height: 170px;
+    background: var(--bg-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .research-highlight-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 0.85rem;
+    box-sizing: border-box;
+  }
+
+  .research-highlight-card .research-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1.25rem;
+  }
+
+  .research-highlight-card .research-content h3 {
+    font-size: 1.05rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .research-highlight-card .research-content p {
+    font-size: 0.88rem;
+    margin: 0 0 0.9rem;
+    flex: 1;
+  }
+
+  .research-card-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: auto;
+  }
+
   .research-content h3 {
     margin: 0 0 12px 0;
     font-size: 1.4rem;
     color: var(--text-primary);
   }
-  
+
   .research-content p {
     margin: 0 0 16px 0;
     line-height: 1.6;
     color: var(--text-secondary);
   }
-  
+
   /* ===== RESEARCH TAGS ===== */
   .research-tags {
     display: flex;
@@ -548,7 +941,7 @@
   .research-tag.ml, .field-tag.ml { background: #599bff; }
   .research-tag.urban, .field-tag.urban { background: #f1a2e2; }
   .research-tag.nathaz, .field-tag.nathaz { background: #ffa94d; }
-  .research-tag.geospatial, .field-tag.geospatial { background: #bdfff8; color: #333; }
+  .research-tag.geospatial, .field-tag.geospatial { background: #c026d3; }
   .research-tag.rs, .field-tag.rs { background: #217c39; }
   .research-tag.paper, .field-tag.paper,
   .research-tag.cpaper, .field-tag.cpaper,
@@ -684,43 +1077,84 @@
   }
   
   .news-item {
-    border-left: 4px solid var(--primary-color);
-    padding: 0.25rem 1rem;
-    margin-bottom: 1rem;
-    background: var(--gradient-bg);
-    border-radius: 0 8px 8px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 0.6rem 1rem;
+    margin-bottom: 0.4rem;
+    background: white;
+    border-radius: 8px;
     transition: var(--transition);
   }
-  
+
   .news-item:hover {
     transform: translateX(5px);
   }
-  
+
+  /* Fixed-width date column (equal across every entry), left-aligned. */
+  .news-meta {
+    flex: 0 0 auto;
+    width: 7.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
   .news-date {
     color: var(--primary-color);
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    text-align: left;
   }
-  
+
+  .news-body {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+  }
+
   .news-title {
     color: var(--text-primary);
     font-weight: 500;
-    margin: 0.5rem 0;
+    margin: 0;
   }
-  
+
+  .news-title-badge {
+    display: inline-block;
+    background: #1a1a1a;
+    color: white;
+    font-size: 0.8em;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 0.3em 0.55em;
+    border-radius: 6px;
+    margin-right: 0.55rem;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .news-links {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+  }
+
   .news-btn {
     font-size: 0.85em;
-    margin-right: 8px;
-    color: var(--text-primary);
-    border: 1px solid var(--text-primary);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
     padding: 4px 8px;
     border-radius: 4px;
     display: inline-block;
     transition: var(--transition);
   }
-  
+
   .news-btn:hover {
     background: var(--primary-color);
     color: white;
@@ -745,8 +1179,9 @@
     font-size: 1rem;
     color: var(--text-primary);
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    gap: 0.6rem;
     transition: var(--transition);
   }
 
@@ -807,6 +1242,65 @@
     margin-top: 0.2rem;
   }
 
+  .mentee-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mentee-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .mentee-row:last-child {
+    border-bottom: none;
+  }
+
+  .mentee-left {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mentee-left strong {
+    color: var(--text-primary);
+  }
+
+  .mentee-detail {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    margin-left: 0.5em;
+  }
+
+  .mentee-dates {
+    flex-shrink: 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  @media (max-width: 640px) {
+    .mentee-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.15rem;
+    }
+
+    .mentee-left {
+      white-space: normal;
+    }
+
+    .mentee-dates {
+      text-align: left;
+    }
+  }
+
   /* ===== TIMELINE STYLES ===== */
 .timeline-item {
     background: linear-gradient(135deg, #f7fafc, #edf2f7);
@@ -854,50 +1348,54 @@
     padding-left: 1.25rem;
 }
 
-/* Year sits inline as its own small flex column rather than absolutely
-   positioned in the outer margin — that relied on nothing ever clipping
-   it, which broke once timeline entries moved inside a collapsible
-   .dropdown-content (overflow: hidden, for the open/close animation). */
+/* Each entry is a column: the year/role/course row, plus an optional
+   note or evaluation panel indented to align under the row's text
+   (not the year). Kept as its own block (rather than a flex row) so
+   the eval panel below can span that same indent at full width. */
 .vt-item {
     position: relative;
-    display: flex;
-    align-items: baseline;
-    gap: 0.65rem;
-    margin-bottom: 0.9rem;
+    margin-bottom: 0.35rem;
     cursor: default;
     border-radius: 8px;
-    padding: 0.35rem 0.5rem;
+    padding: 0.3rem 0.5rem;
     margin-left: -0.5rem;
     transition: background 0.2s ease;
 }
 
+/* Fixed-width year / text columns so dates line up vertically from one
+   entry to the next, and each entry reads as a single line. */
+.vt-row {
+    display: grid;
+    grid-template-columns: 5.4rem 1fr;
+    align-items: center;
+    gap: 0.65rem;
+}
+
 .vt-year {
-    flex: 0 0 auto;
-    width: 4.2rem;
     text-align: right;
     font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.01em;
     color: var(--text-muted);
-}
-
-.vt-content {
-    flex: 1;
-    min-width: 0;
+    white-space: nowrap;
+    transition: color 0.2s ease;
 }
 
 /* One line per entry: role + course together, rather than stacked title/subtitle. */
 .vt-line {
     font-size: 1rem;
     color: #2d3748;
-    margin-bottom: 0.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .vt-line strong {
     font-weight: 600;
 }
 
-.vt-content p {
+.vt-note {
+    margin: 0.2rem 0 0 6.05rem;
     font-size: 0.9rem;
     color: #718096;
     line-height: 1.6;
@@ -905,6 +1403,148 @@
 
 .vt-item:hover {
     background: var(--bg-accent);
+}
+
+/* Entries with a published course evaluation are marked with a
+   highlighted date and underlined role, in place of a separate icon --
+   the whole row is the click target that reveals the scores below. */
+.vt-row-eval {
+    cursor: pointer;
+}
+
+.vt-year-eval {
+    color: var(--primary-color);
+}
+
+.vt-role-eval {
+    text-decoration: underline;
+    text-decoration-color: var(--primary-color);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+}
+
+.vt-row-eval:hover .vt-year-eval,
+.vt-row-eval.active .vt-year-eval {
+    color: var(--primary-dark);
+}
+
+/* "You vs. department average" evaluation bars, shown on timeline entries
+   that have an actual course evaluation report on file, indented to
+   align under the row's text column. Criteria sit side by side
+   (wrapping on narrow screens) rather than stacked. */
+.vt-eval {
+    max-width: 620px;
+    margin: 0.5rem 0 0 6.05rem;
+    padding: 0.6rem 0.75rem;
+    background: var(--bg-accent);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.vt-eval-n {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.6rem;
+}
+
+.vt-eval-criteria-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.vt-eval-criterion {
+    flex: 1 1 170px;
+    min-width: 170px;
+}
+
+/* A soft, translucent divider between side-by-side criteria -- clearer
+   separation than the gap alone, without a harsh solid rule. */
+.vt-eval-criterion:not(:first-child) {
+    border-left: 1px solid rgba(51, 102, 204, 0.2);
+    padding-left: 1rem;
+}
+
+@media (max-width: 600px) {
+    .vt-eval-criterion:not(:first-child) {
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px solid rgba(51, 102, 204, 0.2);
+        padding-top: 0.6rem;
+    }
+}
+
+.vt-eval-criterion-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.3rem;
+}
+
+.vt-eval-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.2rem;
+}
+
+.vt-eval-bar-row:last-child {
+    margin-bottom: 0;
+}
+
+.vt-eval-bar-label {
+    flex: 0 0 auto;
+    width: 3.4rem;
+    font-size: 0.66rem;
+    color: var(--text-muted);
+}
+
+.vt-eval-bar-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.vt-eval-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+}
+
+.vt-eval-bar-you {
+    background: var(--gradient-primary);
+}
+
+.vt-eval-bar-dept {
+    background: #a0aec0;
+}
+
+.vt-eval-bar-value {
+    flex: 0 0 auto;
+    width: 2.1rem;
+    text-align: right;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+    .vt-row {
+        grid-template-columns: 4.5rem 1fr;
+    }
+
+    .vt-line {
+        white-space: normal;
+    }
+
+    .vt-note,
+    .vt-eval {
+        margin-left: 0;
+    }
 }
 
 .timeline-institution {
@@ -935,7 +1575,7 @@
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--text-primary);
     gap: 0.4rem;
     border-radius: 0;
     box-shadow: none;
@@ -987,9 +1627,11 @@
 
 .field-icon-item-icon {
     flex-shrink: 0;
+    box-sizing: border-box;
     width: 34px;
     height: 34px;
     border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.15);
     background: var(--gradient-primary);
     color: white;
     display: flex;
@@ -1000,8 +1642,10 @@
 }
 
 .field-icon-item-title {
+    max-width: 110px;
     font-size: 0.85rem;
     font-weight: 600;
+    line-height: 1.3;
     color: var(--text-secondary);
     transition: var(--transition);
 }
@@ -1019,6 +1663,16 @@
     color: var(--primary-dark);
 }
 
+/* Fields not (yet) taught in an actual course -- greyed out rather than
+   in their usual gradient color, permanently (not just at rest). */
+.field-icon-item.not-taught .field-icon-item-icon {
+    background: #b9bcc4;
+}
+
+.field-icon-item.not-taught .field-icon-item-title {
+    color: var(--text-muted);
+}
+
 @media (max-width: 768px) {
     .teaching-columns {
         grid-template-columns: 1fr;
@@ -1033,6 +1687,117 @@
 
     .field-icon-item-title {
         display: none;
+    }
+}
+
+/* ===== TEACHING PAGE: FEEDBACK & STORIES ===== */
+.feedback-subheading {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0 0 1rem;
+}
+
+.feedback-quote-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin: 0 0 2.25rem;
+}
+
+.feedback-quote {
+    background: var(--bg-glass);
+    border-left: 3px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+    box-shadow: var(--shadow-light);
+    margin: 0;
+}
+
+.feedback-quote p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin: 0 0 0.6rem;
+}
+
+.feedback-quote cite {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-style: normal;
+}
+
+.feedback-story-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 0 0 2rem;
+    padding: 0;
+}
+
+.feedback-story {
+    display: flex;
+    gap: 1.75rem;
+    align-items: flex-start;
+    background: var(--bg-accent);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-light);
+}
+
+.feedback-story-media {
+    flex: 0 0 auto;
+    width: 260px;
+}
+
+.feedback-story-media img {
+    display: block;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: var(--shadow-medium);
+}
+
+.feedback-story-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.feedback-story-text h4 {
+    margin: 0 0 0.6rem;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+}
+
+.feedback-story-text p {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin: 0 0 0.5rem;
+}
+
+.feedback-story-text p:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .feedback-quote-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .feedback-story {
+        flex-direction: column;
+    }
+
+    .feedback-story-media {
+        width: 100%;
     }
 }
 
@@ -1056,7 +1821,38 @@
     color: white;
     transform: translateY(-2px);
   }
-  
+
+  /* About page: links out to other profiles of mine (Stanford, SURI, etc.) */
+  .profile-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .profile-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.55rem 1.1rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 25px;
+    transition: var(--transition);
+  }
+
+  .profile-link-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .profile-link-btn i {
+    font-size: 0.7rem;
+  }
+
   /* ===== ANIMATIONS ===== */
   /* ===== RESPONSIVE BREAKPOINTS ===== */
   
@@ -1210,13 +2006,24 @@
     }
   
     .news-item {
+      flex-direction: column;
       padding: 1rem;
     }
-  
+
+    .news-meta {
+      flex-direction: row;
+      width: auto;
+      gap: 0.6rem;
+    }
+
+    .news-links {
+      justify-content: flex-start;
+    }
+
     .news-title {
       font-size: 0.9rem;
     }
-  
+
     .news-date {
       font-size: 0.85rem;
     }
@@ -1330,10 +2137,21 @@
     .filter-btns {
       gap: 0.25rem;
     }
-    
+
     .year-btn, .type-btn, .tag-btn {
       padding: 0.35rem 0.7rem;
       font-size: 0.7rem;
+    }
+
+    .year-timeline {
+      overflow-x: auto;
+      gap: 1.25rem;
+      padding-bottom: 0.4rem;
+    }
+
+    .year-tick {
+      flex: 0 0 auto;
+      padding: 0 0.35rem;
     }
   
     .research-content h3 {
@@ -1436,11 +2254,142 @@
     display: grid;
     grid-template-columns: minmax(260px, 380px) 1fr;
     gap: 2.5rem;
-    align-items: center;
+    align-items: stretch;
   }
 
   .research-body-text .hero-description:last-child {
     margin-bottom: 0;
+  }
+
+  .research-panel {
+    background: var(--bg-glass);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-medium);
+    padding: 1.5rem 1.75rem;
+    /* Fixed so the panel is the same size on every slide, regardless of
+       whether the diagram or one of the (smaller) figures is showing. */
+    height: 680px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .research-slide-lede {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    margin: 0 0 0.75rem;
+  }
+
+  /* Supporting body text under the lede for the sets.png and
+     complex_adaptive_system.png slides -- smaller than the site's
+     default .hero-description size since this panel sits alongside a
+     figure rather than carrying the page's main copy. */
+  #researchSlideDesc p.hero-description {
+    font-size: 0.85rem;
+  }
+
+  .area-list-compact {
+    margin: 1.25rem 0 0;
+    gap: 0.6rem;
+  }
+
+  .area-list-compact .area-list-card {
+    padding: 0.85rem 1rem;
+  }
+
+  .area-list-compact .area-list-header h3 {
+    font-size: 0.95rem;
+  }
+
+  .area-list-compact .area-number {
+    font-size: 0.7rem;
+  }
+
+  .area-list-compact .tag-pill {
+    font-size: 0.62rem;
+    padding: 0.18rem 0.55rem;
+  }
+
+  .area-list-card p:empty {
+    display: none;
+  }
+
+  .research-body-diagram {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .research-slide-img {
+    width: 100%;
+    height: 420px;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    object-fit: contain;
+    background: white;
+    border-radius: 10px;
+    margin: 1rem 0 0.5rem;
+  }
+
+  .research-slide-controls {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(6px);
+    padding: 0.35rem 0.5rem;
+    border-radius: 25px;
+    box-shadow: var(--shadow-light);
+    z-index: 5;
+  }
+
+  .slide-arrow-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border-color);
+    background: white;
+    color: var(--primary-color);
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    flex-shrink: 0;
+  }
+
+  .slide-arrow-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: scale(1.08);
+  }
+
+  .slide-dots {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .slide-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border-color);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .slide-dot.active {
+    background: var(--primary-color);
+    width: 22px;
+    border-radius: 4px;
   }
 
   @media (max-width: 1024px) {
@@ -1460,7 +2409,7 @@
 
   .bio-switch-label {
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 1.05rem;
     color: var(--text-muted);
     cursor: pointer;
     transition: var(--transition);
@@ -1548,6 +2497,15 @@
     text-decoration: underline;
   }
 
+  /* The three research-area terms are themselves links now (to their own
+     detail pages) -- this needs to outrank .hero-intro-mono a above, which
+     would otherwise flatten them to plain text color. */
+  .hero-intro-mono a.lede-hl-modeling,
+  .hero-intro-mono a.lede-hl-geospatial,
+  .hero-intro-mono a.lede-hl-decision {
+    color: #3366cc;
+  }
+
   /* ===== RESEARCH NETWORK DIAGRAM (mechanics ported from protopolis.is's =====
      src/components/WorkAreas.jsx: hand-drawn breathing blobs, drifting
      keyword nodes, a dynamic proximity-based mesh — reimplemented in plain
@@ -1621,10 +2579,9 @@
 
   .keyword-node .kw-label {
     font-family: 'Inter', sans-serif;
-    font-size: 0.62rem;
+    font-size: 0.68rem;
     font-weight: 600;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
+    letter-spacing: 0.01em;
     fill: var(--text-muted);
     pointer-events: none;
     user-select: none;
@@ -1663,6 +2620,14 @@
   /* Bridge/shared nodes: rendered as a two-tone dot (one half-color per
      connected cluster) with an italic label, since they belong to both. */
   .keyword-node.shared-node .kw-label {
+    font-style: italic;
+  }
+
+  /* Narrative/future-facing keywords (grey dot, see RESEARCH_AREAS'
+     `muted` flag) read as supporting detail rather than a main Topic
+     label -- same treatment as bridge nodes, just for a different
+     reason (not tied to one specific colored Topic tag). */
+  .keyword-node.muted-node .kw-label {
     font-style: italic;
   }
 
@@ -1740,6 +2705,186 @@
     border: 1px solid var(--border-color);
     border-radius: 20px;
     color: var(--text-secondary);
+  }
+
+  /* Bridge-node keywords (labeled in the diagram, but belonging to the
+     corridor between two areas rather than either one alone) get a
+     dashed outline to read as "connects to" rather than "belongs to". */
+  .tag-pill-bridge {
+    border-style: dashed;
+    font-style: italic;
+  }
+
+  /* Narrative/future-facing keywords that support a colored Topic node
+     rather than standing as one themselves -- kept visually quieter
+     (greyed out) so the colored Topic tags read as the primary labels. */
+  .tag-pill-muted {
+    color: var(--text-muted);
+    border-color: var(--border-color);
+    opacity: 0.75;
+  }
+
+  /* ===== RESEARCH AREA DETAIL PAGES (research-modeling/geospatial/decision.html) ===== */
+  .area-detail-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .area-detail-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: var(--transition);
+  }
+
+  .area-detail-back:hover {
+    color: var(--primary-color);
+  }
+
+  /* Top-right nav between the three area pages -- the active page's icon
+     keeps its usual gradient color, the other two grey out until hovered. */
+  .area-nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  .area-nav-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-right: 0.15rem;
+  }
+
+  .area-nav-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.9rem;
+    background: #b9bcc4;
+    transition: var(--transition);
+  }
+
+  .area-nav-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-light);
+  }
+
+  .area-nav-icon.active.area-nav-icon-modeling {
+    background: linear-gradient(135deg, #3366cc, #6c8ee8);
+  }
+
+  .area-nav-icon.active.area-nav-icon-geospatial {
+    background: linear-gradient(135deg, #1f9d5a, #5cd394);
+  }
+
+  .area-nav-icon.active.area-nav-icon-decision {
+    background: linear-gradient(135deg, #b8891f, #e0b64f);
+  }
+
+  .area-detail-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .area-detail-number {
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  .area-detail-heading h1 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    margin: 0;
+  }
+
+  .area-theme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin: 1rem 0 2rem;
+  }
+
+  .area-theme-card {
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: var(--transition);
+  }
+
+  .area-theme-card:hover {
+    box-shadow: var(--shadow-light);
+    transform: translateY(-2px);
+  }
+
+  .area-theme-card h3 {
+    margin: 0 0 0.6rem;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+  }
+
+  .area-theme-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  .area-bridge-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem 0 2rem;
+  }
+
+  .area-bridge-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+    background: var(--bg-accent);
+  }
+
+  .area-bridge-item i {
+    color: var(--primary-color);
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+  }
+
+  .area-bridge-item h4 {
+    margin: 0 0 0.3rem;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+  }
+
+  .area-bridge-item p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .area-theme-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .area-bridge-item {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
   }
 
   /* ===== RESEARCH PAGE: SIDE DETAIL PANEL ===== */
@@ -1852,6 +2997,51 @@
     margin-top: 0.5rem;
   }
 
+  .panel-try-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--gradient-primary);
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.7rem 1.25rem;
+    border-radius: 25px;
+    margin-bottom: 1.5rem;
+    transition: var(--transition);
+  }
+
+  .panel-try-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-light);
+    color: white;
+  }
+
+  .panel-try-btn i {
+    font-size: 0.75rem;
+  }
+
+  .panel-iframe-wrap {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-light);
+  }
+
+  .panel-iframe {
+    display: block;
+    width: 100%;
+    height: 720px;
+    border: none;
+  }
+
+  @media (max-width: 640px) {
+    .panel-iframe {
+      height: 480px;
+    }
+  }
+
   .panel-pub {
     border-left: 3px solid var(--border-color);
     padding: 0 0 0 0.9rem;
@@ -1881,8 +3071,13 @@
   }
 
   @media (max-width: 768px) {
-    .network-diagram {
+    .network-diagram,
+    .research-panel {
       height: 920px;
+    }
+
+    .research-slide-img {
+      height: 560px;
     }
 
     .area-title {
@@ -1897,7 +3092,7 @@
 /* ===== ABOUT PAGE: COLLABORATIONS MAP ===== */
 .collab-layout {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 1.5rem;
 }
 
@@ -2111,9 +3306,9 @@
 }
 
 .annotate-mark-circle {
-  left: -10%;
+  left: -11%;
   top: -23%;
-  width: 120%;
+  width: 122%;
   height: 146%;
 }
 
@@ -2129,8 +3324,8 @@
    edge of the page. Pull it in to stay clear of the viewport. */
 @media (max-width: 480px) {
   .annotate-mark-circle {
-    left: -2%;
-    width: 104%;
+    left: -3%;
+    width: 106%;
   }
 
   .annotate-mark-underline {

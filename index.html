@@ -86,7 +86,7 @@
                             I am a postdoctoral scholar in the <a href="https://urbanresilience.stanford.edu">Stanford Urban Resilience Initiative</a>, advised by Professor <a href="https://scholar.google.com/citations?user=im82jgIAAAAJ&hl=en&oi=ao"> Jack Baker</a>.
                             <br><br>
 
-                            My research combines <span class="lede-hl-modeling">computational modeling</span> and <span class="lede-hl-geospatial">geospatial data science</span> to model natural hazard risk, which inform build <span class="lede-hl-decision">decision support</span> tools that guide more proactive, risk-informed approaches. During my PhD, I focused on wildfires and used fire spread simulations, remote sensing, and network science within a <emph>systems-thinking</emph> approach to understand how risk is complex and interconnected across the built and natural environment.
+                            My research combines <!-- <a href="research-modeling.html" class="lede-hl-modeling"> --><span class="lede-hl-modeling">computational modeling</span><!-- </a> --> and <!-- <a href="research-geospatial.html" class="lede-hl-geospatial"> --><span class="lede-hl-geospatial">geospatial data science</span><!-- </a> --> to model natural hazard risk, which inform build <!-- <a href="research-decision.html" class="lede-hl-decision"> --><span class="lede-hl-decision">decision support</span><!-- </a> --> tools that guide more proactive, risk-informed approaches. During my PhD, I focused on wildfires and used fire spread simulations, remote sensing, and network science within a <emph>systems-thinking</emph> approach to understand how risk is complex and interconnected across the built and natural environment.
                             <!-- Together, these methods inform decision support tools that guide more proactive, risk-informed policies and build resilience in complex socio-ecological systems like the Wildland Urban Interface. -->
 
                             <br><br>
@@ -96,19 +96,20 @@
                     <!-- </div> -->
                 </div>
             </div>
+            </div>
 
             <!-- Three Research Areas -->
             <div class="content-card">
                 <p class="lede-text">
-                    In an era of climate extremes, how do we predict, map, model, and manage
+                    In our modern era of climate extremes, how can we map, model, and predict
                     <span class="annotate" style="--annotate-delay: 0.3s">
-                        <span class="lede-hl">natural hazard risk</span>
+                        <span class="lede-hl">natural hazards</span>
                         <svg class="annotate-mark annotate-mark-circle" viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true">
                             <path d="M14,52 C10,24 48,6 100,6 C155,6 191,22 190,54 C189,84 148,95 99,95 C46,95 12,82 16,50" />
                             <path d="M28,18 C55,2 112,-2 142,9" />
                         </svg>
                     </span>
-                    on humans and our environment towards a more
+                    to manage the risk on humans, infrastructure, and environment towards building a more
                     <span class="annotate" style="--annotate-delay: 0.9s">
                         <span class="lede-hl">sustainable and resilient future</span>
                         <svg class="annotate-mark annotate-mark-underline" viewBox="0 0 200 40" preserveAspectRatio="none" aria-hidden="true">
@@ -124,43 +125,53 @@
                     <div class="home-area-card">
                         <div class="home-area-icon home-area-icon-modeling"><i class="fas fa-network-wired"></i></div>
                         <h3>Computational Modeling</h3>
-                        <p>Fire spread simulations and network models that measure and characterize how wildfire risk propagates across landscapes and communities.</p>
-                        <button class="home-area-btn" onclick="openHomeAreaPanel('modeling')">Learn More <i class="fas fa-arrow-right"></i></button>
+                        <p>Fire spread simulations on wildfire propagation, spatial networks of potential fire spread, and machine learning models that measure and characterize wildfire risk.</p>
+                        <!-- Dedicated page not ready yet -- <a href="research-modeling.html" class="home-area-btn">Learn More <i class="fas fa-arrow-right"></i></a> -->
                     </div>
                     <div class="home-area-card">
                         <div class="home-area-icon home-area-icon-geospatial"><i class="fas fa-satellite-dish"></i></div>
                         <h3>Geospatial Data Science</h3>
-                        <p>Remote sensing and machine learning that build high-resolution datasets to mitigate risk through proactive, data-driven strategies.</p>
-                        <button class="home-area-btn" onclick="openHomeAreaPanel('geospatial')">Learn More <i class="fas fa-arrow-right"></i></button>
+                        <p>Spatial analysis using statistical and ML/DL methods to map and extract key insights from large-scale, multi-source remote sensing/GIS data.</p>
+                        <!-- Dedicated page not ready yet -- <a href="research-geospatial.html" class="home-area-btn">Learn More <i class="fas fa-arrow-right"></i></a> -->
                     </div>
                     <div class="home-area-card">
                         <div class="home-area-icon home-area-icon-decision"><i class="fas fa-chart-line"></i></div>
                         <h3>Decision Support</h3>
-                        <p>A systems-based approach that turns models and data into actionable tools for planning and policy.</p>
-                        <button class="home-area-btn" onclick="openHomeAreaPanel('decision')">Learn More <i class="fas fa-arrow-right"></i></button>
+                        <p>A systems-based approach that integrates data-driven approaches with computational models into actionable tools for risk management and decision-making.</p>
+                        <!-- Dedicated page not ready yet -- <a href="research-decision.html" class="home-area-btn">Learn More <i class="fas fa-arrow-right"></i></a> -->
                     </div>
                 </div>
 
-                <!-- <div class="venn-wrap">
+                <!--
+                <div class="venn-wrap">
                     <div id="vennDiagram"></div>
                 </div>
                 <p class="venn-caption">These three areas are deeply interconnected &mdash; hover, focus, or click the diagram to see how.</p>
-            </div> -->
+                -->
+            </div>
 
             <!-- Recent News (rendered from data/news.js, most recent 10 items) -->
             <div class="content-card">
                 <h2 class="section-title">Recent News</h2>
 
+                <div class="filter-controls" id="recentNewsFilter"></div>
+
                 <div class="scrollable-news" id="recentNews"></div>
 
-            <div class="see-more-link">
-                <a href="news.html" class="see-more-btn">See All News</a>
+                <div class="see-more-link">
+                    <a href="news.html" class="see-more-btn">See All News</a>
+                </div>
             </div>
-        </div>
-          
+
             <!-- Highlighted Research (rendered from data/publications.js) -->
             <div class="content-card">
-                <h2 class="section-title">Highlighted Research</h2>
+                <div class="section-title-row">
+                    <h2 class="section-title">Highlighted Research</h2>
+                    <div class="layout-toggle" id="highlightedLayoutToggle">
+                        <button class="layout-toggle-btn active" data-layout="panel" aria-label="Panel view"><i class="fas fa-table-cells-large"></i></button>
+                        <button class="layout-toggle-btn" data-layout="list" aria-label="List view"><i class="fas fa-list"></i></button>
+                    </div>
+                </div>
 
                 <div id="highlightedResearch"></div>
 
@@ -170,22 +181,6 @@
             </div>
         </div>
     </main>
-
-    <!-- Side detail panel (shared by the "Learn More" buttons above) -->
-    <div class="side-panel-overlay" id="sidePanelOverlay"></div>
-    <div class="side-panel" id="sidePanel">
-      <div class="side-panel-header">
-        <div>
-          <span class="side-panel-number" id="panelNumber"></span>
-          <h3 id="panelTitle"></h3>
-        </div>
-        <button class="side-panel-close" id="panelClose" aria-label="Close panel"><i class="fas fa-times"></i></button>
-      </div>
-      <p class="side-panel-desc" id="panelDesc"></p>
-      <div id="panelFigure"></div>
-      <div class="side-panel-label">Selected Works</div>
-      <div id="panelPubs"></div>
-    </div>
 
     <!-- Footer -->
     <footer class="site-footer">
@@ -219,13 +214,12 @@
     <script src="js/publications-render.js"></script>
     <script src="data/news.js"></script>
     <script src="js/news-render.js"></script>
-    <script src="js/research-network.js"></script>
-    <script src="js/home-areas.js"></script>
     <script src="js/venn-diagram.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         renderHighlightedResearch('#highlightedResearch');
-        renderRecentNews('#recentNews', 10);
+        initHighlightedResearchLayoutToggle('#highlightedLayoutToggle', '#highlightedResearch');
+        renderRecentNews('#recentNews', 10, '#recentNewsFilter');
       });
     </script>
     <script src="script.js"></script>

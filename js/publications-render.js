@@ -1,7 +1,8 @@
 // ============================================================================
 // Renders the PUBLICATIONS array (data/publications.js) into:
-//   - the compact, filterable table on research.html  -> renderPublicationTable()
-//   - the "Highlighted Research" cards on index.html  -> renderHighlightedResearch()
+//   - the compact, filterable table on research.html      -> renderPublicationTable()
+//   - the "Highlighted Research" cards on index.html      -> renderHighlightedResearch()
+//   - the "Related Publications" list on research-*.html  -> renderPubList()
 //
 // Filter buttons are generated FROM the data (every year/type/tag actually
 // present gets a button, and only those), so the buttons can never drift
@@ -20,7 +21,7 @@ const TAG_LABELS = {
 };
 
 const TYPE_LABELS = {
-  paper: 'Journal Paper',
+  paper: 'Paper',
   cpaper: 'Conference',
   preprint: 'Preprint',
   report: 'Report',
@@ -32,6 +33,23 @@ function pubTitleHTML(pub) {
     : pub.title;
   const note = pub.note ? ` <span class="pub-note">(*${pub.note})</span>` : '';
   return `${titleHTML}${note}`;
+}
+
+/** Renders a fixed set of publications (by id) as a simple list, reusing
+ *  the same .panel-pub markup as the research-page side panel. Used by
+ *  the standalone research area detail pages (research-human.html etc.)
+ *  to list the works grounding that area, most recent first. */
+function renderPubList(containerSelector, pubIds) {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  const pubs = PUBLICATIONS.filter((p) => pubIds.includes(p.id)).sort((a, b) => b.year - a.year);
+  container.innerHTML = pubs.map((p) => `
+    <div class="panel-pub">
+      <div class="panel-pub-title">${pubTitleHTML(p)}</div>
+      <div class="panel-pub-meta">${p.authors} &mdash; <em>${p.venue}</em>, ${p.year}</div>
+    </div>
+  `).join('');
 }
 
 /**
@@ -58,21 +76,33 @@ function renderPublicationTable(bodySelector, filterSelector) {
     `)
     .join('');
 
-  // Build filter buttons from whatever years/types/tags are actually present
-  const years = [...new Set(sorted.map((p) => p.year))].sort((a, b) => b - a);
-  const types = [...new Set(sorted.map((p) => p.type))];
+  // Build filter buttons from whatever years/types/tags are actually
+  // present. Type follows a fixed display order (rather than whatever
+  // order it happens to first appear in the data) so the filter reads
+  // consistently: Journal Paper, Conference, Report, Preprint.
+  const years = [...new Set(sorted.map((p) => p.year))].sort((a, b) => a - b);
+  const TYPE_ORDER = ['paper', 'cpaper', 'report', 'preprint'];
+  const types = TYPE_ORDER.filter((t) => sorted.some((p) => p.type === t));
   const tags = [...new Set(sorted.flatMap((p) => p.tags))].sort();
 
-  const yearBtns = years.map((y) => `<button class="year-btn" data-year="${y}">${y}</button>`).join('');
+  const yearTicksHTML = years.map((y) => `
+    <button class="year-btn year-tick" data-year="${y}">
+      <span class="year-tick-dot"></span>
+      <span class="year-tick-label">${y}</span>
+    </button>
+  `).join('');
   const typeBtns = types.map((t) => `<button class="type-btn" data-type="${t}">${TYPE_LABELS[t] || t}</button>`).join('');
   const tagBtns = tags.map((t) => `<button class="tag-btn" data-tag="${t}">${TAG_LABELS[t] || t}</button>`).join('');
 
   filterEl.innerHTML = `
     <div class="filter-row">
       <strong>Filter by Year:</strong>
-      <div class="filter-btns">
-        <button class="year-btn active" data-year="all">All</button>
-        ${yearBtns}
+      <div class="year-slider-wrap">
+        <button class="year-btn year-all-btn active" data-year="all">All</button>
+        <div class="year-timeline">
+          <div class="year-timeline-track"></div>
+          ${yearTicksHTML}
+        </div>
       </div>
     </div>
     <div class="filter-row">
@@ -83,7 +113,7 @@ function renderPublicationTable(bodySelector, filterSelector) {
       </div>
     </div>
     <div class="filter-row">
-      <strong>Filter by Field:</strong>
+      <strong>Filter by Topic:</strong>
       <div class="filter-btns">
         <button class="tag-btn active" data-tag="all">All</button>
         ${tagBtns}
@@ -145,13 +175,20 @@ function initPublicationFilter() {
   apply();
 }
 
-/** Renders the homepage's curated "Highlighted Research" cards. */
-function renderHighlightedResearch(containerSelector) {
+/** Renders the homepage's curated "Highlighted Research" cards. Supports
+ *  two layouts: "panel" (the default) -- a grid of self-contained project
+ *  panels with a framed image, type badge, title, and blurb -- or a
+ *  compact "list" of thumbnail-and-text rows. Toggled via the icons next
+ *  to the section heading. */
+function renderHighlightedResearch(containerSelector, layout) {
   const container = document.querySelector(containerSelector);
   if (!container) return;
 
-  const highlighted = PUBLICATIONS.filter((p) => p.highlighted).sort((a, b) => b.year - a.year);
+  layout = layout || 'panel';
+  const highlighted = PUBLICATIONS.filter((p) => p.highlighted)
+    .sort((a, b) => (a.highlightOrder || 99) - (b.highlightOrder || 99));
 
+  container.className = layout === 'panel' ? 'research-highlight-grid' : '';
   container.innerHTML = highlighted
     .map((pub) => {
       const img = pub.image ? `<img src="${pub.image}" alt="${pub.highlightTitle || pub.title}">` : '';
@@ -161,9 +198,19 @@ function renderHighlightedResearch(containerSelector) {
       const videoLink = pub.video
         ? `<a href="${pub.video}" target="_blank" rel="noopener" class="news-btn"><i class="fas fa-video"></i> Presentation</a>`
         : '';
-      const tags = pub.tags
-        .map((t) => `<span class="research-tag ${t}">${TAG_LABELS[t] || t}</span>`)
-        .join('');
+
+      if (layout === 'panel') {
+        return `
+          <div class="research-highlight-card">
+            <div class="research-highlight-card-media">${img}</div>
+            <div class="research-content">
+              <h3>${pub.shortTitle || pub.highlightTitle || pub.title}</h3>
+              <p>${pub.blurb || ''}</p>
+              <div class="research-card-links">${paperLink}${videoLink}</div>
+            </div>
+          </div>
+        `;
+      }
 
       return `
         <div class="research-highlight">
@@ -171,10 +218,22 @@ function renderHighlightedResearch(containerSelector) {
           <div class="research-content">
             <h3>${pub.highlightTitle || pub.title}</h3>
             <p>${pub.blurb || ''} ${paperLink} ${videoLink}</p>
-            <div class="research-tags">${tags}</div>
           </div>
         </div>
       `;
     })
     .join('');
+}
+
+/** Wires up the list/panel toggle icons next to "Highlighted Research". */
+function initHighlightedResearchLayoutToggle(toggleSelector, containerSelector) {
+  const toggle = document.querySelector(toggleSelector);
+  if (!toggle) return;
+
+  toggle.querySelectorAll('.layout-toggle-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      toggle.querySelectorAll('.layout-toggle-btn').forEach((b) => b.classList.toggle('active', b === btn));
+      renderHighlightedResearch(containerSelector, btn.dataset.layout);
+    });
+  });
 }

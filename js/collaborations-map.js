@@ -46,9 +46,13 @@ function renderCollaborationsMap() {
     </svg>
   `;
 
-  let selectedIdx = 0; // defaults to "me"
+  let selectedIdx = null; // panel starts empty until a pin is hovered or clicked
 
   function renderPanel(idx) {
+    if (idx === null) {
+      panel.innerHTML = '';
+      return;
+    }
     const entry = ALL_LOCATIONS[idx];
     const listHTML = entry.collaborators.map((c) => `
       <div class="collab-panel-item">

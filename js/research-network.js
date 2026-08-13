@@ -1,28 +1,35 @@
 // ============================================================================
 // Research page network visualization.
 //
-// Three areas — Human (left), Environment (right), Technology (bottom)
+// Three areas — Humans (left), Environment (right), Technology (bottom)
 // ============================================================================
 
+// Each area's keywords are now built from two tiers:
+//   - Topic nodes: one per entry in that area's own `tags`, labeled with
+//     the same TAG_LABELS used to filter the Publications table -- these
+//     are the "main" labels and render in the area's color.
+//   - Muted nodes (`muted: true`): narrower or forward-looking themes
+//     that don't map cleanly onto a single Topic tag (either because
+//     they cut across several, or because they're not tied to a
+//     published work yet). These render grey rather than colored, so
+//     the colored Topic tags stay the primary read of the diagram.
 const RESEARCH_AREAS = [
   {
     id: 'human',
     number: '01',
-    title: 'Human',
+    title: 'Humans',
     description: '',
     tags: ['urban', 'planning'],
     color: '#3366cc',
-    cx: 0.26, cy: 0.33,
+    cx: 0.21, cy: 0.30,
     keywords: [
-      { tag: 'planning', label: 'Decision-Making' },
-      { label: 'Community Resilience',
+      { tag: 'urban', label: 'Urban', topic: true },
+      { tag: 'planning', label: 'Planning', topic: true },
+      { tag: 'planning', label: 'Decision-Making', muted: true },
+      { label: 'Community Resilience', muted: true,
         pubIds: ['c15-homeowner-responsibility', 'w1-mapping-responsibility'],
         description: 'Spatial metrics that map shared responsibility for risk mitigation among neighboring homeowners in the Wildland Urban Interface.' },
-      { label: 'Shared Responsibility',
-        pubIds: ['c15-homeowner-responsibility', 'w1-mapping-responsibility'],
-        description: 'Mapping how responsibility for wildfire risk mitigation is shared and distributed among neighboring homeowners.' },
-      { tag: 'planning', label: 'Planning' },
-      { label: 'Governance',
+      { label: 'Governance', muted: true,
         pubIds: ['w3-catastrophic-risk', 'o3-catastrophic-governance'],
         description: 'Modeling cascading risk and governance in complex adaptive systems with the Center for Catastrophic Risk Management.' },
     ],
@@ -34,22 +41,16 @@ const RESEARCH_AREAS = [
     description: '',
     tags: ['wildfire', 'nathaz'],
     color: '#5559b7',
-    cx: 0.74, cy: 0.33,
+    cx: 0.79, cy: 0.30,
     keywords: [
-      { tag: 'wildfire', label: 'Wildfires' },
-      { label: 'Fire Weather',
+      { tag: 'wildfire', label: 'Wildfire', topic: true },
+      { tag: 'nathaz', label: 'Natural Hazards', topic: true },
+      { label: 'Fire Weather', muted: true,
         pubIds: ['w5-pyromes', 'w4-korea-fire'],
         description: 'Characterizing dynamic global pyromes and unprecedented fire behavior driven by compounding climate extremes.' },
-      { label: 'Land Cover',
-        pubIds: ['p4-lcz-attention', 'c10-landform-segmentation', 'c6-lst-fusion'],
-        description: 'High-resolution local climate zone, landform, and land cover mapping to monitor urban development and mitigate urban heat.' },
-      { label: 'LCZ Mapping',
-        pubIds: ['p4-lcz-attention', 'c10-landform-segmentation', 'c6-lst-fusion'],
-        description: 'High-resolution local climate zone mapping to monitor urban development and mitigate urban heat.' },
-      { label: 'Climate Extreme',
+      { label: 'Climate Extreme', muted: true,
         pubIds: ['w5-pyromes', 'w4-korea-fire'],
         description: 'Characterizing dynamic global pyromes and unprecedented fire behavior driven by compounding climate extremes.' },
-      { tag: 'nathaz', label: 'Natural Hazard' },
     ],
   },
   {
@@ -59,28 +60,29 @@ const RESEARCH_AREAS = [
     description: '',
     tags: ['rs', 'ml', 'geospatial', 'netsci'],
     color: '#764ba2',
-    cx: 0.50, cy: 0.60,
+    cx: 0.50, cy: 0.66,
     keywords: [
-      { tag: 'ml', label: 'Machine Learning' },
-      { label: 'GeoAI',
+      { tag: 'rs', label: 'Remote Sensing', topic: true },
+      { tag: 'ml', label: 'Machine Learning', topic: true },
+      { tag: 'geospatial', label: 'Geospatial', topic: true },
+      { tag: 'netsci', label: 'Network Science', topic: true },
+      { label: 'GeoAI', muted: true,
         pubIds: ['c8-inaccessible-areas', 'p4-lcz-attention', 'c7-lcz-training-samples'],
         description: 'Applying AI to geospatial problems, from semantic segmentation to attention-based deep learning for satellite imagery.' },
-      { tag: 'geospatial', label: 'GIS' },
-      { label: 'Computer Vision',
+      { tag: 'geospatial', label: 'GIS', muted: true },
+      { label: 'Computer Vision', muted: true,
         pubIds: ['c8-inaccessible-areas', 'p4-lcz-attention', 'c7-lcz-training-samples'],
         description: 'Image classification and segmentation models for extracting information from satellite and aerial imagery at high resolution.' },
-      { tag: 'geospatial', label: 'Data Science' },
-      { tag: 'rs', label: 'Remote Sensing' },
-      { tag: 'netsci', label: 'Network Science' },
+      { tag: 'geospatial', label: 'Data Science', muted: true },
     ],
   },
 ];
 
 // Bridge nodes sit along the corridor between two areas, grounded in
-// publications that genuinely span both domains. Each pair gets a primary
-// bridge (at the midpoint, seeding that corridor's unlabeled interstitial
-// nodes) plus a second, more specific bridge labeled and positioned
-// further along the same corridor.
+// publications that genuinely span both domains -- one labeled bridge
+// per pair that actually has one (at the midpoint, also seeding that
+// corridor's unlabeled interstitial nodes). Not every pair of areas
+// necessarily has a bridge.
 const SHARED_NODES = [
   {
     id: 'bridge-human-environment',
@@ -90,67 +92,24 @@ const SHARED_NODES = [
     description: 'A spatial network of fire potential polygons, identifying critical fire-spread pathways and suppression opportunities, tested in the field with the Catalan Fire Service.',
   },
   {
-    id: 'bridge-human-environment-2',
-    label: 'Wildfire Policy',
-    areaIds: ['human', 'environment'],
-    t: 0.32,
-    skipInterstitial: true,
-    pubIds: ['o3-catastrophic-governance', 'o2-sediment-bulking'],
-    description: 'Governance and infrastructure policy responses to wildfire and post-fire hazards.',
-  },
-  {
-    id: 'bridge-environment-technology',
-    label: 'Fire Sensing',
-    areaIds: ['environment', 'technology'],
-    pubIds: ['p2-histogram-matching', 'c3-sentinel-planetscope', 'c1-mendocino-wildfire'],
-    description: 'Calibrating and monitoring wildfire behavior against satellite-derived fire perimeters and multispectral imagery.',
-  },
-  {
-    id: 'bridge-environment-technology-2',
-    label: 'Vegetation Mapping',
-    areaIds: ['environment', 'technology'],
-    t: 0.32,
-    skipInterstitial: true,
-    pubIds: ['c10-landform-segmentation', 'p4-lcz-attention'],
-    description: 'Remote sensing of vegetation and fuel conditions that shape wildfire risk across landscapes.',
-  },
-  {
-    id: 'bridge-environment-technology-3',
-    label: 'Fire Monitoring',
-    areaIds: ['environment', 'technology'],
-    t: 0.68,
-    skipInterstitial: true,
-    pubIds: ['p2-histogram-matching', 'c3-sentinel-planetscope', 'c1-mendocino-wildfire'],
-    description: 'Calibrating and monitoring wildfire behavior against satellite-derived fire perimeters and multispectral imagery.',
-  },
-  {
     id: 'bridge-technology-human',
     label: 'Risk Mapping',
     areaIds: ['technology', 'human'],
     pubIds: ['p5-microclimate', 'c9-urban-vegetation-lst', 'c11-lidar-urban-forest', 'c5-smart-city', 'o1-interdisciplinary-approach'],
     description: 'Remote sensing and geospatial analytics that inform urban planning, microclimate management, and interdisciplinary risk assessment.',
   },
-  {
-    id: 'bridge-technology-human-2',
-    label: 'Smart Cities',
-    areaIds: ['technology', 'human'],
-    t: 0.32,
-    skipInterstitial: true,
-    pubIds: ['c5-smart-city', 'p5-microclimate'],
-    description: 'Geospatial technology applications that inform smart, resilient urban planning.',
-  },
 ];
 
 const UNLABELED_PER_AREA = 2;
-const INTERSTITIAL_PER_PAIR = 2;
+const INTERSTITIAL_PER_PAIR = 3;
 
 // Physics/layout constants.
-const KEYWORD_SPREAD_MIN = 130;
-const KEYWORD_SPREAD_MAX = 180;
+const KEYWORD_SPREAD_MIN = 105;
+const KEYWORD_SPREAD_MAX = 145;
 const BRIDGE_JITTER = 22;
-const BLOB_RADIUS = 190;
-const CONNECTION_DIST = 125;
-const BRIDGE_CONNECTION_DIST = 130;
+const BLOB_RADIUS = 160;
+const CONNECTION_DIST = 160;
+const BRIDGE_CONNECTION_DIST = 170;
 const DRIFT_SPEED = 0.4;
 const TICK_MS = 55;
 
@@ -215,9 +174,10 @@ function buildNodes() {
       const angle = (i / n) * Math.PI * 2 + (Math.random() - 0.5) * 0.6;
       const radius = KEYWORD_SPREAD_MIN + Math.random() * (KEYWORD_SPREAD_MAX - KEYWORD_SPREAD_MIN);
       nodes.push({
-        id: `${area.id}-${kw.tag || i}`,
+        id: `${area.id}-${i}`,
         areaId: area.id,
-        color: area.color,
+        color: kw.muted ? '#b9bcc4' : area.color,
+        muted: !!kw.muted,
         labeled: true,
         keyword: kw,
         x: cx + Math.cos(angle) * radius,
@@ -273,15 +233,20 @@ function buildNodes() {
       boundsMinX: mx - BRIDGE_JITTER, boundsMaxX: mx + BRIDGE_JITTER,
       boundsMinY: my - BRIDGE_JITTER, boundsMaxY: my + BRIDGE_JITTER,
     });
+  });
 
-    // Extra unlabeled nodes scattered along the corridor between this pair
-    // of clusters — decorative connective tissue reinforcing that the
-    // network is interconnected, not just three isolated stars. Only the
-    // primary bridge per pair seeds these, so a second labeled bridge on
-    // the same corridor doesn't double up the clutter.
-    if (!bridge.skipInterstitial) {
+  // Interstitial connector dots along the corridor between EVERY pair of
+  // areas -- not just pairs that happen to have a labeled SHARED_NODES
+  // bridge -- so no two clusters ever go fully without a connection.
+  for (let i = 0; i < RESEARCH_AREAS.length; i++) {
+    for (let j = i + 1; j < RESEARCH_AREAS.length; j++) {
+      const areaA = RESEARCH_AREAS[i], areaB = RESEARCH_AREAS[j];
+      const ax = areaA.cx * diagramSize.w, ay = areaA.cy * diagramSize.h;
+      const bx = areaB.cx * diagramSize.w, by = areaB.cy * diagramSize.h;
+      const pairIds = [areaA.id, areaB.id];
       const perpAngle = Math.atan2(by - ay, bx - ax) + Math.PI / 2;
-      for (let i = 0; i < INTERSTITIAL_PER_PAIR; i++) {
+
+      for (let k = 0; k < INTERSTITIAL_PER_PAIR; k++) {
         const t = 0.15 + Math.random() * 0.7;
         const px = ax + (bx - ax) * t;
         const py = ay + (by - ay) * t;
@@ -289,11 +254,11 @@ function buildNodes() {
         const ix = px + Math.cos(perpAngle) * perpOffset;
         const iy = py + Math.sin(perpAngle) * perpOffset;
         nodes.push({
-          id: `interstitial-${bridge.id}-${i}`,
+          id: `interstitial-${areaA.id}-${areaB.id}-${k}`,
           areaId: null,
           shared: false,
           interstitial: true,
-          areaIds: bridge.areaIds,
+          areaIds: pairIds,
           color: '#b9bcc4',
           labeled: false,
           x: ix, y: iy,
@@ -304,7 +269,7 @@ function buildNodes() {
         });
       }
     }
-  });
+  }
 }
 
 function createKeywordNodeEl(node) {
@@ -312,6 +277,7 @@ function createKeywordNodeEl(node) {
   g.classList.add('keyword-node');
   if (!node.labeled) g.classList.add('unlabeled');
   if (node.shared) g.classList.add('shared-node');
+  if (node.muted) g.classList.add('muted-node');
   g.dataset.id = node.id;
 
   if (node.labeled) {
@@ -460,6 +426,8 @@ function isBridgeLike(n) {
 
 function buildMeshEdgesHTML() {
   const parts = [];
+  const connected = new Set();
+
   for (let i = 0; i < nodes.length; i++) {
     for (let j = i + 1; j < nodes.length; j++) {
       const a = nodes[i], b = nodes[j];
@@ -483,11 +451,44 @@ function buildMeshEdgesHTML() {
       else if (sameArea) { color = a.color; involvesActive = a.areaId === activeAreaId; }
       else { color = '#b9bcc4'; involvesActive = false; }
 
-      let opacity = (1 - dist / threshold) * (sameArea || isBridgeLike(a) || isBridgeLike(b) ? 0.4 : 0.18);
+      let opacity = (1 - dist / threshold) * (sameArea ? 0.6 : isBridgeLike(a) || isBridgeLike(b) ? 0.4 : 0.18);
       if (activeAreaId) opacity = involvesActive ? Math.min(1, opacity * 1.8) : opacity * 0.25;
-      parts.push(`<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="${color}" stroke-width="${sameArea ? 1.3 : 1}" opacity="${opacity.toFixed(2)}" />`);
+      parts.push(`<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="${color}" stroke-width="${sameArea ? 1.6 : 1}" opacity="${opacity.toFixed(2)}" />`);
+      connected.add(i);
+      connected.add(j);
     }
   }
+
+  // Guarantee: every labeled, non-bridge node has at least one edge to
+  // its nearest same-cluster neighbor, even if that neighbor currently
+  // drifted just past the normal connection distance -- so no keyword
+  // node ever reads as its own disconnected island.
+  const byArea = new Map();
+  nodes.forEach((n, idx) => {
+    if (!n.labeled || isBridgeLike(n)) return;
+    if (!byArea.has(n.areaId)) byArea.set(n.areaId, []);
+    byArea.get(n.areaId).push(idx);
+  });
+
+  byArea.forEach((idxs) => {
+    if (idxs.length < 2) return;
+    idxs.forEach((i) => {
+      if (connected.has(i)) return;
+      let best = -1, bestDist = Infinity;
+      idxs.forEach((j) => {
+        if (j === i) return;
+        const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < bestDist) { bestDist = d; best = j; }
+      });
+      if (best === -1) return;
+      const a = nodes[i], b = nodes[best];
+      parts.push(`<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="${a.color}" stroke-width="1.6" opacity="0.4" />`);
+      connected.add(i);
+      connected.add(best);
+    });
+  });
+
   return parts.join('');
 }
 
@@ -533,6 +534,13 @@ function applySelectionStyles() {
   });
 }
 
+// Bridge nodes are labeled in the diagram but belong to a corridor
+// between two areas rather than any single one -- without this, their
+// labels never show up in either area's keyword panel.
+function bridgeLabelsForArea(areaId) {
+  return SHARED_NODES.filter((bridge) => bridge.areaIds.includes(areaId)).map((bridge) => bridge.label);
+}
+
 function renderListView() {
   const container = document.getElementById('areaList');
   if (!container) return;
@@ -545,7 +553,8 @@ function renderListView() {
       </div>
       <p>${area.description}</p>
       <div class="area-list-tags">
-        ${area.keywords.map((k) => `<span class="tag-pill">${(k.label || TAG_LABELS[k.tag] || k.tag).toUpperCase()}</span>`).join('')}
+        ${area.keywords.map((k) => `<span class="tag-pill${k.muted ? ' tag-pill-muted' : ''}">${(k.label || TAG_LABELS[k.tag] || k.tag).toUpperCase()}</span>`).join('')}
+        ${bridgeLabelsForArea(area.id).map((label) => `<span class="tag-pill tag-pill-bridge">${label.toUpperCase()}</span>`).join('')}
       </div>
     </div>
   `).join('');
@@ -618,6 +627,17 @@ function openPanel(number, title, description, opts) {
       : '';
   }
 
+  const tryEl = document.getElementById('panelTry');
+  if (tryEl) {
+    tryEl.innerHTML = opts.tryUrl
+      ? `
+        <a class="panel-try-btn" href="${opts.tryUrl}" target="_blank" rel="noopener">
+          ${opts.tryLabel || 'Try it'} <i class="fas fa-arrow-up-right-from-square"></i>
+        </a>
+      `
+      : '';
+  }
+
   document.getElementById('panelPubs').innerHTML = pubs.length
     ? pubs.map((p) => {
         const titleHTML = p.link
@@ -641,11 +661,128 @@ function closePanel() {
   document.getElementById('sidePanelOverlay').classList.remove('open');
 }
 
+function stopAnimation() {
+  if (tickTimer) {
+    clearInterval(tickTimer);
+    tickTimer = null;
+  }
+}
+
+// The left-side text panel and the right-side visual step through
+// together as a small carousel: the live network diagram first, then a
+// couple of static figures with their own framing text. Only the first
+// slide (the diagram) shows the Human/Environment/Technology keyword
+// list underneath, since that list describes the diagram specifically.
+// Each slide leads with a short "lede" statement (bolded, like the
+// diagram's own "I adopt a systems-based view..." line) followed by at
+// most one short supporting sentence -- not a block of prose.
+const RESEARCH_SLIDES = [
+  {
+    type: 'diagram',
+    lede: `I study at the complex interface of:
+      <span class="rp-hl rp-hl-human">Humans</span>,
+      <span class="rp-hl rp-hl-environment">Environment</span>, &
+      <span class="rp-hl rp-hl-technology">Technology</span>.`,
+    body: '',
+    showAreaList: true,
+  },
+  {
+    type: 'image',
+    src: 'images/sets.png',
+    imgHeight: '550px',
+    alt: 'Social, Environmental, and Technological dimensions interacting to produce disaster resilience',
+    lede: `My research applies data and analysis to each pillar of wildfire risk &mdash;
+      the <span class="rp-hl rp-hl-human">Social</span>,
+      <span class="rp-hl rp-hl-environment">Environmental</span>, and
+      <span class="rp-hl rp-hl-technology">Technological</span> systems.`,
+    body: `My research has focused on understanding the role of decision-makers (fire managers, homeowners) in managing wildfire risk on landscapes and neighborhoods by viewing through the lens of socio-environmental (ecological) systems. 
+    I also studied the effect of wildfires on socio-technical systems such as interconnected critical infrastructure networks (transportation, hydraulic, communication) and multi-organization governance (operational fire management).
+    The convergence of these interdisciplinary works pushes the need for a more integrative framework, especially when managing the complexity of wildfire risk in the wildland urban interface.`,
+    showAreaList: false,
+  },
+  {
+    type: 'image',
+    src: 'images/complex_adaptive_system.png',
+    alt: 'Multi-layer infrastructure networks and a temporal command-structure network illustrating complex adaptive systems',
+    lede: `Looking ahead, I will explore how complex natural hazard risks interact with interconnected systems in our built and natural environments.`,
+      // <span class="rp-hl rp-hl-human">social</span>,
+      // <span class="rp-hl rp-hl-environment">environmental</span>, and
+      // <span class="rp-hl rp-hl-technology">technological</span> systems interconnect as one complex adaptive system.`,
+    body: `My focus is shifting toward complex systems in natural hazard risk management and disaster risk reduction, especially the extreme tail events reshaping wildfire behavior today &mdash; from fire-atmosphere interactions that produce pyrocumulonimbus clouds to fast-moving fires in the wildland-urban interface.
+      This means studying multi-hazard risk, where cascading impacts (like post-fire debris flows) and compound weather extremes interact across interconnected socio-technical networks, all pointing toward a more general theory of disaster resilience.`,
+    showAreaList: false,
+  },
+];
+
+let currentSlide = 0;
+
+function renderResearchSlide(index) {
+  const slide = RESEARCH_SLIDES[index];
+  if (!slide) return;
+  currentSlide = index;
+
+  const descEl = document.getElementById('researchSlideDesc');
+  if (descEl) {
+    descEl.innerHTML = `<p class="research-slide-lede">${slide.lede}</p>`
+      + (slide.body ? `<p class="hero-description">${slide.body}</p>` : '');
+  }
+
+  const areaListEl = document.getElementById('areaList');
+  if (areaListEl) areaListEl.style.display = slide.showAreaList ? '' : 'none';
+
+  const diagramEl = document.getElementById('networkDiagram');
+  const imgEl = document.getElementById('researchSlideImg');
+
+  if (slide.type === 'diagram') {
+    if (imgEl) imgEl.style.display = 'none';
+    if (diagramEl) diagramEl.style.display = '';
+    renderNetworkView();
+  } else {
+    if (diagramEl) diagramEl.style.display = 'none';
+    stopAnimation();
+    if (imgEl) {
+      imgEl.src = slide.src;
+      imgEl.alt = slide.alt || '';
+      imgEl.style.display = '';
+      imgEl.style.height = slide.imgHeight || '';
+    }
+  }
+
+  const dotsEl = document.getElementById('slideDots');
+  if (dotsEl) {
+    dotsEl.querySelectorAll('.slide-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+  }
+}
+
+function initResearchSlides() {
+  const prevBtn = document.getElementById('slidePrevBtn');
+  const nextBtn = document.getElementById('slideNextBtn');
+  const dotsEl = document.getElementById('slideDots');
+  if (!prevBtn || !nextBtn) return;
+
+  if (dotsEl) {
+    dotsEl.innerHTML = RESEARCH_SLIDES.map((_, i) => `<span class="slide-dot${i === 0 ? ' active' : ''}" data-index="${i}"></span>`).join('');
+    dotsEl.querySelectorAll('.slide-dot').forEach((dot) => {
+      dot.addEventListener('click', () => renderResearchSlide(Number(dot.dataset.index)));
+    });
+  }
+
+  prevBtn.addEventListener('click', () => {
+    renderResearchSlide((currentSlide - 1 + RESEARCH_SLIDES.length) % RESEARCH_SLIDES.length);
+  });
+  nextBtn.addEventListener('click', () => {
+    renderResearchSlide((currentSlide + 1) % RESEARCH_SLIDES.length);
+  });
+}
+
 function initResearchPage() {
   if (!document.getElementById('networkDiagram')) return;
 
-  renderNetworkView();
   renderListView();
+  initResearchSlides();
+  renderResearchSlide(0);
 
   document.getElementById('panelClose').addEventListener('click', () => {
     closePanel();
@@ -662,7 +799,7 @@ function initResearchPage() {
 
   window.addEventListener('resize', () => {
     clearTimeout(resizeDebounce);
-    resizeDebounce = setTimeout(renderNetworkView, 200);
+    resizeDebounce = setTimeout(() => renderResearchSlide(currentSlide), 200);
   });
 }
 
