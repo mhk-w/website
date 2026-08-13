@@ -217,7 +217,10 @@ function initMobileCollapsibleText() {
         : 'Read more <i class="fas fa-chevron-down"></i>';
       if (!expanded) el.scrollIntoView({ block: 'nearest' });
     });
-    el.insertAdjacentElement('afterend', btn);
+    // With a partner paragraph, the button belongs after it (the
+    // bottom of the full expanded text) rather than between the two
+    // paragraphs.
+    (partner || el).insertAdjacentElement('afterend', btn);
   });
 }
 

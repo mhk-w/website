@@ -3475,11 +3475,12 @@
   }
 
   /* --- Teaching page: the "empowers the next-generation" circle's
-     right edge sits right up against the adjacent word "of" -- pull
-     just that side in a bit without moving the left edge (so it stays
-     in step with the general left-shift above). --- */
+     right edge should clear the last "n" in "generation" but stay
+     short of "of" -- pull just that side in from the general rule's
+     122% without moving the left edge (so it stays in step with the
+     general left-shift above). --- */
   .annotate-mark-circle.annotate-mark-circle-tight-right {
-    width: 108%;
+    width: 115%;
   }
 }
 
@@ -3865,6 +3866,17 @@
   #researchSlideDesc p.hero-description {
     font-size: 0.78rem;
   }
+
+  /* --- Research page: the panel's desktop padding (1.5rem 1.75rem) is
+     more breathing room than a short mobile-width lede needs, and adds
+     up with the lede's own trailing margin below it -- tighten both. --- */
+  .research-panel {
+    padding: 1rem 1.25rem;
+  }
+
+  .research-slide-lede {
+    margin-bottom: 0.5rem;
+  }
 }
 
 /* ============================================================================
@@ -3932,6 +3944,17 @@
   .hero-left .compact-content-card {
     order: 4;
     margin-top: 0.75rem;
+    /* The general mobile .content-card rule (1.25rem 0.75rem padding)
+       otherwise wins over .compact-content-card's own near-zero
+       desktop padding (same specificity, but .content-card's mobile
+       override comes later in the file) -- this card is one short
+       line of text, not a full section, so it should hug it tightly
+       instead of sitting in an oversized box. */
+    padding: 0.4rem 0.75rem;
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   /* The paragraph breaks in the bio are plain <br><br>, so there's no
@@ -4014,7 +4037,7 @@
        of the row instead of being centered within it. */
     margin: 0;
     align-self: center;
-    justify-self: end;
+    justify-self: start;
   }
 
   #bioAcademic .mobile-hide-until-expanded,
