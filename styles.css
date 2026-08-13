@@ -1853,6 +1853,14 @@
     font-size: 0.7rem;
   }
 
+  /* Hidden by default (desktop/tablet) -- a mobile-only media query
+     further down turns this into a visible toggle indicator for the
+     Education/Awards/Services headers. Without this, the <span> would
+     render with its default `display: inline` on every screen size. */
+  .profile-toggle-arrow {
+    display: none;
+  }
+
   /* ===== MOBILE-ONLY COLLAPSIBLE TEXT ===== */
   /* Long text blocks (marked .mobile-collapse in markup) clamp to a few
      lines with a "Read more" toggle, but only below 640px -- on desktop
@@ -3668,10 +3676,12 @@
 
   /* --- About page: tighten the bio's Read More clamp so the second
      paragraph ("My research combines...") doesn't visibly peek through
-     before the toggle -- 3 lines lands right after the first sentence. */
+     before the toggle -- lands right after the first sentence. Needs
+     more lines than it used to now that the text column sits beside a
+     photo (round 3) rather than spanning the full width. */
   #bioAcademic .mobile-collapse,
   #bioCasual .mobile-collapse {
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 5;
   }
 
   /* --- About page: slightly larger, still-centered profile photo --- */
@@ -3738,5 +3748,227 @@
 
   .keyword-node .kw-label {
     font-size: 0.48rem;
+  }
+}
+
+/* ============================================================================
+   MOBILE-ONLY REFINEMENTS (round 3) -- same scoping rule as round 2 above:
+   everything here is under @media (max-width: 640px) and placed last so it
+   wins the cascade at that width; nothing here touches desktop/tablet.
+   ============================================================================ */
+@media (max-width: 640px) {
+  /* --- Home page: smaller top gap before the hero card --- */
+  .hero {
+    margin: 0.75rem auto;
+    padding: 1.1rem 0.9rem;
+  }
+
+  .hero-main {
+    gap: 1rem;
+  }
+
+  /* Home page: drop the "Minho Kim" heading entirely (the header logo
+     already says it) and go straight to the bio paragraph. */
+  .typewriter-container {
+    display: none;
+  }
+
+  /* Home page: unwrap .hero-left so its children (photo, social icons,
+     the "Read more about me" card) become direct items alongside
+     .hero-right, then reorder so the card lands after the bio text
+     instead of above it. */
+  .hero-left {
+    display: contents;
+  }
+
+  .hero-photo {
+    order: 1;
+  }
+
+  .social-icons {
+    order: 2;
+  }
+
+  .hero-right {
+    order: 3;
+  }
+
+  .hero-left .compact-content-card {
+    order: 4;
+    margin-top: 1rem;
+  }
+
+  /* --- Lede text (the big serif intro sentence) a little smaller so it
+     wraps more efficiently instead of leaving a ragged gap on the right
+     of each short line --- */
+  .lede-text {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* --- About page: smaller Academic/Casual switch to match the now-
+     compact photo column --- */
+  .bio-switch {
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+  }
+
+  .bio-switch-label {
+    font-size: 0.8rem;
+  }
+
+  .bio-switch-track {
+    width: 36px;
+    height: 20px;
+  }
+
+  .bio-switch-thumb {
+    width: 15px;
+    height: 15px;
+    top: 2.5px;
+    left: 2.5px;
+  }
+
+  .bio-switch.is-casual .bio-switch-thumb {
+    transform: translateX(16px);
+  }
+
+  /* --- About page: Education/Awards/Services become collapsible,
+     starting closed, using the same toggleDropdown() click handler as
+     the existing Honors & Awards / Scholarships dropdowns -- but styled
+     as a plain heading (no pill background) so it still reads like a
+     normal section title, just with a small clickable arrow. */
+  .profile-toggle-header {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .profile-toggle-arrow {
+    display: inline-block;
+    font-size: 0.7rem;
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+  }
+
+  .profile-section.open .profile-toggle-arrow {
+    transform: rotate(90deg);
+  }
+
+  .profile-toggle-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.35s ease, opacity 0.3s ease;
+  }
+
+  .profile-section.open .profile-toggle-content {
+    max-height: 3000px;
+    opacity: 1;
+  }
+
+  /* --- About page: shrink the empty collaborations info panel, and give
+     the map's zoom controls a dedicated strip below the map itself so
+     they don't sit on top of map content --- */
+  .collab-info-panel {
+    min-height: 70px;
+    padding: 0.85rem 1rem;
+  }
+
+  .collab-map-wrap {
+    padding-bottom: 2.75rem;
+  }
+
+  /* --- Homepage Recent News: pills only, no leading label --- */
+  #recentNewsFilter strong {
+    display: none;
+  }
+
+  /* --- Research page: slide prev/next controls flow below the image
+     instead of overlaying its top-left corner --- */
+  .research-slide-controls {
+    position: static;
+    align-self: center;
+    margin: 0.75rem auto 0;
+  }
+
+  /* --- Teaching page: tighten the intro paragraph's Read More clamp so
+     it truncates right after the lede instead of several lines in --- */
+  .lede-text + .hero-description.mobile-collapse {
+    -webkit-line-clamp: 2;
+  }
+
+  /* --- All pages: the page's own name (first section-title of the
+     first content-card) moves into the header next to the logo (see
+     initMobilePageTitle in script.js) instead of repeating here. --- */
+  .container > .content-card:first-child > .section-title:first-child {
+    display: none;
+  }
+
+  /* Room for the longer "Minho Kim - About" form of the logo text. */
+  .logo {
+    font-size: 1.05rem;
+  }
+
+  /* Every other section-title on the page loses the gradient underline
+     and reads like a plain heading instead (matching .profile-section h3
+     on the About page). */
+  .section-title::after {
+    display: none;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid #eee;
+  }
+
+  /* --- Footer: drop Home (the logo already covers it) and keep the
+     rest on one row --- */
+  .footer-nav-link[href="index.html"] {
+    display: none;
+  }
+
+  .footer-nav {
+    gap: 0.65rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .footer-nav-link {
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  /* --- Back-to-top button (injected by script.js) --- */
+  .back-to-top-btn {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    box-shadow: var(--shadow-medium);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .back-to-top-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
   }
 }

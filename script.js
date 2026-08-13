@@ -208,3 +208,42 @@ function initMobileCollapsibleText() {
 
 document.addEventListener('DOMContentLoaded', initMobileCollapsibleText);
 
+// Mobile-only: fold the page's own name into the header logo ("Minho Kim
+// - About") instead of repeating it as a big heading with its own
+// underline at the top of the content card. The CSS hides that heading
+// (.container > .content-card:first-child > .section-title:first-child)
+// under the same breakpoint -- read its text here before it disappears,
+// so the two stay in sync without hardcoding a page name anywhere.
+function initMobilePageTitleInHeader() {
+  if (!window.matchMedia('(max-width: 640px)').matches) return;
+  const pageTitleEl = document.querySelector('.container > .content-card:first-child > .section-title:first-child');
+  const logo = document.querySelector('.header .logo');
+  if (!pageTitleEl || !logo) return;
+  logo.textContent = `Minho Kim - ${pageTitleEl.textContent.trim()}`;
+}
+
+document.addEventListener('DOMContentLoaded', initMobilePageTitleInHeader);
+
+// Mobile-only: a floating "back to top" button, shown once the page has
+// scrolled a bit. Injected here (rather than in every page's HTML) so
+// it's one shared implementation.
+function initBackToTop() {
+  if (!window.matchMedia('(max-width: 640px)').matches) return;
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'back-to-top-btn';
+  btn.setAttribute('aria-label', 'Back to top');
+  btn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  document.body.appendChild(btn);
+
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 400);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initBackToTop);
+

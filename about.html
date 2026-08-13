@@ -112,6 +112,43 @@
       }
     }
 
+    /* Mobile only: back to a photo-left / text-right row (like desktop)
+       instead of the stacked, centered tablet layout above, but with a
+       small circular photo so its height roughly matches the text
+       column instead of dominating it. */
+    @media (max-width: 640px) {
+      .profile-container {
+        grid-template-columns: auto 1fr;
+        align-items: flex-start;
+        text-align: left;
+        gap: 1rem;
+      }
+
+      .profile-photo {
+        width: auto;
+        margin: 0;
+      }
+
+      .profile-photo img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        flex: none;
+      }
+
+      .profile-photo .bio-switch {
+        margin: 0.65rem auto 0;
+      }
+
+      .profile-text {
+        text-align: left;
+      }
+
+      /* Hidden on mobile only -- kept for desktop/tablet. */
+      .profile-links {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -225,8 +262,8 @@
 
       <!-- Education Section -->
       <div class="profile-section">
-        <h3>Education</h3>
-        <ul>
+        <h3 class="profile-toggle-header" onclick="toggleDropdown(this)">Education <span class="profile-toggle-arrow">&#9654;</span></h3>
+        <ul class="profile-toggle-content">
           <li><strong>PhD in Environmental Planning</strong>, UC Berkeley (Sep 2021 &ndash; May 2026)
             <br><small>Dissertation: Data-Driven Planning for Natural Hazard Risk Management</small></li>
           <li><strong>MS in Civil &amp; Environmental Engineering</strong>, Seoul National University (Mar 2017 &ndash; Feb 2021)
@@ -239,7 +276,8 @@
 
       <!-- Awards Section -->
       <div class="profile-section">
-        <h3>Awards</h3>
+        <h3 class="profile-toggle-header" onclick="toggleDropdown(this)">Awards <span class="profile-toggle-arrow">&#9654;</span></h3>
+        <div class="profile-toggle-content">
 
     <!-- Honors & Awards Dropdown -->
     <div class="dropdown-section open">
@@ -272,17 +310,20 @@
         <div class="scholarship-entry"><strong>SNU Global Scholarship (2012, 2013)</strong> <span class="scholarship-sponsor">Seoul National University</span></div>
       </div>
     </div>
+        </div>
       </div>
 
       <!-- Services Section -->
       <div class="profile-section">
-        <h3>Services</h3>
+        <h3 class="profile-toggle-header" onclick="toggleDropdown(this)">Services <span class="profile-toggle-arrow">&#9654;</span></h3>
+        <div class="profile-toggle-content">
         <div class="award-entry"><strong>Journal Reviewer</strong> <span class="scholarship-sponsor">Remote Sensing (22), GIScience &amp; Remote Sensing (3), Forecasting (3), Agronomy (3), Fire (2), Applied Sciences (2), Geospatial Information Science (2), IEEE JSTARS (2), International Journal of Digital Earth (2), ISPRS International Journal of Geo-Information (2), Land (2), Sustainability (2), European Journal of Remote Sensing (1), and Geocarto International (1)</span></div>
         <div class="award-entry"><strong>Society Memberships</strong> <span class="scholarship-sponsor">American Association of Geographers, Association for Fire Ecology, American Geophysical Union, International Association of Wildland Fire, Association of Environmental Professionals, IEEE Geoscience and Remote Sensing Society, American Society for Photogrammetry and Remote Sensing, Korean-American Scientists and Engineers Association, Korean Graduate Student Association, ISPRS Student Consortium, Korean Society of Civil Engineers</span></div>
         <div class="award-entry"><strong>Student Committee, Stanford Urban Resilience Initiative (2026)</strong></div>
         <div class="award-entry"><strong>Student Committee, California Fire Science Consortium (2025)</strong></div>
         <div class="award-entry"><strong>Session Chair, Image Analysis for Land Cover Mapping (IGARSS 2023)</strong></div>
         <div class="award-entry"><strong>Geospatial Data Support, Investigative Reporting Program, UC Berkeley (2022)</strong> <span class="scholarship-sponsor">Advised journalists on GIS tools and mapped deforestation and human activity in Brazil using satellite data, nighttime light imagery, and GIS data for the J298 OSINT Seminar</span></div>
+        </div>
       </div>
 
       <!-- Collaborations Section -->
