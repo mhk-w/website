@@ -3548,9 +3548,13 @@
      right edge should clear the last "n" in "generation" but stay
      short of "of" -- pull just that side in from the general rule's
      122% without moving the left edge (so it stays in step with the
-     general left-shift above). --- */
+     general left-shift above). Note the drawn stroke's rightmost point
+     sits inset from the SVG's own bounding box (the hand-drawn path's
+     rightmost anchor is ~191 of the 200-wide viewBox, not 200), so the
+     width needed to visually clear the text is larger than a naive
+     box-edge measurement suggests. --- */
   .annotate-mark-circle.annotate-mark-circle-tight-right {
-    width: 117%;
+    width: 121%;
   }
 }
 
@@ -3911,6 +3915,14 @@
      otherwise always wins over an external stylesheet rule. --- */
   .feedback-section-title {
     margin-top: 1.25rem !important;
+  }
+
+  /* --- About page: Education entries put the degree and institution
+     on the same line, which crowds together (or wraps mid-institution
+     name) at mobile widths -- give the institution its own row. --- */
+  .edu-institution {
+    display: block;
+    margin-top: 0.15rem;
   }
 
   /* --- Research page: network diagram area titles smaller, so
@@ -4325,34 +4337,4 @@
     transform: translateY(0);
   }
 
-  /* --- Back-to-top button (injected by script.js) -- bottom-center on
-     every page, matching the same position convention as the Research
-     page's slide prev/next controls below the diagram. --- */
-  .back-to-top-btn {
-    position: fixed;
-    left: 50%;
-    bottom: 1rem;
-    transform: translate(-50%, 8px);
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: var(--gradient-primary);
-    color: white;
-    border: none;
-    box-shadow: var(--shadow-medium);
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 500;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-  }
-
-  .back-to-top-btn.visible {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translate(-50%, 0);
-  }
 }

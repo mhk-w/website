@@ -259,35 +259,6 @@ function initMobilePageTitleInHeader() {
 
 document.addEventListener('DOMContentLoaded', initMobilePageTitleInHeader);
 
-// Mobile-only: a floating "back to top" button, shown once the page has
-// scrolled a bit. Injected here (rather than in every page's HTML) so
-// it's one shared implementation.
-function initBackToTop() {
-  if (!window.matchMedia('(max-width: 640px)').matches) return;
-
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.className = 'back-to-top-btn';
-  btn.setAttribute('aria-label', 'Back to top');
-  btn.innerHTML = '<i class="fas fa-arrow-up"></i>';
-  btn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-  document.body.appendChild(btn);
-
-  // Bottom-center means it would otherwise sit right on top of the
-  // footer's own (also centered) social icon row on a short page --
-  // hide it once the footer scrolls into view.
-  const footer = document.querySelector('.site-footer');
-
-  window.addEventListener('scroll', () => {
-    const footerVisible = footer && footer.getBoundingClientRect().top < window.innerHeight;
-    btn.classList.toggle('visible', window.scrollY > 400 && !footerVisible);
-  }, { passive: true });
-}
-
-document.addEventListener('DOMContentLoaded', initBackToTop);
-
 // Mobile-only: fade in each top-level block of a page's content-card(s)
 // as it scrolls into view, instead of everything just being there at
 // once. Class-gated (.fade-in-section only exists in CSS under the
