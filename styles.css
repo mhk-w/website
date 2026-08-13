@@ -1901,6 +1901,42 @@
     }
   }
 
+  /* Hidden entirely (not just clamped) until its "Read more" toggle is
+     clicked -- see toggleMobileReveal() in script.js. Desktop never
+     sees the button at all (display: none below), so the block just
+     renders normally there. */
+  .reveal-toggle-btn {
+    display: none;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0 0 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .reveal-toggle-btn i {
+    font-size: 0.7rem;
+  }
+
+  @media (max-width: 640px) {
+    .reveal-toggle-btn {
+      display: inline-flex;
+    }
+
+    .mobile-hide-until-expanded {
+      display: none;
+    }
+
+    .mobile-hide-until-expanded.expanded {
+      display: block;
+    }
+  }
+
   /* ===== ANIMATIONS ===== */
   /* ===== RESPONSIVE BREAKPOINTS ===== */
   
@@ -2452,6 +2488,19 @@
     .research-body-row {
       grid-template-columns: 1fr;
     }
+  }
+
+  /* Whichever of #bioAcademic/#bioCasual isn't the active view (see
+     setBioView in script.js) -- applies at every screen size, since
+     both desktop and mobile need the inactive one fully hidden, just
+     via different mechanisms once visible (see the mobile-only
+     display: contents rule for the visible one). ID-scoped so its
+     specificity (1,1,0) beats that mobile-only #bioAcademic/#bioCasual
+     rule (1,0,0) -- a plain .bio-hidden class alone (0,1,0) would lose
+     to it and never actually hide anything on mobile. */
+  #bioAcademic.bio-hidden,
+  #bioCasual.bio-hidden {
+    display: none;
   }
 
   /* Academic/Casual bio switch on about.html — a single connected on/off
@@ -3399,7 +3448,7 @@
    edge of the page. Pull it in to stay clear of the viewport. */
 @media (max-width: 480px) {
   .annotate-mark-circle {
-    left: -8%;
+    left: -14%;
     top: -26%;
     width: 118%;
     height: 152%;
@@ -3757,14 +3806,18 @@
    wins the cascade at that width; nothing here touches desktop/tablet.
    ============================================================================ */
 @media (max-width: 640px) {
-  /* --- Home page: smaller top gap before the hero card --- */
+  /* --- Home page: minimal top gap before the hero card --- */
+  .main-content {
+    padding-top: 0.5rem;
+  }
+
   .hero {
-    margin: 0.75rem auto;
-    padding: 1.1rem 0.9rem;
+    margin: 0.35rem auto;
+    padding: 0.85rem 0.75rem;
   }
 
   .hero-main {
-    gap: 1rem;
+    gap: 0.5rem;
   }
 
   /* Home page: drop the "Minho Kim" heading entirely (the header logo
@@ -3783,10 +3836,12 @@
 
   .hero-photo {
     order: 1;
+    margin-bottom: 0.5rem;
   }
 
   .social-icons {
     order: 2;
+    margin-bottom: 0.5rem;
   }
 
   .hero-right {
@@ -3795,7 +3850,14 @@
 
   .hero-left .compact-content-card {
     order: 4;
-    margin-top: 1rem;
+    margin-top: 0.35rem;
+  }
+
+  /* The paragraph breaks in the bio are plain <br><br>, so there's no
+     element to target directly -- shrinking the line-height shrinks
+     those gaps proportionally along with normal line spacing. */
+  .hero-right .hero-description.hero-intro-mono {
+    line-height: 1.5;
   }
 
   /* --- Lede text (the big serif intro sentence) a little smaller so it
@@ -3806,31 +3868,66 @@
     line-height: 1.6;
   }
 
-  /* --- About page: smaller Academic/Casual switch to match the now-
-     compact photo column --- */
+  /* --- About page: smaller Academic/Casual switch, slider first (on
+     the left) followed by a single label that reflects whichever state
+     is active -- rather than two labels flanking the track with one
+     dimmed out --- */
   .bio-switch {
     gap: 0.4rem;
-    margin-top: 0.5rem;
-  }
-
-  .bio-switch-label {
-    font-size: 0.8rem;
+    margin-top: 0;
   }
 
   .bio-switch-track {
-    width: 36px;
-    height: 20px;
+    order: 1;
+    width: 34px;
+    height: 19px;
+  }
+
+  .bio-switch-label {
+    order: 2;
+    font-size: 0.7rem;
+  }
+
+  .bio-switch-label:not(.active) {
+    display: none;
   }
 
   .bio-switch-thumb {
-    width: 15px;
-    height: 15px;
+    width: 14px;
+    height: 14px;
     top: 2.5px;
     left: 2.5px;
   }
 
   .bio-switch.is-casual .bio-switch-thumb {
-    transform: translateX(16px);
+    transform: translateX(15px);
+  }
+
+  /* --- About page: photo+text layout (see the grid-template-areas on
+     .profile-container in about.html's own <style> block, which this
+     needs to match) -- unwrap whichever bio is currently visible so its
+     lede/Read-More/rest-text pieces become direct grid items, and keep
+     the other one (marked .bio-hidden by setBioView in script.js)
+     fully out of the layout regardless of screen size. */
+  #bioAcademic,
+  #bioCasual {
+    display: contents;
+  }
+
+  .bio-lede-line {
+    grid-area: lede;
+    margin: 0;
+  }
+
+  #bioAcademic .reveal-toggle-btn,
+  #bioCasual .reveal-toggle-btn {
+    grid-area: readmore;
+    align-self: start;
+  }
+
+  #bioAcademic .mobile-hide-until-expanded,
+  #bioCasual .mobile-hide-until-expanded {
+    grid-area: rest;
   }
 
   /* --- About page: Education/Awards/Services become collapsible,
@@ -3886,6 +3983,29 @@
     display: none;
   }
 
+  /* --- News page & Recent News widget: filter pills stretch to fill
+     each row's full width instead of leaving empty space on the right
+     of a wrapped row (buttons were content-sized before). --- */
+  #newsFilterControls .filter-btns,
+  #recentNewsFilter .filter-btns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+    gap: 0.4rem;
+    width: 100%;
+    /* .filter-row is align-items: flex-start at this width, which
+       shrinks flex children to their content size by default -- this
+       grid needs to stretch to the row's full width instead, or
+       auto-fit has nothing to measure against and collapses to a
+       single 72px column. */
+    align-self: stretch;
+  }
+
+  #newsFilterControls .year-btn,
+  #newsFilterControls .cat-btn,
+  #recentNewsFilter .cat-btn {
+    width: 100%;
+  }
+
   /* --- Research page: slide prev/next controls flow below the image
      instead of overlaying its top-left corner --- */
   .research-slide-controls {
@@ -3894,11 +4014,37 @@
     margin: 0.75rem auto 0;
   }
 
-  /* --- Teaching page: tighten the intro paragraph's Read More clamp so
-     it truncates right after the lede instead of several lines in --- */
-  .lede-text + .hero-description.mobile-collapse {
-    -webkit-line-clamp: 2;
+  /* Less dead space between the lede/body text panel and the first
+     Humans/Environment/Technology card below it. */
+  .area-list {
+    margin-top: 0.75rem;
   }
+
+  /* Area-list cards start collapsed to just the title -- clicking a
+     card (already wired to highlight it in the diagram, see
+     renderListView in research-network.js) also reveals its tags. */
+  .area-list-card p,
+  .area-list-tags {
+    display: none;
+  }
+
+  .area-list-card.expanded p,
+  .area-list-card.expanded .area-list-tags {
+    display: block;
+  }
+
+  .area-list-card.expanded .area-list-tags {
+    display: flex;
+  }
+
+  .area-list-chevron {
+    transition: transform 0.3s ease;
+  }
+
+  .area-list-card.expanded .area-list-chevron {
+    transform: rotate(180deg);
+  }
+
 
   /* --- All pages: the page's own name (first section-title of the
      first content-card) moves into the header next to the logo (see

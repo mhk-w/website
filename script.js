@@ -133,14 +133,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Academic/Casual bio switch on about.html — a single connected on/off
 // control rather than two independent buttons.
+//
+// Hidden state uses a class (.bio-hidden) rather than inline style, so
+// that a mobile-only CSS rule can still turn the *visible* one into a
+// `display: contents` wrapper (unwrapping its children into the
+// .profile-container grid) without an inline style permanently winning
+// that fight regardless of screen size.
 function setBioView(view) {
   const academic = document.getElementById('bioAcademic');
   const casual = document.getElementById('bioCasual');
   if (!academic || !casual) return;
-  academic.style.display = view === 'academic' ? 'block' : 'none';
-  casual.style.display = view === 'casual' ? 'block' : 'none';
+  academic.classList.toggle('bio-hidden', view !== 'academic');
+  casual.classList.toggle('bio-hidden', view !== 'casual');
   // Whichever bio just became visible may contain a .mobile-collapse
-  // block that couldn't be measured for overflow while display:none.
+  // block that couldn't be measured for overflow while hidden.
   initMobileCollapsibleText();
 
   const photoAcademic = document.getElementById('profilePhotoAcademic');
@@ -207,6 +213,23 @@ function initMobileCollapsibleText() {
 }
 
 document.addEventListener('DOMContentLoaded', initMobileCollapsibleText);
+
+// Mobile-only "Read more" reveal for a block that starts fully hidden
+// (rather than .mobile-collapse's partial line-clamp preview). Used
+// where a lede/first-sentence is meant to stand alone with the rest of
+// the text hidden entirely until asked for -- About page's bio,
+// Teaching's intro, and the Research page's image-slide body text.
+// The toggled element is either the button's next sibling, or (when
+// the button sits alone in its own row, e.g. About's grid layout) the
+// next sibling of its parent.
+function toggleMobileReveal(btn) {
+  const el = btn.nextElementSibling || (btn.parentElement && btn.parentElement.nextElementSibling);
+  if (!el) return;
+  const expanded = el.classList.toggle('expanded');
+  btn.innerHTML = expanded
+    ? 'Read less <i class="fas fa-chevron-up"></i>'
+    : 'Read more <i class="fas fa-chevron-down"></i>';
+}
 
 // Mobile-only: fold the page's own name into the header logo ("Minho Kim
 // - About") instead of repeating it as a big heading with its own

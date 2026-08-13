@@ -597,7 +597,15 @@ function renderListView() {
   `).join('');
 
   container.querySelectorAll('.area-list-card').forEach((card) => {
-    card.addEventListener('click', () => selectArea(card.dataset.area));
+    card.addEventListener('click', () => {
+      selectArea(card.dataset.area);
+      // Mobile-only in effect (see .area-list-tags in styles.css) --
+      // the tag pills start collapsed under the area title there, and
+      // this same click both highlights the area in the diagram and
+      // reveals its tags. Harmless no-op on desktop, where the tags
+      // are always visible regardless of this class.
+      card.classList.toggle('expanded');
+    });
   });
 }
 
@@ -761,7 +769,10 @@ function renderResearchSlide(index) {
   const descEl = document.getElementById('researchSlideDesc');
   if (descEl) {
     descEl.innerHTML = `<p class="research-slide-lede">${slide.lede}</p>`
-      + (slide.body ? `<p class="hero-description">${slide.body}</p>` : '');
+      + (slide.body
+        ? `<button type="button" class="reveal-toggle-btn" onclick="toggleMobileReveal(this)">Read more <i class="fas fa-chevron-down"></i></button>`
+          + `<p class="hero-description mobile-hide-until-expanded">${slide.body}</p>`
+        : '');
   }
 
   const areaListEl = document.getElementById('areaList');
