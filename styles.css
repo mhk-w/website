@@ -1910,6 +1910,7 @@
     align-items: center;
     gap: 0.35rem;
     margin: 0 0 1rem;
+    font-family: inherit;
     font-size: 0.82rem;
     font-weight: 600;
     color: var(--primary-color);
@@ -3462,15 +3463,23 @@
    edge of the page. Pull it in to stay clear of the viewport. */
 @media (max-width: 480px) {
   .annotate-mark-circle {
-    left: -11%;
+    left: -13%;
     top: -26%;
-    width: 124%;
+    width: 122%;
     height: 152%;
   }
 
   .annotate-mark-underline {
     left: -1%;
     width: 102%;
+  }
+
+  /* --- Teaching page: the "empowers the next-generation" circle's
+     right edge sits right up against the adjacent word "of" -- pull
+     just that side in a bit without moving the left edge (so it stays
+     in step with the general left-shift above). --- */
+  .annotate-mark-circle.annotate-mark-circle-tight-right {
+    width: 108%;
   }
 }
 
@@ -3794,11 +3803,43 @@
     -webkit-line-clamp: 3;
   }
 
+  /* --- A story's second paragraph rides along with the first's Read
+     More button (see initMobileCollapsibleText in script.js) instead of
+     getting a clamp/button of its own. --- */
+  .mobile-collapse-partner {
+    display: none;
+  }
+
+  .mobile-collapse-partner.expanded {
+    display: block;
+  }
+
   /* --- Secondary/meta text smaller throughout Teaching --- */
   .timeline-institution,
   .vt-line,
   .vt-eval-n {
     font-size: 0.78rem;
+  }
+
+  /* --- Teaching page: pull the Read More button up closer to the lede
+     above it. A negative margin-top on the button itself has no visual
+     effect (it's an inline-flex box, and Chrome/Safari don't let a
+     negative margin move it above its natural resting line), so
+     instead shrink the lede's own trailing margin -- but only when a
+     reveal-toggle-btn directly follows it, since .lede-text's margin is
+     otherwise shared with every other page that uses it. --- */
+  .lede-text:has(+ .reveal-toggle-btn) {
+    margin-bottom: 0.65rem;
+  }
+
+  /* --- Teaching page: the "Teaching Feedback & Stories" title's inline
+     margin-top (2.5rem, shared with two other section titles further
+     down the same page) leaves too much space above it since the
+     collapsed timeline group right before it is already fairly short
+     on mobile -- override with !important since an inline style
+     otherwise always wins over an external stylesheet rule. --- */
+  .feedback-section-title {
+    margin-top: 1.25rem !important;
   }
 
   /* --- Research page: network diagram area titles smaller, so
@@ -3812,6 +3853,18 @@
   .keyword-node .kw-label {
     font-size: 0.48rem;
   }
+
+  /* --- Research page: the three slide panels' text (the "I study..."
+     lede plus its supporting body paragraph) was rendering larger than
+     the page's own top lede-text (1rem here) -- bring both down so
+     they read as secondary to it instead of competing with it. --- */
+  .research-slide-lede {
+    font-size: 0.9rem;
+  }
+
+  #researchSlideDesc p.hero-description {
+    font-size: 0.78rem;
+  }
 }
 
 /* ============================================================================
@@ -3820,13 +3873,24 @@
    wins the cascade at that width; nothing here touches desktop/tablet.
    ============================================================================ */
 @media (max-width: 640px) {
+  /* --- The real rendered header is ~54px tall on mobile (smaller logo,
+     tighter nav-container padding) but --header-height stays 70px for
+     desktop, so .main-content's margin-top (which uses that var to
+     clear the fixed header) was reserving 16px more than the header
+     actually occupies. Match the var to the real mobile height so that
+     dead space -- and the mobile nav dropdown's own top offset, which
+     also reads this var -- both tighten up correctly. --- */
+  :root {
+    --header-height: 54px;
+  }
+
   /* --- Home page: minimal top gap before the hero card --- */
   .main-content {
-    padding-top: 0.5rem;
+    padding-top: 0.3rem;
   }
 
   .hero {
-    margin: 0.35rem auto;
+    margin: 0.2rem auto;
     padding: 0.85rem 0.75rem;
   }
 
@@ -3906,7 +3970,7 @@
 
   .bio-switch-label {
     order: 2;
-    font-size: 0.7rem;
+    font-size: 0.82rem;
   }
 
   .bio-switch-label:not(.active) {
@@ -3943,7 +4007,14 @@
   #bioAcademic .reveal-toggle-btn,
   #bioCasual .reveal-toggle-btn {
     grid-area: readmore;
-    align-self: start;
+    /* The base rule's margin-bottom (1rem, meant for normal block flow
+       elsewhere) inflates this grid item's margin box to the full row
+       height, which defeats align-self: center below -- it ends up
+       flush at the row's top with the margin silently filling the rest
+       of the row instead of being centered within it. */
+    margin: 0;
+    align-self: center;
+    justify-self: end;
   }
 
   #bioAcademic .mobile-hide-until-expanded,
@@ -4026,8 +4097,11 @@
     gap: 0.5rem;
   }
 
+  /* Wide enough for "Category:" (the longer of the two labels) so both
+     rows' pill grids start at the same x position -- "Year:" is left
+     with a bit of trailing space, which is fine. */
   #newsFilterControls .filter-row strong {
-    min-width: auto;
+    min-width: 70px;
     flex-shrink: 0;
     padding-top: 0.35rem;
   }

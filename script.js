@@ -197,12 +197,21 @@ function initMobileCollapsibleText() {
     if (el.scrollHeight <= el.clientHeight + 2) return;
     el.dataset.collapseInit = '1';
 
+    // A directly-following .mobile-collapse-partner (e.g. a story's
+    // second paragraph) has no clamp or button of its own -- it stays
+    // hidden and rides along with this element's own expand/collapse,
+    // so a multi-paragraph block only ever shows one Read More button.
+    const partner = el.nextElementSibling && el.nextElementSibling.classList.contains('mobile-collapse-partner')
+      ? el.nextElementSibling
+      : null;
+
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'mobile-collapse-toggle';
     btn.innerHTML = 'Read more <i class="fas fa-chevron-down"></i>';
     btn.addEventListener('click', () => {
       const expanded = el.classList.toggle('expanded');
+      if (partner) partner.classList.toggle('expanded', expanded);
       btn.innerHTML = expanded
         ? 'Read less <i class="fas fa-chevron-up"></i>'
         : 'Read more <i class="fas fa-chevron-down"></i>';
@@ -286,7 +295,21 @@ function initScrollFadeIn() {
   if (!window.matchMedia('(max-width: 640px)').matches) return;
   if (!('IntersectionObserver' in window)) return;
 
-  const targets = document.querySelectorAll('.content-card > *');
+  // Tall, dynamically-populated list containers (e.g. the full news
+  // archive) can render with less than the intersection threshold on
+  // screen at load on shorter viewports, so the observer never fires
+  // and the whole block sits invisible until a scroll happens to cross
+  // it. Skip anything that tall entirely rather than fade it in as one
+  // giant unit — it's not a meaningful "section" to animate anyway.
+  // .compact-content-card (the small "Read more about me and my CV"
+  // card) carries the content-card class itself, so the selector below
+  // would otherwise also match ITS children -- the icon and the two
+  // inline links -- fading each in separately while the plain text
+  // around them stays visible the whole time. Treat it as a single
+  // atomic unit instead by not reaching inside it at all.
+  const MAX_FADE_HEIGHT = 900;
+  const targets = [...document.querySelectorAll('.content-card:not(.compact-content-card) > *')]
+    .filter((el) => el.scrollHeight <= MAX_FADE_HEIGHT);
   if (!targets.length) return;
 
   const observer = new IntersectionObserver((entries) => {

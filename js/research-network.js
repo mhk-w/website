@@ -382,23 +382,30 @@ function measureDiagram() {
   KEYWORD_SPREAD_MIN = KEYWORD_SPREAD_MIN_BASE * scale;
   KEYWORD_SPREAD_MAX = KEYWORD_SPREAD_MAX_BASE * scale;
   BRIDGE_JITTER = BRIDGE_JITTER_BASE * scale;
-  BLOB_RADIUS = BLOB_RADIUS_BASE * scale;
   CONNECTION_DIST = CONNECTION_DIST_BASE * scale;
   BRIDGE_CONNECTION_DIST = BRIDGE_CONNECTION_DIST_BASE * scale;
 
-  // The keyword-spread shrink alone isn't enough on narrow screens --
-  // the area centers themselves (cx: 0.21/0.79 for Humans/Environment)
-  // are spaced for a wide desktop diagram and push labels past the
-  // container's edges even with a tight spread. Pull each area's center
-  // toward the middle by the same scale, so at scale 1 (desktop) nothing
-  // changes, and at smaller scales the three areas sit closer together.
+  // At scale 1 (desktop) both of these stay exactly `scale` (1), so
+  // nothing changes there. Below that, pulling the three area centers
+  // toward the middle by the *same* scale as the blob radius (the
+  // original behavior) shrank the gaps between them faster than the
+  // blobs themselves shrank, so on narrow phones the three blobs ended
+  // up overlapping and cluttered near the center. Now the centers are
+  // pulled in less aggressively (a higher floor keeps them further
+  // apart) while the radius shrinks more (lower multiplier), so there's
+  // consistently a visible gap between blobs instead of a bunched-up
+  // overlap.
+  const centerScale = scale === 1 ? 1 : Math.max(scale, 0.75);
+  const radiusScale = scale === 1 ? 1 : scale * 0.65;
+  BLOB_RADIUS = BLOB_RADIUS_BASE * radiusScale;
+
   RESEARCH_AREAS.forEach((area) => {
     if (area.cxBase === undefined) {
       area.cxBase = area.cx;
       area.cyBase = area.cy;
     }
-    area.cx = 0.5 + (area.cxBase - 0.5) * scale;
-    area.cy = 0.5 + (area.cyBase - 0.5) * scale;
+    area.cx = 0.5 + (area.cxBase - 0.5) * centerScale;
+    area.cy = 0.5 + (area.cyBase - 0.5) * centerScale;
   });
 
   return true;
