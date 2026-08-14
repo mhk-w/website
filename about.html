@@ -128,7 +128,14 @@
          under the lede without needing an extra wrapper element. */
       .profile-container {
         display: grid;
-        grid-template-columns: auto auto 1fr;
+        /* The switch column used to be auto-sized, so it shrank to fit
+           whichever label ("Academic" vs the shorter "Casual") was
+           currently showing -- shifting the Read More column (and the
+           button in it) left/right depending on which bio is active.
+           A fixed width (comfortably wider than "Academic", the
+           longer of the two) keeps Read More in the same spot either
+           way. */
+        grid-template-columns: auto 112px 1fr;
         grid-template-areas:
           "photo lede     lede"
           "photo switch   readmore"
@@ -283,13 +290,13 @@
       <div class="profile-section">
         <h3 class="profile-toggle-header" onclick="toggleDropdown(this)">Education <span class="profile-toggle-arrow">&#9654;</span></h3>
         <ul class="profile-toggle-content">
-          <li><strong>PhD in Environmental Planning</strong>, <span class="edu-institution">UC Berkeley (Sep 2021 &ndash; May 2026)</span>
-            <br><small>Dissertation: Data-Driven Planning for Natural Hazard Risk Management</small></li>
-          <li><strong>MS in Civil &amp; Environmental Engineering</strong>, <span class="edu-institution">Seoul National University (Mar 2017 &ndash; Feb 2021)</span>
-            <br><small>Thesis: <a href="https://s-space.snu.ac.kr/handle/10371/175090">Local Climate Zone Classification Using Multi-Scale Convolutional Networks</a></small>
+          <li><strong>PhD in Environmental Planning</strong><span class="edu-comma">,</span> <span class="edu-institution">UC Berkeley (Sep 2021 &ndash; May 2026)</span>
+            <br class="edu-br"><small>Dissertation: Data-Driven Planning for Natural Hazard Risk Management</small></li>
+          <li><strong>MS in Civil &amp; Environmental Engineering</strong><span class="edu-comma">,</span> <span class="edu-institution">Seoul National University (Mar 2017 &ndash; Feb 2021)</span>
+            <br class="edu-br"><small>Thesis: <a href="https://s-space.snu.ac.kr/handle/10371/175090">Local Climate Zone Classification Using Multi-Scale Convolutional Networks</a></small>
           </li>
-          <li><strong>BS in Civil &amp; Environmental Engineering</strong>, <span class="edu-institution">Seoul National University (Sep 2012 &ndash; Feb 2017)</span>
-            <br><small>Thesis: Monitoring North Korea's 4th Nuclear Test Site Using Sentinel-1A DInSAR</small></li>
+          <li><strong>BS in Civil &amp; Environmental Engineering</strong><span class="edu-comma">,</span> <span class="edu-institution">Seoul National University (Sep 2012 &ndash; Feb 2017)</span>
+            <br class="edu-br"><small>Thesis: Monitoring North Korea's 4th Nuclear Test Site Using Sentinel-1A DInSAR</small></li>
         </ul>
       </div>
 

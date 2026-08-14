@@ -2793,19 +2793,12 @@
     opacity: 0.6;
   }
 
-  /* Bridge/shared nodes: rendered as a two-tone dot (one half-color per
-     connected cluster) with an italic label, since they belong to both. */
-  .keyword-node.shared-node .kw-label {
-    font-style: italic;
-  }
-
-  /* Narrative/future-facing keywords (grey dot, see RESEARCH_AREAS'
-     `muted` flag) read as supporting detail rather than a main Topic
-     label -- same treatment as bridge nodes, just for a different
-     reason (not tied to one specific colored Topic tag). */
-  .keyword-node.muted-node .kw-label {
-    font-style: italic;
-  }
+  /* Bridge/shared nodes render as a two-tone dot (one half-color per
+     connected cluster) -- previously an italic label too, but that
+     read more like a stray formatting glitch than an intentional
+     distinction, so both this and the muted/narrative keywords below
+     (see RESEARCH_AREAS' `muted` flag) now use the same plain label
+     style as regular Topic nodes. */
 
   .network-diagram-hint {
     text-align: center;
@@ -2888,7 +2881,6 @@
      dashed outline to read as "connects to" rather than "belongs to". */
   .tag-pill-bridge {
     border-style: dashed;
-    font-style: italic;
   }
 
   /* Narrative/future-facing keywords that support a colored Topic node
@@ -3919,10 +3911,20 @@
 
   /* --- About page: Education entries put the degree and institution
      on the same line, which crowds together (or wraps mid-institution
-     name) at mobile widths -- give the institution its own row. --- */
+     name) at mobile widths -- give the institution its own row. Since
+     that row break already separates them, the trailing comma after
+     the degree (needed on desktop, where they share a line) and the
+     explicit <br> before the thesis/dissertation line (which would
+     otherwise stack a second, blank line break on top of this block's
+     own) both become redundant and are hidden here. --- */
   .edu-institution {
     display: block;
     margin-top: 0.15rem;
+  }
+
+  .edu-comma,
+  .edu-br {
+    display: none;
   }
 
   /* --- Research page: network diagram area titles smaller, so
