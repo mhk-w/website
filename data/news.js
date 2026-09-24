@@ -14,6 +14,10 @@
 
 const NEWS_ITEMS = [
   {
+    date: 'Sep 2026', sort: '2026-09', year: 2026, type: 'Teaching',
+    title: 'I am teaching <b>CEE 308: Topics in Disaster Resilience Research</b> as <b>Lead Instructor</b> at Stanford University this fall!',
+  },
+  {
     date: 'Aug 2026', sort: '2026-08', year: 2026, type: 'Career',
     title: 'I started as a <b>Postdoctoral Scholar</b> in the Stanford Urban Resilience Initiative, Dept. of Civil and Environmental Engineering, working with Professor <a href="https://scholar.google.com/citations?user=im82jgIAAAAJ&hl=en&oi=ao">Jack Baker</a>!',
   },
@@ -24,6 +28,7 @@ const NEWS_ITEMS = [
   {
     date: 'May 2026', sort: '2026-05-b', year: 2026, type: 'Career',
     title: 'I completed my <b>PhD in Environmental Planning</b> at UC Berkeley! My dissertation: &ldquo;Data-Driven Planning for Natural Hazard Risk Management.&rdquo;',
+    links: [{ icon: 'fa-book', label: 'Dissertation', url: 'https://search.proquest.com/openview/4b3e2868547d316db059d47a4cabf1ef/1?pq-origsite=gscholar&cbl=18750&diss=y' }],
   },
   {
     date: 'May 2026', sort: '2026-05-a', year: 2026, type: 'Talk',

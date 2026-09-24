@@ -8,7 +8,7 @@
 
 // Fixed display order for the Category filter (not alphabetical), shared
 // by both the homepage widget and the full archive.
-const NEWS_CATEGORY_ORDER = ['Career', 'Award', 'Paper', 'Conference', 'Talk', 'Research'];
+const NEWS_CATEGORY_ORDER = ['Career', 'Teaching', 'Award', 'Paper', 'Conference', 'Talk', 'Research'];
 
 function orderNewsCategories(categories) {
   return NEWS_CATEGORY_ORDER.filter((c) => categories.includes(c));
