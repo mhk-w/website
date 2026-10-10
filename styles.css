@@ -690,7 +690,7 @@
     flex: 1;
   }
   
-  .year-btn, .type-btn, .tag-btn, .cat-btn {
+  .year-btn, .type-btn, .tag-btn, .cat-btn, .area-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -711,10 +711,12 @@
   .type-btn:hover,
   .tag-btn:hover,
   .cat-btn:hover,
+  .area-btn:hover,
   .year-btn.active,
   .type-btn.active,
   .tag-btn.active,
-  .cat-btn.active {
+  .cat-btn.active,
+  .area-btn.active {
     background: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
@@ -826,13 +828,28 @@
     box-shadow: 0 10px 25px rgba(102, 126, 234, 0.15);
   }
   
-  .research-highlight img {
+  /* Fixed thumbnail frame: figures here range from wide maps to near-square
+     panels, so they are contained on a tinted backdrop at one size rather
+     than each setting its own height from its aspect ratio. */
+  .research-highlight-media {
     width: 200px;
-    height: auto;
-    object-fit: contain;
-    border-radius: 6px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-accent);
     border: 1px solid var(--border-color);
-    max-height: 200px; /* Optional: restrict height if too tall */
+    border-radius: 6px;
+    overflow: hidden;
+    flex: none;
+  }
+
+  .research-highlight-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 0.4rem;
+    box-sizing: border-box;
   }
 
   /* "Panel" layout for Highlighted Research (the default) -- a grid of
@@ -867,7 +884,9 @@
      object-fit: cover (which badly over-crops the wider figures). */
   .research-highlight-card-media {
     width: 100%;
-    height: 170px;
+    /* Panel cards carry only a title, so the figure is the card -- it gets
+       the height the blurb used to take (see renderHighlightedResearch). */
+    height: 240px;
     background: var(--bg-accent);
     display: flex;
     align-items: center;
@@ -891,12 +910,7 @@
 
   .research-highlight-card .research-content h3 {
     font-size: 1.05rem;
-    margin: 0 0 0.5rem;
-  }
-
-  .research-highlight-card .research-content p {
-    font-size: 0.88rem;
-    margin: 0 0 0.9rem;
+    margin: 0 0 0.75rem;
     flex: 1;
   }
 
@@ -1964,11 +1978,11 @@
       text-align: center;
     }
     
-    .research-highlight img {
+    .research-highlight-media {
         width: 100%;
         max-width: 400px;
-        height: auto;
-        object-fit: contain;
+        height: 200px;
+        margin: 0 auto;
     }
     
     
@@ -2108,11 +2122,11 @@
       font-size: 0.9rem;
     }
     
-    .research-highlight img {
+    .research-highlight-media {
       width: 100%;
       max-width: 400px;
-      height: auto;
-      object-fit: contain;
+      height: 200px;
+      margin: 0 auto;
     }
 
     .vertical-timeline {
@@ -2258,7 +2272,7 @@
       gap: 0.25rem;
     }
 
-    .year-btn, .type-btn, .tag-btn {
+    .year-btn, .type-btn, .tag-btn, .area-btn {
       padding: 0.35rem 0.7rem;
       font-size: 0.7rem;
     }
@@ -2635,7 +2649,7 @@
   }
 
   .rp-hl-human { color: #3366cc; }
-  .rp-hl-environment { color: #5559b7; }
+  .rp-hl-environment { color: #1f9d5a; }
   .rp-hl-technology { color: #764ba2; }
 
   /* Single-tone keyword highlight for lede sentences that don't split into
@@ -2847,11 +2861,28 @@
   }
 
   .area-list-card.area-human .area-number, .area-list-card.area-human h3 { color: #3366cc; }
-  .area-list-card.area-environment .area-number, .area-list-card.area-environment h3 { color: #5559b7; }
+  .area-list-card.area-environment .area-number, .area-list-card.area-environment h3 { color: #1f9d5a; }
   .area-list-card.area-technology .area-number, .area-list-card.area-technology h3 { color: #764ba2; }
+  .area-list-card.area-modeling .area-number, .area-list-card.area-modeling h3 { color: #3366cc; }
+  .area-list-card.area-networks .area-number, .area-list-card.area-networks h3 { color: #1f9d5a; }
+  .area-list-card.area-geospatial .area-number, .area-list-card.area-geospatial h3 { color: #764ba2; }
 
-  .area-list-chevron {
-    color: var(--text-muted);
+  /* "Explore this area" link on each research-area list card, pointing at
+     the matching research-*.html page. */
+  .area-list-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.15rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+
+  .area-list-link:hover {
+    text-decoration: underline;
   }
 
   .area-list-card p {
@@ -2952,12 +2983,12 @@
     background: linear-gradient(135deg, #3366cc, #6c8ee8);
   }
 
-  .area-nav-icon.active.area-nav-icon-geospatial {
+  .area-nav-icon.active.area-nav-icon-networks {
     background: linear-gradient(135deg, #1f9d5a, #5cd394);
   }
 
-  .area-nav-icon.active.area-nav-icon-decision {
-    background: linear-gradient(135deg, #b8891f, #e0b64f);
+  .area-nav-icon.active.area-nav-icon-geospatial {
+    background: linear-gradient(135deg, #764ba2, #a67cc9);
   }
 
   .area-detail-heading {
@@ -3593,16 +3624,19 @@
   margin-bottom: 1.1rem;
 }
 
+/* The three research areas. Tints match .area-nav-icon.active.*,
+   and .highlight-placeholder-* so an area reads
+   consistently everywhere it appears. */
 .home-area-icon-modeling {
   background: linear-gradient(135deg, #3366cc, #6c8ee8);
 }
 
-.home-area-icon-geospatial {
+.home-area-icon-networks {
   background: linear-gradient(135deg, #1f9d5a, #5cd394);
 }
 
-.home-area-icon-decision {
-  background: linear-gradient(135deg, #b8891f, #e0b64f);
+.home-area-icon-geospatial {
+  background: linear-gradient(135deg, #764ba2, #a67cc9);
 }
 
 .home-area-card h3 {
@@ -4257,32 +4291,6 @@
     margin-top: 0.75rem;
   }
 
-  /* Area-list cards start collapsed to just the title -- clicking a
-     card (already wired to highlight it in the diagram, see
-     renderListView in research-network.js) also reveals its tags. */
-  .area-list-card p,
-  .area-list-tags {
-    display: none;
-  }
-
-  .area-list-card.expanded p,
-  .area-list-card.expanded .area-list-tags {
-    display: block;
-  }
-
-  .area-list-card.expanded .area-list-tags {
-    display: flex;
-  }
-
-  .area-list-chevron {
-    transition: transform 0.3s ease;
-  }
-
-  .area-list-card.expanded .area-list-chevron {
-    transform: rotate(180deg);
-  }
-
-
   /* --- All pages: the page's own name (first section-title of the
      first content-card) moves into the header next to the logo (see
      initMobilePageTitle in script.js) instead of repeating here. --- */
@@ -4339,4 +4347,334 @@
     transform: translateY(0);
   }
 
+}
+
+
+/* ---------------------------------------------------------------------------
+   Highlighted Research: placeholder tile
+   Recent working papers often have no publishable figure yet. Rather than
+   render an empty .research-highlight-card-media frame, publications-render.js
+   falls back to this typographic tile, tinted by the publication's primary
+   research area so the card still reads as intentional.
+   --------------------------------------------------------------------------- */
+/* Repository icon trailing a publication title in the table -- deliberately
+   quiet, so it reads as an affordance rather than competing with the title
+   link next to it. */
+.pub-code-link {
+  color: var(--text-muted);
+  font-size: 0.85em;
+  margin-left: 0.15em;
+}
+
+.pub-code-link:hover {
+  color: var(--text-primary);
+}
+
+.highlight-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  height: 100%;
+  min-height: 150px;
+  padding: 1.1rem 1rem;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* On a panel card the label is the tile's only content, so it carries a
+   little more weight than it does as a kicker above a title in list view. */
+.research-highlight-card .highlight-placeholder-area {
+  font-size: 0.72rem;
+}
+
+.highlight-placeholder-area {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.highlight-placeholder-title {
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: white;
+}
+
+/* Area tints mirror .home-area-icon-* so a card's colour matches its area. */
+.highlight-placeholder-modeling {
+  background: linear-gradient(135deg, #3366cc, #6c8ee8);
+}
+
+.highlight-placeholder-networks {
+  background: linear-gradient(135deg, #1f9d5a, #5cd394);
+}
+
+.highlight-placeholder-geospatial {
+  background: linear-gradient(135deg, #764ba2, #a67cc9);
+}
+
+/* ---------------------------------------------------------------------------
+   RESEARCH AREAS (research.html)
+   Two columns per area: representative figure on the left, all text on the
+   right. The short field label is the headline; the longer programme title
+   sits beneath it, sharing a row with the "Read more" button. Description and
+   research branches share one slot in that right column -- the description
+   shows by default and is swapped out for the branches on expand (see
+   toggleResearchArea, now removed), so the area reads as one passage.
+   --------------------------------------------------------------------------- */
+.ra-block {
+  padding: 2rem 0 0;
+  border-top: 1px solid var(--border-color);
+  margin-top: 2rem;
+}
+
+.ra-block:first-of-type {
+  border-top: none;
+  padding-top: 0.5rem;
+}
+
+.ra-main {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 2rem;
+  /* The text sits against a figure that is usually taller than it, so
+     centring the two reads better than hanging the text off the top. */
+  align-items: center;
+}
+
+/* Placeholder state: an area whose subject image is not in yet holds the
+   frame at the same size the image will occupy, so the two-column rhythm
+   is unchanged and dropping the <img> back in (see research.html) needs
+   no CSS edit. Keyed on the absence of an <img> rather than on :empty,
+   which any reformatting of the markup would otherwise break by leaving
+   whitespace inside the div. */
+.ra-figure:not(:has(img)) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 260px;
+  border-style: dashed;
+}
+
+.ra-figure:not(:has(img))::before {
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  content: '\f03e';
+  font-size: 1.75rem;
+  color: var(--text-muted);
+  opacity: 0.4;
+}
+
+/* Figure: the three area illustrations sit on white and come in different
+   aspect ratios (roughly 16:9, 7:6 and 1:1 once trimmed), so rather than
+   force them into one frame they keep their own proportions inside a
+   shared slot -- capped by the column width on one side and a common
+   height on the other, which keeps the three rows in the same rhythm
+   without letterboxing the squarer two. No backdrop or border: the
+   artwork's own white ground would otherwise read as a box within a box. */
+.ra-figure {
+  display: flex;
+  align-items: center;
+  /* Flush left on desktop so the three differently-proportioned images share
+     one edge with the card's margin; centred once the layout stacks. */
+  justify-content: flex-start;
+  transition: var(--transition);
+}
+
+.ra-figure img {
+  display: block;
+  /* All three fill the column, so they share one width and one left and
+     right edge; their differing aspect ratios play out in height rather
+     than in width, which would otherwise leave the column ragged. */
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Headline = the short field label. */
+.ra-body h3 {
+  font-size: 1.45rem;
+  line-height: 1.25;
+  color: var(--text-primary);
+  margin: 0 0 0.55rem;
+}
+
+/* Each area is a short list of points rather than a paragraph: a bolded
+   headline names the strand, the sentence after it carries the work. */
+.ra-points {
+  list-style: none;
+  padding: 0;
+  margin: 0.7rem 0 0;
+}
+
+.ra-points li {
+  position: relative;
+  /* Balances the last line so a point never spills a single word onto a
+     line of its own; ignored by browsers that do not support it. */
+  text-wrap: pretty;
+  padding-left: 1.1rem;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+/* Several points run to three lines, where a new point's first line would
+   otherwise be indistinguishable from a continuation line. The marker and
+   hanging indent give the eye a left rail; muted, so it introduces no
+   further colour against the blue titles. */
+.ra-points li::before {
+  content: '';
+  position: absolute;
+  left: 0.1rem;
+  top: 0.72em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-muted);
+}
+
+.ra-points li:last-child {
+  margin-bottom: 0;
+}
+
+/* The headline of each point is now the page's keyword affordance: a chip
+   that names the strand, with the sentence running on after it. */
+/* Blue is the label, not the link: the point titles are what a reader
+   scans for, so they take the accent, and the citations below sit in body
+   colour and rely on their underline instead. */
+.ra-points strong {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+/* Work that is not published yet: marked as a citation-to-be, coloured but
+   deliberately not underlined and not a link, so a URL can be dropped in
+   once the paper is out without the text changing. */
+/* Work not yet published: a dotted underline marks it as a reference
+   without implying it can be clicked, and it becomes a real link by
+   wrapping this span in an anchor once the paper is out. */
+.ra-wp {
+  color: var(--text-primary);
+  font-weight: 500;
+  text-decoration: underline dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(45, 55, 72, 0.4);
+}
+
+/* Keywords in the area copy hyperlink to the underlying paper, so they
+   need to read as citations -- the global `a` rule drops the underline,
+   which loses them entirely at this size. */
+.ra-points a {
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.ra-points a {
+  color: var(--text-primary);
+  text-decoration-color: rgba(45, 55, 72, 0.45);
+}
+
+/* Hover restores the accent, so the links stay discoverable as links even
+   though they sit in body colour at rest. */
+.ra-points a:hover {
+  color: var(--primary-color);
+  text-decoration-color: var(--primary-color);
+}
+
+@media (max-width: 900px) {
+  .ra-main { grid-template-columns: 1fr; gap: 0.9rem; }
+  .ra-figure { justify-content: center; }
+  .ra-figure img { max-width: 420px; }
+  .ra-figure:not(:has(img)) { height: 230px; }
+  .ra-body h3 { font-size: 1.12rem; }
+
+}
+
+/* ---------------------------------------------------------------------------
+   Forward-looking directions, shown as a 2x2 of titles on the "Looking
+   ahead" slide of the Humans/Environment/Technology panel. Deliberately
+   plainer than the .ra-block areas above, so current work stays the
+   stronger read on the page.
+   --------------------------------------------------------------------------- */
+.future-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.future-card {
+  padding: 1.2rem 1.3rem;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-accent);
+}
+
+.future-num {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--primary-color);
+  margin-bottom: 0.4rem;
+}
+
+.future-card h3 {
+  font-size: 0.98rem;
+  line-height: 1.3;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem;
+}
+
+.future-card p {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Sidebar variant: the "Looking ahead" slide carries only a lede and these
+   four fields, so the cards take the space the body prose used to and sit
+   as four equal tiles rather than four lines of text. */
+.future-grid-compact {
+  gap: 0.9rem;
+  margin-top: 1.5rem;
+}
+
+.future-grid-compact .future-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 112px;
+  padding: 1.1rem 1rem;
+}
+
+.future-grid-compact .future-num {
+  font-size: 0.68rem;
+  margin-bottom: 0.4rem;
+}
+
+.future-grid-compact .future-card h3 {
+  font-size: 0.92rem;
+  line-height: 1.3;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .future-grid { grid-template-columns: 1fr; }
+}
+
+/* Anchor targets for the homepage "Learn More" buttons (research.html#area-*).
+   Offset by the sticky header so the area heading is not hidden beneath it. */
+.ra-block[id] {
+  scroll-margin-top: calc(var(--header-height) + 1rem);
 }

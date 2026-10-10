@@ -20,6 +20,21 @@ const TAG_LABELS = {
   planning: 'Planning',
 };
 
+// The three research areas. These are the site's primary taxonomy: the same
+// three drive the homepage cards, the research.html network diagram, and the
+// dedicated research-*.html pages. A publication may belong to more than one.
+const AREA_LABELS = {
+  modeling: 'Computational Modeling',
+  networks: 'Disaster Resilience',
+  geospatial: 'Geospatial Data Science',
+};
+
+const AREA_PAGES = {
+  modeling: 'research-modeling.html',
+  networks: 'research-networks.html',
+  geospatial: 'research-geospatial.html',
+};
+
 const TYPE_LABELS = {
   paper: 'Paper',
   cpaper: 'Conference',
@@ -32,7 +47,13 @@ function pubTitleHTML(pub) {
     ? `<a href="${pub.link}" target="_blank" rel="noopener">${pub.title}</a>`
     : pub.title;
   const note = pub.note ? ` <span class="pub-note">(*${pub.note})</span>` : '';
-  return `${titleHTML}${note}`;
+  const code = pub.code
+    ? ` <a href="${pub.code}" target="_blank" rel="noopener" class="pub-code-link" title="Code repository" aria-label="Code repository"><i class="fab fa-github"></i></a>`
+    : '';
+  const demo = pub.demo
+    ? ` <a href="${pub.demo}" target="_blank" rel="noopener" class="pub-code-link" title="Interactive visualization" aria-label="Interactive visualization"><i class="fas fa-diagram-project"></i></a>`
+    : '';
+  return `${titleHTML}${note}${code}${demo}`;
 }
 
 /** Renders a fixed set of publications (by id) as a simple list, reusing
@@ -44,6 +65,27 @@ function renderPubList(containerSelector, pubIds) {
   if (!container) return;
 
   const pubs = PUBLICATIONS.filter((p) => pubIds.includes(p.id)).sort((a, b) => b.year - a.year);
+  container.innerHTML = pubs.map((p) => `
+    <div class="panel-pub">
+      <div class="panel-pub-title">${pubTitleHTML(p)}</div>
+      <div class="panel-pub-meta">${p.authors} &mdash; <em>${p.venue}</em>, ${p.year}</div>
+    </div>
+  `).join('');
+}
+
+/** Renders every publication belonging to a research area, most recent first.
+ *  Used by the dedicated research-*.html pages so their "Related Publications"
+ *  list stays in sync with data/publications.js automatically -- adding a
+ *  publication with the right `areas` value is enough, nothing else to edit. */
+function renderPubListByArea(containerSelector, area) {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  const TYPE_RANK = { paper: 0, preprint: 1, cpaper: 2, report: 3 };
+  const pubs = PUBLICATIONS
+    .filter((p) => (p.areas || []).includes(area))
+    .sort((a, b) => (b.year - a.year) || (TYPE_RANK[a.type] - TYPE_RANK[b.type]));
+
   container.innerHTML = pubs.map((p) => `
     <div class="panel-pub">
       <div class="panel-pub-title">${pubTitleHTML(p)}</div>
@@ -66,7 +108,7 @@ function renderPublicationTable(bodySelector, filterSelector) {
 
   bodyEl.innerHTML = sorted
     .map((pub) => `
-      <tr class="pub-row" id="${pub.id}" data-year="${pub.year}" data-type="${pub.type}" data-tags="${pub.tags.join(',')}">
+      <tr class="pub-row" id="${pub.id}" data-year="${pub.year}" data-type="${pub.type}" data-tags="${pub.tags.join(',')}" data-areas="${(pub.areas || []).join(',')}">
         <td class="pub-col-year">${pub.year}</td>
         <td class="pub-col-title">${pubTitleHTML(pub)}</td>
         <td class="pub-col-venue">${pub.venue}</td>
@@ -84,6 +126,8 @@ function renderPublicationTable(bodySelector, filterSelector) {
   const TYPE_ORDER = ['paper', 'cpaper', 'report', 'preprint'];
   const types = TYPE_ORDER.filter((t) => sorted.some((p) => p.type === t));
   const tags = [...new Set(sorted.flatMap((p) => p.tags))].sort();
+  const AREA_ORDER = ['modeling', 'networks', 'geospatial'];
+  const areas = AREA_ORDER.filter((a) => sorted.some((p) => (p.areas || []).includes(a)));
 
   const yearTicksHTML = years.map((y) => `
     <button class="year-btn year-tick" data-year="${y}">
@@ -93,6 +137,7 @@ function renderPublicationTable(bodySelector, filterSelector) {
   `).join('');
   const typeBtns = types.map((t) => `<button class="type-btn" data-type="${t}">${TYPE_LABELS[t] || t}</button>`).join('');
   const tagBtns = tags.map((t) => `<button class="tag-btn" data-tag="${t}">${TAG_LABELS[t] || t}</button>`).join('');
+  const areaBtns = areas.map((a) => `<button class="area-btn" data-area="${a}">${AREA_LABELS[a] || a}</button>`).join('');
 
   filterEl.innerHTML = `
     <div class="filter-row">
@@ -103,6 +148,13 @@ function renderPublicationTable(bodySelector, filterSelector) {
           <div class="year-timeline-track"></div>
           ${yearTicksHTML}
         </div>
+      </div>
+    </div>
+    <div class="filter-row">
+      <strong>Filter by Research Area:</strong>
+      <div class="filter-btns">
+        <button class="area-btn active" data-area="all">All</button>
+        ${areaBtns}
       </div>
     </div>
     <div class="filter-row">
@@ -128,7 +180,7 @@ function renderPublicationTable(bodySelector, filterSelector) {
  *  entirely by whatever buttons renderPublicationTable() generated. */
 function initPublicationFilter() {
   const allItems = Array.from(document.querySelectorAll('.pub-row'));
-  const selected = { year: new Set(['all']), type: new Set(['all']), tag: new Set(['all']) };
+  const selected = { year: new Set(['all']), type: new Set(['all']), tag: new Set(['all']), area: new Set(['all']) };
 
   function toggle(set, value) {
     if (value === 'all') {
@@ -148,7 +200,9 @@ function initPublicationFilter() {
       const typeMatch = selected.type.has('all') || selected.type.has(item.dataset.type);
       const itemTags = item.dataset.tags.split(',');
       const tagMatch = selected.tag.has('all') || itemTags.some((t) => selected.tag.has(t));
-      const visible = yearMatch && typeMatch && tagMatch;
+      const itemAreas = (item.dataset.areas || '').split(',');
+      const areaMatch = selected.area.has('all') || itemAreas.some((a) => selected.area.has(a));
+      const visible = yearMatch && typeMatch && tagMatch && areaMatch;
       item.style.display = visible ? '' : 'none';
       if (visible) shown++;
     });
@@ -172,14 +226,16 @@ function initPublicationFilter() {
   wire('year-btn', 'year', 'year');
   wire('type-btn', 'type', 'type');
   wire('tag-btn', 'tag', 'tag');
+  wire('area-btn', 'area', 'area');
   apply();
 }
 
 /** Renders the homepage's curated "Highlighted Research" cards. Supports
  *  two layouts: "panel" (the default) -- a grid of self-contained project
- *  panels with a framed image, type badge, title, and blurb -- or a
- *  compact "list" of thumbnail-and-text rows. Toggled via the icons next
- *  to the section heading. */
+ *  panels that lead with a large framed image and carry only the short
+ *  title, so the row reads as a set of figures -- or a compact "list" of
+ *  thumbnail-and-text rows, which is where the blurb still shows.
+ *  Toggled via the icons next to the section heading. */
 function renderHighlightedResearch(containerSelector, layout) {
   const container = document.querySelector(containerSelector);
   if (!container) return;
@@ -191,12 +247,33 @@ function renderHighlightedResearch(containerSelector, layout) {
   container.className = layout === 'panel' ? 'research-highlight-grid' : '';
   container.innerHTML = highlighted
     .map((pub) => {
-      const img = pub.image ? `<img src="${pub.image}" alt="${pub.highlightTitle || pub.title}">` : '';
+      // Recent working papers may not have a figure yet. Rather than leaving
+      // an empty frame, fall back to a typographic tile tinted by the
+      // publication's primary research area.
+      const primaryArea = (pub.areas && pub.areas[0]) || 'modeling';
+      // Panel cards print the short title directly beneath the frame, so the
+      // tile carries only the area label there -- repeating the title inside
+      // the tile reads as a stutter once the blurb is gone.
+      const placeholderTitle = layout === 'panel'
+        ? ''
+        : `<span class="highlight-placeholder-title">${pub.shortTitle || pub.title}</span>`;
+      const img = pub.image
+        ? `<img src="${pub.image}" alt="${pub.highlightTitle || pub.title}">`
+        : `<div class="highlight-placeholder highlight-placeholder-${primaryArea}">
+             <span class="highlight-placeholder-area">${AREA_LABELS[primaryArea] || ''}</span>
+             ${placeholderTitle}
+           </div>`;
       const paperLink = pub.link
         ? `<a href="${pub.link}" target="_blank" rel="noopener" class="news-btn"><i class="fas fa-file-alt"></i> Paper</a>`
         : '';
       const videoLink = pub.video
         ? `<a href="${pub.video}" target="_blank" rel="noopener" class="news-btn"><i class="fas fa-video"></i> Presentation</a>`
+        : '';
+      const codeLink = pub.code
+        ? `<a href="${pub.code}" target="_blank" rel="noopener" class="news-btn"><i class="fab fa-github"></i> Code</a>`
+        : '';
+      const demoLink = pub.demo
+        ? `<a href="${pub.demo}" target="_blank" rel="noopener" class="news-btn"><i class="fas fa-diagram-project"></i> Interactive</a>`
         : '';
 
       if (layout === 'panel') {
@@ -204,9 +281,8 @@ function renderHighlightedResearch(containerSelector, layout) {
           <div class="research-highlight-card">
             <div class="research-highlight-card-media">${img}</div>
             <div class="research-content">
-              <h3>${pub.shortTitle || pub.highlightTitle || pub.title}</h3>
-              <p>${pub.blurb || ''}</p>
-              <div class="research-card-links">${paperLink}${videoLink}</div>
+              <h3>${pub.highlightTitle || pub.title}</h3>
+              <div class="research-card-links">${paperLink}${codeLink}${demoLink}${videoLink}</div>
             </div>
           </div>
         `;
@@ -214,10 +290,11 @@ function renderHighlightedResearch(containerSelector, layout) {
 
       return `
         <div class="research-highlight">
-          ${img}
+          <div class="research-highlight-media">${img}</div>
           <div class="research-content">
             <h3>${pub.highlightTitle || pub.title}</h3>
-            <p>${pub.blurb || ''} ${paperLink} ${videoLink}</p>
+            <p>${pub.blurb || ''}</p>
+            <div class="research-card-links">${paperLink}${codeLink}${demoLink}${videoLink}</div>
           </div>
         </div>
       `;

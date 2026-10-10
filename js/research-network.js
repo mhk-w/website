@@ -18,7 +18,7 @@ const RESEARCH_AREAS = [
     id: 'human',
     number: '01',
     title: 'Humans',
-    description: '',
+    description: 'Communities, homeowners, and the institutions that govern risk \u2014 who is exposed, who is responsible, and who recovers.',
     tags: ['urban', 'planning'],
     color: '#3366cc',
     cx: 0.21, cy: 0.30,
@@ -26,9 +26,15 @@ const RESEARCH_AREAS = [
       { tag: 'urban', label: 'Urban', topic: true },
       { tag: 'planning', label: 'Planning', topic: true },
       { tag: 'planning', label: 'Decision-Making', muted: true },
-      { label: 'Community Resilience', muted: true,
-        pubIds: ['w1-mapping-responsibility'],
+      { label: 'Shared Responsibility', muted: true,
+        pubIds: ['w1-mapping-responsibility', 'c15-homeowner-responsibility'],
         description: 'Spatial metrics that map shared responsibility for risk mitigation among neighboring homeowners in the Wildland Urban Interface.' },
+      { label: 'Disaster Resilience', muted: true,
+        pubIds: ['w1-mapping-responsibility', 'w7-permit-recovery'],
+        description: 'Evaluating mitigation strategies through network dismantling, and measuring whether communities actually recover afterwards.' },
+      { label: 'Post-Disaster Recovery', muted: true,
+        pubIds: ['w7-permit-recovery'],
+        description: 'Reconstructing who rebuilds after hurricanes and wildfires, how quickly, and who does not, from parcel-scale building permit records.' },
       { label: 'Governance', muted: true,
         pubIds: ['w3-catastrophic-risk', 'o3-catastrophic-governance'],
         description: 'Modeling cascading risk and governance in complex adaptive systems with the Center for Catastrophic Risk Management.' },
@@ -38,26 +44,32 @@ const RESEARCH_AREAS = [
     id: 'environment',
     number: '02',
     title: 'Environment',
-    description: '',
+    description: 'Hazard processes in the landscape \u2014 how fire, weather, and water behave, and when that behavior leaves the historical record.',
     tags: ['wildfire', 'nathaz'],
-    color: '#5559b7',
+    color: '#1f9d5a',
     cx: 0.79, cy: 0.30,
     keywords: [
       { tag: 'wildfire', label: 'Wildfire', topic: true },
       { tag: 'nathaz', label: 'Natural Hazards', topic: true },
+      { label: 'Fire Spread Simulation', muted: true,
+        pubIds: ['p6-cell2fire', 'c16-cell2fire-wind', 'c13-cell2fire-synthetic'],
+        description: 'A semi-empirical cellular automata fire growth model, calibrated by data-driven optimization and coupled to downscaled high-resolution wind fields.' },
       { label: 'Fire Weather', muted: true,
-        pubIds: ['w5-pyromes', 'w4-korea-fire'],
+        pubIds: ['w5-pyromes', 'w4-korea-fire', 'w8-china-pyroregions'],
         description: 'Characterizing dynamic global pyromes and unprecedented fire behavior driven by compounding climate extremes.' },
       { label: 'Climate Extreme', muted: true,
         pubIds: ['w5-pyromes', 'w4-korea-fire'],
-        description: 'Characterizing dynamic global pyromes and unprecedented fire behavior driven by compounding climate extremes.' },
+        description: 'Identifying the conditions under which hazard behavior becomes discontinuous with the historical record.' },
+      { label: 'Multi-scale', muted: true,
+        pubIds: ['w5-pyromes', 'p7-fire-spread-polygons', 'w1-mapping-responsibility'],
+        description: 'Working deliberately across scales, from a single parcel through a neighborhood and landscape to a global fire regime.' },
     ],
   },
   {
     id: 'technology',
     number: '03',
     title: 'Technology',
-    description: '',
+    description: 'The methods that make the other two tractable \u2014 simulation, network science, remote sensing, and deep learning.',
     tags: ['rs', 'ml', 'geospatial', 'netsci'],
     color: '#764ba2',
     cx: 0.50, cy: 0.66,
@@ -66,14 +78,17 @@ const RESEARCH_AREAS = [
       { tag: 'ml', label: 'Machine Learning', topic: true },
       { tag: 'geospatial', label: 'Geospatial', topic: true },
       { tag: 'netsci', label: 'Network Science', topic: true },
-      { label: 'GeoAI', muted: true,
+      { label: 'Complex Systems', muted: true,
+        pubIds: ['w3-catastrophic-risk', 'p7-fire-spread-polygons'],
+        description: 'Treating risk as an emergent property of interacting parts rather than a sum of independent units.' },
+      { label: 'Deep Learning', muted: true,
         pubIds: ['c8-inaccessible-areas', 'p4-lcz-attention', 'c7-lcz-training-samples', 'c10-landform-segmentation'],
-        description: 'Applying AI to geospatial problems, from semantic segmentation to attention-based deep learning for satellite imagery.' },
-      { tag: 'geospatial', label: 'GIS', muted: true },
+        description: 'Semantic segmentation and attention-based networks for extracting high-resolution information from satellite and aerial imagery.' },
       { label: 'Computer Vision', muted: true,
-        pubIds: ['c8-inaccessible-areas', 'p4-lcz-attention', 'c7-lcz-training-samples', 'c10-landform-segmentation'],
+        pubIds: ['c8-inaccessible-areas', 'p4-lcz-attention', 'c10-landform-segmentation'],
         description: 'Image classification and segmentation models for extracting information from satellite and aerial imagery at high resolution.' },
-      { tag: 'geospatial', label: 'Data Science', muted: true },
+      { tag: 'geospatial', label: 'Geospatial Data Science', muted: true },
+      { tag: 'geospatial', label: 'GIS', muted: true },
     ],
   },
 ];
@@ -81,15 +96,21 @@ const RESEARCH_AREAS = [
 // Bridge nodes sit along the corridor between two areas, grounded in
 // publications that genuinely span both domains -- one labeled bridge
 // per pair that actually has one (at the midpoint, also seeding that
-// corridor's unlabeled interstitial nodes). Not every pair of areas
-// necessarily has a bridge.
+// corridor's unlabeled interstitial nodes).
 const SHARED_NODES = [
   {
     id: 'bridge-human-environment',
     label: 'Suppression Networks',
     areaIds: ['human', 'environment'],
-    pubIds: ['p7-fire-spread-polygons'],
+    pubIds: ['p7-fire-spread-polygons', 'c12-fire-potential-networks'],
     description: 'A spatial network of fire potential polygons, identifying critical fire-spread pathways and suppression opportunities, tested in the field with the Catalan Fire Service.',
+  },
+  {
+    id: 'bridge-environment-technology',
+    label: 'Cascading Hazards',
+    areaIds: ['environment', 'technology'],
+    pubIds: ['o2-sediment-bulking', 'w2-debris-flows', 'c14-flood-after-fires'],
+    description: 'Data-driven assessment of post-fire debris flow risk to transportation and water infrastructure, built from basin, soil, terrain, and flowline data.',
   },
   {
     id: 'bridge-technology-human',
@@ -593,9 +614,8 @@ function renderListView() {
     <div class="area-list-card area-${area.id}" data-area="${area.id}">
       <div class="area-list-header">
         <div class="area-list-title-zone"><span class="area-number">[${area.number}]</span><h3>${area.title}</h3></div>
-        <i class="fas fa-chevron-down area-list-chevron"></i>
       </div>
-      <p>${area.description}</p>
+      ${area.href ? `<a href="${area.href}" class="area-list-link">Explore this area <i class="fas fa-arrow-right"></i></a>` : ''}
       <div class="area-list-tags">
         ${area.keywords.map((k) => `<span class="tag-pill${k.muted ? ' tag-pill-muted' : ''}">${(k.label || TAG_LABELS[k.tag] || k.tag).toUpperCase()}</span>`).join('')}
         ${bridgeLabelsForArea(area.id).map((label) => `<span class="tag-pill tag-pill-bridge">${label.toUpperCase()}</span>`).join('')}
@@ -738,10 +758,9 @@ function stopAnimation() {
 const RESEARCH_SLIDES = [
   {
     type: 'diagram',
-    lede: `I study at the complex interface of:
-      <span class="rp-hl rp-hl-human">Humans</span>,
-      <span class="rp-hl rp-hl-environment">Environment</span>, &
-      <span class="rp-hl rp-hl-technology">Technology</span>.`,
+    // The interface statement lives at the top of the section on research.html,
+    // so the diagram slide itself carries no lede -- it would read twice.
+    lede: '',
     body: '',
     showAreaList: true,
   },
@@ -767,8 +786,15 @@ const RESEARCH_SLIDES = [
       // <span class="rp-hl rp-hl-human">social</span>,
       // <span class="rp-hl rp-hl-environment">environmental</span>, and
       // <span class="rp-hl rp-hl-technology">technological</span> systems interconnect as one complex adaptive system.`,
-    body: `My focus is shifting toward complex systems in natural hazard risk management and disaster risk reduction, especially the extreme tail events reshaping wildfire behavior today &mdash; from fire-atmosphere interactions that produce pyrocumulonimbus clouds to fast-moving fires in the wildland-urban interface.
-      This means studying multi-hazard risk, where cascading impacts (like post-fire debris flows) and compound weather extremes interact across interconnected socio-technical networks, all pointing toward a more general theory of disaster resilience.`,
+    // No body prose here: the lede sets the direction and the four fields
+    // below name it, which is all this slide needs to carry.
+    body: '',
+    panels: [
+      'Multi-hazard risk analysis',
+      'Geospatial AI',
+      'Agentic decision support',
+      'Disaster justice and resilience',
+    ],
     showAreaList: false,
   },
 ];
@@ -782,11 +808,25 @@ function renderResearchSlide(index) {
 
   const descEl = document.getElementById('researchSlideDesc');
   if (descEl) {
-    descEl.innerHTML = `<p class="research-slide-lede">${slide.lede}</p>`
+    // Guard the lede: the diagram slide deliberately has none (the interface
+    // statement sits at the top of the section), and an empty <p> would still
+    // occupy its margins.
+    const panelsHTML = (slide.panels || []).length
+      ? `<div class="future-grid future-grid-compact">`
+        + slide.panels.map((title, i) => `
+            <div class="future-card">
+              <span class="future-num">0${i + 1}</span>
+              <h3>${title}</h3>
+            </div>`).join('')
+        + `</div>`
+      : '';
+
+    descEl.innerHTML = (slide.lede ? `<p class="research-slide-lede">${slide.lede}</p>` : '')
       + (slide.body
         ? `<button type="button" class="reveal-toggle-btn" onclick="toggleMobileReveal(this)">Read more <i class="fas fa-chevron-down"></i></button>`
           + `<p class="hero-description mobile-hide-until-expanded">${slide.body}</p>`
-        : '');
+        : '')
+      + panelsHTML;
   }
 
   const areaListEl = document.getElementById('areaList');

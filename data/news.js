@@ -14,7 +14,34 @@
 
 const NEWS_ITEMS = [
   {
-    date: 'Sep 2026', sort: '2026-09', year: 2026, type: 'Teaching',
+    date: 'Dec 2026', sort: '2026-12', year: 2026, type: 'Conference',
+    title: 'I will give an oral presentation, &ldquo;Multi-source data assessment of extreme fire behavior during South Korea&rsquo;s first pyrocumulonimbus event,&rdquo; at <b>AGU26</b>.',
+  },
+  {
+    date: 'Nov 2026', sort: '2026-11', year: 2026, type: 'Talk',
+    title: 'I will give an <b>eMERGE seminar</b> on &ldquo;Wildfire risk management in an era of climate extremes.&rdquo;',
+  },
+  {
+    date: 'Oct 2026', sort: '2026-10-d', year: 2026, type: 'Paper',
+    title: 'Our paper, &ldquo;A network approach to mapping responsibility in wildfire risk mitigation,&rdquo; was published in <em>Landscape and Urban Planning</em>!',
+    links: [{ icon: 'fa-file-alt', label: 'Paper', url: 'https://doi.org/10.1016/j.landurbplan.2026.105805' },
+            { icon: 'fa-code-branch', label: 'Code', url: 'https://github.com/minhokim93/spatial-responsibility' },
+            { icon: 'fa-diagram-project', label: 'Interactive', url: 'https://minhokim93.github.io/spatial-responsibility/' }],
+  },
+  {
+    date: 'Oct 2026', sort: '2026-10-c', year: 2026, type: 'Talk',
+    title: 'I will give a seminar at <b>Seoul National University</b> on October 22, hosted by the Ecological Sensing Lab of Professor <a href="https://scholar.google.com/citations?user=dvjMbwsAAAAJ&hl=en">Youngryel Ryu</a> in the Department of Landscape Architecture and Rural Systems Engineering.',
+  },
+  {
+    date: 'Oct 2026', sort: '2026-10-b', year: 2026, type: 'Talk',
+    title: 'I will give a seminar at <b>Seoul National University</b> on October 17.',
+  },
+  {
+    date: 'Oct 2026', sort: '2026-10-a', year: 2026, type: 'Talk',
+    title: 'I will give a guest lecture for <b>CP4190: Introduction to Climate Change Planning</b> at the <b>Georgia Institute of Technology</b>.',
+  },
+  {
+    date: 'Sep 2026', sort: '2026-09-a', year: 2026, type: 'Teaching',
     title: 'I am teaching <b>CEE 308: Topics in Disaster Resilience Research</b> as <b>Lead Instructor</b> at Stanford University this fall!',
   },
   {

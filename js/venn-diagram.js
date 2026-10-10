@@ -10,9 +10,9 @@
 // keep hovering.
 
 const VENN_AREAS = [
-  { key: 'modeling', cx: 250, cy: 165, r: 135, color: '#3366cc', label: ['Computational', 'Modeling'], labelX: 155, labelY: 85 },
-  { key: 'geospatial', cx: 390, cy: 165, r: 135, color: '#1f9d5a', label: ['Geospatial Data', 'Science'], labelX: 485, labelY: 85 },
-  { key: 'decision', cx: 320, cy: 270, r: 135, color: '#b8891f', label: ['Decision', 'Support'], labelX: 320, labelY: 368 },
+  { key: 'modeling', cx: 250, cy: 165, r: 135, color: '#3366cc', label: ['Computational', 'Hazard Modeling'], labelX: 155, labelY: 85 },
+  { key: 'networks', cx: 390, cy: 165, r: 135, color: '#1f9d5a', label: ['Disaster', 'Resilience'], labelX: 485, labelY: 85 },
+  { key: 'geospatial', cx: 320, cy: 270, r: 135, color: '#764ba2', label: ['Geospatial', 'Data Science'], labelX: 320, labelY: 368 },
 ];
 
 const VENN_HUB = { x: 320, y: 200 };
@@ -62,7 +62,7 @@ function initVennDiagram() {
   svg.setAttribute('class', 'venn-svg');
   svg.setAttribute('role', 'img');
   svg.setAttribute('tabindex', '0');
-  svg.setAttribute('aria-label', 'Venn diagram of three interconnected research areas: Computational Modeling, Geospatial Data Science, and Decision Support. Hover, focus, or click to see how they connect.');
+  svg.setAttribute('aria-label', 'Venn diagram of three interconnected research areas: Computational Modeling, Disaster Resilience, and Geospatial Data Science. Hover, focus, or click to see how they connect.');
 
   const circleState = {};
   VENN_AREAS.forEach((area, i) => {

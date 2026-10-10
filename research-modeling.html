@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<body>
   <!-- Header -->
   <header class="header">
     <div class="container nav-container">
@@ -41,25 +42,25 @@
                     <a href="index.html" class="area-detail-back"><i class="fas fa-arrow-left"></i> Back to Home</a>
                     <div class="area-nav-icons">
                         <span class="area-nav-label">Navigate:</span>
-                        <a href="research-modeling.html" class="area-nav-icon active area-nav-icon-modeling" title="Computational Modeling"><i class="fas fa-network-wired"></i></a>
+                        <a href="research-modeling.html" class="area-nav-icon active area-nav-icon-modeling" title="Computational Modeling"><i class="fas fa-fire"></i></a>
+                        <a href="research-networks.html" class="area-nav-icon area-nav-icon-networks" title="Disaster Resilience"><i class="fas fa-diagram-project"></i></a>
                         <a href="research-geospatial.html" class="area-nav-icon area-nav-icon-geospatial" title="Geospatial Data Science"><i class="fas fa-satellite-dish"></i></a>
-                        <a href="research-decision.html" class="area-nav-icon area-nav-icon-decision" title="Decision Support"><i class="fas fa-chart-line"></i></a>
                     </div>
                 </div>
 
                 <div class="area-detail-heading" style="align-items: center;">
-                    <div class="home-area-icon home-area-icon-modeling" style="width: 56px; height: 56px; font-size: 1.4rem; margin-bottom: 0;"><i class="fas fa-network-wired"></i></div>
+                    <div class="home-area-icon home-area-icon-modeling" style="width: 56px; height: 56px; font-size: 1.4rem; margin-bottom: 0;"><i class="fas fa-fire"></i></div>
                     <h1>Computational Modeling</h1>
                 </div>
 
                 <h2 class="section-title" style="margin-top: 1.5rem;">Overview</h2>
                 <p class="hero-description mobile-collapse">
-                    Computational modeling is how I turn wildfire behavior into something measurable and testable before it happens. In today's era of climate extremes, natural hazards like wildfires are increasing in frequency, intensity, and scale beyond our capacity to respond effectively. Model simulations let us anticipate potential fire behavior and plan proactively, generating risk assessments that are paramount to protecting human lives, infrastructure, and ecosystems from unprecedented catastrophe.
+                    A simulation earns its keep only if you can trust it. Fire spread models are widely used to anticipate what a fire will do, but they frequently fail to reproduce real outcomes, which makes them hard to act on. This area is about closing that gap: calibrating a physics-based growth model against observed perimeters, quantifying what remains uncertain, and coupling it to the drivers that actually govern behavior &mdash; high-resolution wind, urban fuels, and the fire-weather regime that determines what kind of event to expect in the first place. The same logic runs across scales &mdash; a single burn scar, a landscape, a global fire regime &mdash; and extends to hazards that compound: with Caltrans I built a multi-criteria framework that turns basin, soil, terrain, and flowline data into post-fire debris flow risk estimates for state infrastructure. In every case the output is not a picture of a hazard but an input to a decision. How the resulting consequences then propagate through communities and infrastructure is taken up on the <a href="research-networks.html">Disaster Resilience</a> page.
                 </p>
 
                 <h2 class="section-title" style="margin-top: 2rem;">My Work</h2>
 
-                <h3 class="area-subheading">Wildfire: Fire Spread Modeling</h3>
+<h3 class="area-subheading">Fire Spread Simulation &amp; Uncertainty</h3>
                 <p class="hero-description mobile-collapse">
                     Fire spread models (FSMs) simulate how a fire will propagate across a landscape, information that's critical for anticipating risk and planning proactively. I benchmarked and optimized Cell2Fire, a cellular-automata FSM based on semi-empirical fire physics, across synthetic and real landscapes in the US, Canada, and Chile, the first application of the model to US terrain. I developed a multi-objective optimization method that scales the simulated fire's elliptical shape to better match observed rates of spread, and used blackbox optimization to fine-tune the simulation against a real burn scar, improving prediction accuracy (F1-score from 0.74 to 0.83) while running an order of magnitude faster than benchmark simulators like FARSITE and Prometheus. To evaluate model uncertainty and sensitivity more broadly, I used a machine-learning-based surrogate model to assess robustness and feature importance through explainable AI methods.
                 </p>
@@ -75,51 +76,15 @@
                     <figcaption>Cell2Fire coupled with downscaled WindNinja wind fields, evaluated on the 2025 Palisades Fire: simulated fire pathways (pink) driven by severe winds from ignition (1) through heavy damage in Pacific Palisades (2). Kim &amp; Gonz&aacute;lez (2025), <em>CEE Highlights</em>.</figcaption>
                 </figure>
 
-                <h3 class="area-subheading">Machine Learning &amp; Deep Learning</h3>
+                <h3 class="area-subheading">Fire Weather &amp; Changing Fire Regimes</h3>
                 <p class="hero-description mobile-collapse">
-                    Machine learning and deep learning are how I generate the high-resolution datasets that feed directly into the fire models above. I built MSMLA-Net, a multi-scale, multi-level attention network, to classify Local Climate Zones from Sentinel-2 imagery and ancillary GIS data: a multi-scale (MS) module extracts features at multiple spatial scales, a modified SE-ResNet backbone processes them through three residual blocks, and a multi-level attention (MLA) module applies channel-and-spatial attention (CBAM) at each depth rather than just the final layer, before all four attention outputs are fused for classification. I've applied the same semantic segmentation toolkit elsewhere to map high-resolution enhanced landforms and surface fuel models that feed directly into the fire spread simulations above. Click through the architecture below:
-                </p>
-
-                <div class="arch-flow" id="archFlow">
-                    <div class="arch-stage" data-stage="input">
-                        <div class="arch-stage-icon"><i class="fas fa-satellite"></i></div>
-                        <div class="arch-stage-label">Input Patch</div>
-                    </div>
-                    <div class="arch-arrow"><i class="fas fa-arrow-right"></i></div>
-                    <div class="arch-stage" data-stage="ms">
-                        <div class="arch-stage-icon"><i class="fas fa-layer-group"></i></div>
-                        <div class="arch-stage-label">MS Module</div>
-                    </div>
-                    <div class="arch-arrow"><i class="fas fa-arrow-right"></i></div>
-                    <div class="arch-stage" data-stage="resnet">
-                        <div class="arch-stage-icon"><i class="fas fa-cubes"></i></div>
-                        <div class="arch-stage-label">SE-ResNet Backbone</div>
-                    </div>
-                    <div class="arch-arrow"><i class="fas fa-arrow-right"></i></div>
-                    <div class="arch-stage" data-stage="mla">
-                        <div class="arch-stage-icon"><i class="fas fa-eye"></i></div>
-                        <div class="arch-stage-label">MLA Module (CBAM)</div>
-                    </div>
-                    <div class="arch-arrow"><i class="fas fa-arrow-right"></i></div>
-                    <div class="arch-stage" data-stage="fusion">
-                        <div class="arch-stage-icon"><i class="fas fa-code-merge"></i></div>
-                        <div class="arch-stage-label">Feature Fusion</div>
-                    </div>
-                    <div class="arch-arrow"><i class="fas fa-arrow-right"></i></div>
-                    <div class="arch-stage" data-stage="output">
-                        <div class="arch-stage-icon"><i class="fas fa-map"></i></div>
-                        <div class="arch-stage-label">LCZ Output (17 classes)</div>
-                    </div>
-                </div>
-                <div class="arch-demo" id="archDemo" hidden>
-                    <h4 class="arch-demo-title" id="archDemoTitle"></h4>
-                    <p class="arch-demo-text" id="archDemoText"></p>
-                </div>
-                <p class="hero-description" style="font-size: 0.85rem; color: var(--text-muted);">
-                    Click a stage above to see what it does. MSMLA-Net architecture from Kim, Jeong, &amp; Kim (2021), <em>ISPRS Journal of Photogrammetry and Remote Sensing</em>, 181, 345&ndash;366.
+                    Simulating a fire assumes we know roughly what kind of fire to expect. Increasingly we do not. I study how atmospheric drivers organize fire behavior at regional to global scales, and how those regimes shift when conditions leave the historical envelope. I am developing a dynamic global pyrome framework that classifies fire regimes by their <em>fire weather structure</em> rather than by static biome, and tracks how they move under extreme conditions; applied to China's fire record from 2001 to 2025, it reveals a consistent fire weather structure underlying sharply divergent regional regimes. I have also analyzed the March 2025 South Korean fires, an event that produced fire behavior with no regional precedent, to isolate the meteorological and fuel conditions that made it possible. This work draws on reanalysis products, satellite fire detections, and increasingly the output of AI weather models. I am extending it toward operational forecasting with the Catalan Fire Service, using self-supervised deep learning to answer a simple, useful question: what is today's fire weather forecast most similar to, and what did that day's fire behavior look like?
                 </p>
 
                 <h2 class="section-title" style="margin-top: 2rem;">Related Publications</h2>
+                <p class="hero-description" style="font-size: 0.85rem; color: var(--text-muted);">
+                    Every publication tagged to this research area, most recent first. The full, filterable list lives on the <a href="research.html#publications">Research</a> page.
+                </p>
                 <div id="areaPubs"></div>
             </div>
         </div>
@@ -155,13 +120,11 @@
     <script src="js/publications-render.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        renderPubList('#areaPubs', [
-          'p6-cell2fire', 'c16-cell2fire-wind', 'p7-fire-spread-polygons',
-          'p4-lcz-attention', 'c7-lcz-training-samples', 'c10-landform-segmentation',
-        ]);
+        // Driven by the `areas` field in data/publications.js -- adding a
+        // publication with areas: ['modeling'] is enough, nothing here to edit.
+        renderPubListByArea('#areaPubs', 'modeling');
       });
     </script>
-    <script src="js/model-architecture.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
