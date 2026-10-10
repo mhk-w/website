@@ -1,0 +1,38 @@
+\newcommand{\skill}[2]
+  {\small \color{maincolor} 
+    \begin{tabular}{@{} p{0.22\linewidth} p{0.64\linewidth}}
+    \textbf{\color{hlcolor-0} #1} & \textcolor{maincolor}{#2}
+    \end{tabular}}
+
+\newcommand{\certification}[2]
+    {\small #1 \hfill{\textbf{#2}}}
+\newcommand{\github}
+  {\small \url{https://github.com/\GitHubAccount}}
+
+
+\section*{Skills}
+\begin{cvcontent}
+  %
+  \skill{GitHub}{\github}\\ [0.5mm]
+  %
+  \skill{Coding}{Python, C/C++, CMake, Matlab, Javascript (Google Earth Engine), Git, Scripting (Bash), LaTeX, HTML}\\ [0.5mm]
+  %
+  \skill{ML/DL}{Tensorflow, Keras, PyTorch, Scikit-learn, Scikit-image, OpenCV}\\[0.5mm]
+  %
+  \skill{Remote Sensing}{ENVI (SARscape), Google Earth Engine (Javascript/geemap), Python (Rasterio/GDAL)} \\[0.5mm]
+  %
+  \skill{GIS}{ArcGIS, QGIS, Python} \\[0.5mm]
+  % \skill{Fire Modeling}{FARSITE/FLAMMAP}\\[0.5mm]
+  %
+  \skill{Languages}{English (Native), Korean (Native), French (Fluent)}
+  %
+\\[3mm]
+\textbf{Certificates}\\[-5mm]
+\begin{itemize}[leftmargin=1.5cm]
+    \setlength\itemsep{-0.25em}
+    % \item \certification{Applied Data Science}{Expected}
+    \item \certification{Teaching and Learning in Higher Education}{2026}
+    \item \certification{Geospatial Information Science and Technology}{2022}
+\end{itemize}
+
+\end{cvcontent}

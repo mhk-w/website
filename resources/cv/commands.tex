@@ -1,0 +1,30 @@
+%% Shared macros used across multiple CV sections
+%% -------------------------------------------------------------------
+\newcommand{\university}[2]
+  {\small\textbf{\color{hlcolor-0}{#1}}\textbf{\small \hfill{#2}}}
+
+\newcommand{\degree}[1]
+  {\small \textbf{\color{hlcolor-0}}{#1}}
+
+\newcommand{\texttitle}[2]
+  {\small \color{hlcolor-0}
+    {#1:}
+    \begin{minipage}[t]{0.8\linewidth}
+      \begin{flushleft}
+        {#2}
+      \end{flushleft}
+    \end{minipage}}
+
+\newcommand{\research}[1]
+  {\small {\color{hlcolor-0} {#1}}}
+
+% Talk symbols
+%% ---------------------------------------------------------------------
+\newcommand{\pill}[3]{%
+  \tikz[baseline=-0.55ex]\node[fill=#1, text=#2, rounded corners=1.5pt,
+    inner sep=2.2pt, font=\fontsize{7.5}{7.5}\selectfont\bfseries\sffamily] {#3};%
+}
+\newcommand{\tagSeminar}{\pill{tagBlueBg}{tagBlueText}{SEMINAR}}
+\newcommand{\tagLecture}{\pill{tagGreenBg}{tagGreenText}{LECTURE}}
+\newcommand{\tagExhibition}{\pill{tagPurpleBg}{tagPurpleText}{EXHIBITION}}
+\newcommand{\tagPanel}{\pill{tagOrangeBg}{tagOrangeText}{PANEL}}

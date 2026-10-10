@@ -1,0 +1,66 @@
+% One \item = one talk. \talktitle prints the title once; each \talkrow
+% below it is one independent venue/date instance (a talk given multiple
+% times gets multiple \talkrow calls) — every row uses the same macro,
+% so there's no special-cased "first row" to keep track of when editing.
+\newcommand{\talktitle}[1]{%
+  \small\color{maincolor}\textbf{\color{hlcolor-0}{#1}}\\
+}
+
+\newcommand{\talkrow}[3]{%
+  \small\color{maincolor}%
+  \begin{tabular}[t]{p{0.8\linewidth}@{\hspace{0.03\linewidth}}p{0.15\linewidth}}
+    \talktag{#1}\ \textit{#3}
+    & \raggedleft\textbf{\textcolor{maincolor}{#2}}
+  \end{tabular}%
+}
+
+\newcommand{\talktag}[1]{%
+  \ifstrequal{#1}{Seminar}{\tagSeminar}{%
+  \ifstrequal{#1}{Lecture}{\tagLecture}{%
+  \ifstrequal{#1}{Exhibition}{\tagExhibition}{%
+  \tagPanel}}}%
+}
+
+\section*{\textsc{Invited Talks \& Panels}}
+\noindent
+% \tagSeminar\ Seminar \ \ \tagLecture\ Lecture \ \ \tagExhibition\ Exhibition \ \ \tagPanel\ Panel
+    \begin{etaremune}[leftmargin=1.5cm]
+      \renewcommand\labelenumi{[T\theenumi]}
+      \setlength\itemsep{-0.05em}
+    %
+    \item \talktitle{Disaster resilience and extreme wildfires}
+    \talkrow{Seminar}{Oct 2026}{SPINS-RS Lab, Seoul National University}
+    % 
+    \item \talktitle{Thermal remote sensing and fire-weather interactions}
+    \talkrow{Seminar}{Oct 2026}{Ecological Sensing Lab, Seoul National University}
+    %
+    \item \talktitle{Multiscale analysis of wildfire risk in the built and natural environments}
+    \talkrow{Seminar}{Jul 2026}{Center for Catastrophic Risk Management, UC Berkeley}
+    \talkrow{Exhibition}{Apr 2026}{Just Climate Futures Exhibition, UC Berkeley}
+    \textbf{Media}: \href{https://ced.berkeley.edu/news/ced-awards-seed-grants-for-climate-research}{UC Berkeley} | \href{https://minhokim93.github.io/wildfires/}{Online Exhibition}
+    %
+    \item \talktitle{Geospatial data science for natural hazard risk analysis}
+    \talkrow{Lecture}{Apr 2026}{CE153: Resilient Cities by Design, UC Berkeley}
+    \talkrow{Lecture}{Apr 2026}{457.539: Advanced Remote Sensing, Seoul National University} 
+    %
+    \item \talktitle{Shared responsibility and structure separation distance using network modeling and metrics}
+    \talkrow{Seminar}{Jul 2024}{Catalan Fire Service, Forest Actions Reinforcement Group}
+    \talkrow{Seminar}{Jul 2024}{Pau Costa Foundation, Spain}
+    %
+    \item \talktitle{Fire spread modeling and superpixel-based fire suppression networks}
+    \talkrow{Seminar}{Jul 2024}{Meteorology and Air Quality group, Wageningen University \& Research}
+    \talkrow{Seminar}{Jul 2024}{Catalan Fire Service, Forest Actions Reinforcement Group}
+    %
+    \item \talktitle{Data-driven planning and modeling for wildfire research using geospatial data science and network science}
+    \talkrow{Lecture}{Oct 2026}{CP4190: Introduction to Climate Change Planning, Georgia Institute of Technology}
+    \talkrow{Lecture}{Oct 2025}{CP4190: Introduction to Climate Change Planning, Georgia Institute of Technology}
+    \talkrow{Seminar}{Aug 2025}{Ecological Sensing Lab, Seoul National University}
+    \talkrow{Lecture}{Feb 2024}{CP4190: Introduction to Climate Change Planning, Georgia Institute of Technology}
+    %
+    \item \talktitle{Exploring Research in the Environmental Field}
+    \talkrow{Panel}{Oct 2021}{Berkeley Environmental Economics and Policy Students, UC Berkeley}
+    %
+    \item \talktitle{Urban Remote Sensing}
+    \talkrow{Lecture}{Apr 2020}{457.544: Satellite Image Interpretation, Seoul National University}
+    \talkrow{Seminar}{Jan 2020}{Interdisciplinary Program in Landscape Architecture, Seoul National University}
+ \end{etaremune}

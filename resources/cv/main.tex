@@ -1,0 +1,255 @@
+\documentclass[a4paper, 11pt]{article}
+
+%% ID information
+%% --------------
+\newcommand{\Title}{Curriculum Vitae}
+\newcommand{\FirstName}{Minho}
+\newcommand{\LastName}{Kim}
+\newcommand{\Initials}{MHK}
+\newcommand{\MyName}{\FirstName\ \LastName}
+\newcommand{\Email}{minhok@stanford.edu}
+\newcommand{\Website}{https://minho.me}
+\newcommand{\Researchgate}{https://www.researchgate.net/profile/Minho-Kim-23}
+\newcommand{\Scholar}{https://scholar.google.com/citations?user=VRVL4TYAAAAJ&hl=en}
+\newcommand{\Twitter}{https://twitter.com/mh_k93}
+\newcommand{\GitHubAccount}{minhokim93}
+\newcommand{\ORCID}{https://orcid.org/0000-0002-9504-5935}
+%% Define font typeface
+%% --------------------
+\usepackage[T1]{fontenc}
+\usepackage{helvet}
+
+%% Control the font size
+%% ---------------------
+\usepackage{anyfontsize}
+
+%% Define new date format
+%% ----------------------
+\usepackage{datetime}
+\newdateformat{monthyear}{\monthname[\THEMONTH], \THEYEAR}
+
+%% Set the page margins
+%% --------------------
+\usepackage[left=1.5cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+%% Remove space between items
+%% --------------------------
+\usepackage[inline]{enumitem}
+\usepackage{etaremune}
+
+%% Use custom colors
+%% -----------------
+\usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{maincolor}{HTML}{000000}
+\definecolor{titlecolor}{HTML}{000000}
+\definecolor{sectioncolor}{HTML}{000000}
+\definecolor{iconcolor}{HTML}{003262}
+\definecolor{urlcolor}{HTML}{003262}
+\definecolor{hlcolor-0}{HTML}{000000}
+\definecolor{hlcolor-1}{HTML}{003262}
+\definecolor{hlcolor-2}{HTML}{003262}
+
+%% Airtable-style pill-tag colors (fill / text pairs) for talk-type labels
+%% ------------------------------------------------------------------------
+\definecolor{tagBlueBg}{HTML}{D3E5FF}
+\definecolor{tagBlueText}{HTML}{1B4F91}
+\definecolor{tagGreenBg}{HTML}{D2F3DC}
+\definecolor{tagGreenText}{HTML}{1B6E3C}
+\definecolor{tagPurpleBg}{HTML}{E7DBFA}
+\definecolor{tagPurpleText}{HTML}{6B3FA0}
+\definecolor{tagOrangeBg}{HTML}{FFE4C2}
+\definecolor{tagOrangeText}{HTML}{A15C00}
+
+%% Enable small rounded-rectangle pill tags (Airtable/spreadsheet-style)
+%% -----------------------------------------------------------------------
+\usepackage{tikz}
+\usepackage{etoolbox}
+
+%% Enable using special symbols
+%% ------------------------------
+\usepackage{fontawesome5}
+\usepackage{textcomp}
+
+%% Reverse numerical ordering
+%% ------------------------------
+\usepackage{enumitem} 
+
+% Enable alternative underlining
+% ------------------------------
+\usepackage{soul}
+
+%% Enable multiple columns
+%% -----------------------
+\usepackage{multicol}
+
+%% Enable m{} / b{} column types in tabular (used by projects.tex)
+%% ----------------------------------------------------------------
+\usepackage{array}
+
+\usepackage{amsmath}
+
+%% Set fancy headers
+%% -----------------
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+\chead{
+  \fontsize{10pt}{12pt}\selectfont
+  \MyName
+  \hfill
+  \url{\Website}
+  \hfill
+  Last updated: \monthyear\today
+}
+\rhead{}
+\cfoot{\fontsize{10pt}{0}\selectfont \thepage\ of \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+%% Define first page header
+%% ------------------------
+\fancypagestyle{firstpage}
+{
+  \fancyhf{}
+  \cfoot{\fontsize{10pt}{0}\selectfont \thepage\ of \pageref{LastPage}}
+}
+
+%% Sections customization
+%% ----------------------
+\usepackage{titlesec}
+\titleformat{\section}
+  {\sc\bfseries\Large\color{sectioncolor}}  % format
+  {\thesection}  % label
+  {2.5mm}  % sep
+  {}  % before-code
+  [
+    \vspace{-5mm}%
+    {\color{maincolor}\rule{\linewidth}{0.3pt}}
+  ] % after-code
+\titlespacing{\section}{0mm}{5mm}{0.5mm}
+
+%% Define section indentation
+%% --------------------------
+\newenvironment{cvcontent}{
+  \leftskip=0.5cm\rightskip=0cm
+  \noindent\ignorespaces}{\par}
+
+%% Metadata for the PDF output
+%% ---------------------------
+\usepackage[colorlinks=true]{hyperref}
+\hypersetup{ % document metadata
+  pdftitle  = {\MyName\ - \Title},
+  pdfauthor = {\MyName},
+  linkcolor = blue,
+  citecolor = blue,
+  filecolor = blue,
+  urlcolor  = blue,
+}
+
+%% Useful macros
+%% -------------
+\newcommand{\makefield}[2]{\makebox[1.5em]{\color{iconcolor}#1} #2}
+\newcommand{\mail}[1]{\href{mailto:#1}{\texttt{#1}}}
+
+%% Macros shared across multiple section files
+%% ---------------------------------------------
+\input{commands}
+
+
+%%% ==================
+%%%   DOCUMENT START
+%%% ==================
+\begin{document}
+
+%% No header for the first page
+%% ----------------------------
+\thispagestyle{firstpage}
+
+%%%  HEADER
+%%% ========
+\begin{center}
+  {\fontsize{30pt}{0}\selectfont
+    \textbf{\textsc{\color{titlecolor} \MyName}}
+  }
+  \\[3mm]
+  {\fontsize{10pt}{0}\selectfont
+    {
+     \makefield{\faGlobe}{\href{\Website}{minho.me}} \makefield{\faEnvelope}{\mail{\Email}}
+      \\
+     \makefield{\faGraduationCap}{\href{\Scholar}{Google Scholar}}
+      \, | \,
+     \makefield{\faResearchgate}{\href{\Researchgate}{Minho-Kim-23}}
+     \, | \,
+     \makefield{\faTwitter}{\href{\Twitter}{@mh\_k93}}
+     \, | \,
+     \href{\ORCID}{0000-0002-9504-5935}
+    }
+  }
+  \\[3mm]
+\end{center}
+
+%%%  RESEARCH INTERESTS
+%%% ====================
+% \noindent
+% {\color{maincolor}%
+% \fbox{\color{black}%
+% \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{
+%   \small\raggedright
+%   My research explores data-driven methods to model and manage disaster risk and resilience: 
+%   \begin{enumerate}
+%       \item \textbf{Modeling Natural Hazards}: Wildfires, fire spread simulations, compound weather extremes 
+%       \item \textbf{Geospatial Data Science}: Remote sensing, GIS, machine learning, computer vision
+%       \item \textbf{Disaster Risk and Resilience}: Complex systems, network science, urban resilience
+%   \end{enumerate}
+% }}}
+% \vspace{1mm}
+
+%%%  Appointments
+%%% ===========
+\input{appointments}
+
+%%%  EDUCATION
+%%% ===========
+\input{education}
+
+%%%  AWARDS
+%%% ========
+\input{awards}
+
+%%%  SCHOLARSHIPS
+%%% ==============
+\input{scholarships}
+
+%%%  PUBLICATIONS
+%%% ==============
+\input{publications}
+
+%%%  TALKS
+%%% ===============
+\input{talks}
+
+%%%  SOFTWARE
+%%% ==========
+\input{software}
+
+%%%  TEACHING
+%%% ==========
+\input{teaching}
+
+%%%  COMMUNITY
+%%% ===========
+\input{community}
+
+%%% PROJECTS
+%%% ==================
+\input{projects}
+
+%%% SKILLS
+%%% ==================
+\input{skills}
+
+%%%  References
+%%% ===========
+\input{contacts}
+
+\end{document}
