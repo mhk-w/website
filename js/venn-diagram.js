@@ -62,7 +62,7 @@ function initVennDiagram() {
   svg.setAttribute('class', 'venn-svg');
   svg.setAttribute('role', 'img');
   svg.setAttribute('tabindex', '0');
-  svg.setAttribute('aria-label', 'Venn diagram of three interconnected research areas: Computational Modeling, Disaster Resilience, and Geospatial Data Science. Hover, focus, or click to see how they connect.');
+  svg.setAttribute('aria-label', 'Venn diagram of three interconnected research areas: Computational Modeling, Disaster Risk and Resilience, and Geospatial Data Science. Hover, focus, or click to see how they connect.');
 
   const circleState = {};
   VENN_AREAS.forEach((area, i) => {

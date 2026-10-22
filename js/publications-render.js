@@ -25,7 +25,7 @@ const TAG_LABELS = {
 // dedicated research-*.html pages. A publication may belong to more than one.
 const AREA_LABELS = {
   modeling: 'Computational Modeling',
-  networks: 'Disaster Resilience',
+  networks: 'Disaster Risk and Resilience',
   geospatial: 'Geospatial Data Science',
 };
 

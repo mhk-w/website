@@ -29,7 +29,7 @@ const RESEARCH_AREAS = [
       { label: 'Shared Responsibility', muted: true,
         pubIds: ['w1-mapping-responsibility', 'c15-homeowner-responsibility'],
         description: 'Spatial metrics that map shared responsibility for risk mitigation among neighboring homeowners in the Wildland Urban Interface.' },
-      { label: 'Disaster Resilience', muted: true,
+      { label: 'Disaster Risk and Resilience', muted: true,
         pubIds: ['w1-mapping-responsibility', 'w7-permit-recovery'],
         description: 'Evaluating mitigation strategies through network dismantling, and measuring whether communities actually recover afterwards.' },
       { label: 'Post-Disaster Recovery', muted: true,
