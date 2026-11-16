@@ -26,6 +26,17 @@
 const PUBLICATIONS = [
   // ---- Working Papers / Preprints ----
   {
+    id: 'w9-landcover-foundation',
+    authors: 'Yao, X., Wu, K., Bhatt, R., Kang, Y., &amp; <strong>Kim, M.</strong>',
+    year: 2026,
+    title: 'Interactive Land Cover Change Detection Using Geospatial Foundation Model Embeddings',
+    link: null,
+    venue: 'Working paper',
+    type: 'preprint',
+    tags: ['rs', 'ml', 'geospatial'],
+    areas: ['geospatial'],
+  },
+  {
     id: 'w8-china-pyroregions',
     authors: 'Domènech, R., Cunill Camprubí, A., <strong>Kim, M.</strong>, Artés, T., &amp; Resco de Dios, V.',
     year: 2026,
@@ -59,7 +70,7 @@ const PUBLICATIONS = [
     year: 2026,
     title: 'Enhancing coverage, robustness, and optimization of California’s camera network for early fire detection',
     link: null,
-    venue: 'Working paper',
+    venue: 'To be submitted, <i>Computers, Environment, and Urban Systems</i>',
     type: 'preprint',
     tags: ['wildfire', 'geospatial', 'netsci'],
     areas: ['geospatial', 'networks'],
@@ -250,6 +261,17 @@ const PUBLICATIONS = [
   },
 
   // ---- Conference & Workshop Papers ----
+  {
+    id: 'c17-agu26-korea-pyrocb',
+    authors: '<strong>Kim, M.</strong>, Castellnou, M., &amp; González, M.C.',
+    year: 2026,
+    title: 'Multi-source data assessment of extreme fire behavior during South Korea’s first pyrocumulonimbus event',
+    link: null,
+    venue: '<i>AGU 2026</i>, San Francisco, USA, Dec 7-11, 2026',
+    type: 'cpaper',
+    tags: ['wildfire', 'nathaz', 'rs'],
+    areas: ['modeling'],
+  },
   {
     id: 'c16-cell2fire-wind',
     authors: '<strong>Kim, M.</strong>, &amp; González, M.C.',

@@ -14,12 +14,20 @@
 
 const NEWS_ITEMS = [
   {
-    date: 'Dec 2026', sort: '2026-12', year: 2026, type: 'Conference',
-    title: 'I will give an oral presentation, &ldquo;Multi-source data assessment of extreme fire behavior during South Korea&rsquo;s first pyrocumulonimbus event,&rdquo; at <b>AGU26</b>.',
+    date: 'Dec 2026', sort: '2026-12-b', year: 2026, type: 'Talk',
+    title: 'I will give a seminar at the <b>Berkeley Fire Science Gathering</b> on December 9.',
   },
   {
-    date: 'Nov 2026', sort: '2026-11', year: 2026, type: 'Talk',
-    title: 'I will give an <b>eMERGE seminar</b> on &ldquo;Wildfire risk management in an era of climate extremes.&rdquo;',
+    date: 'Dec 2026', sort: '2026-12-a', year: 2026, type: 'Conference',
+    title: 'I will give an oral presentation, &ldquo;Multi-source data assessment of extreme fire behavior during South Korea&rsquo;s first pyrocumulonimbus event,&rdquo; at <b>AGU26</b> in San Francisco.',
+  },
+  {
+    date: 'Nov 2026', sort: '2026-11-b', year: 2026, type: 'Talk',
+    title: 'I will give an <b>eMERGE seminar</b> at UC Berkeley on November 30, &ldquo;Wildfire risk management in an era of climate extremes.&rdquo;',
+  },
+  {
+    date: 'Nov 2026', sort: '2026-11-a', year: 2026, type: 'Talk',
+    title: 'I was invited to give a seminar, &ldquo;Multiscale analysis of wildfire risk in the built and natural environments,&rdquo; at the Geospatial Science and Engineering Lab, <b>Chungbuk National University</b>.',
   },
   {
     date: 'Oct 2026', sort: '2026-10-d', year: 2026, type: 'Paper',
@@ -30,15 +38,15 @@ const NEWS_ITEMS = [
   },
   {
     date: 'Oct 2026', sort: '2026-10-c', year: 2026, type: 'Talk',
-    title: 'I will give a seminar at <b>Seoul National University</b> on October 22, hosted by the Ecological Sensing Lab of Professor <a href="https://scholar.google.com/citations?user=dvjMbwsAAAAJ&hl=en">Youngryel Ryu</a> in the Department of Landscape Architecture and Rural Systems Engineering.',
+    title: 'I gave a seminar, &ldquo;Extraordinary fire behavior and fire-weather interactions,&rdquo; at <b>Seoul National University</b>, hosted by the Ecological Sensing Lab of Professor <a href="https://scholar.google.com/citations?user=dvjMbwsAAAAJ&hl=en">Youngryel Ryu</a> in the Department of Landscape Architecture and Rural Systems Engineering.',
   },
   {
     date: 'Oct 2026', sort: '2026-10-b', year: 2026, type: 'Talk',
-    title: 'I will give a seminar at <b>Seoul National University</b> on October 17.',
+    title: 'I gave a seminar, &ldquo;Enhancing coverage, robustness, and optimization of California&rsquo;s camera network for early fire detection,&rdquo; at the SPINS-RS Lab, <b>Seoul National University</b>.',
   },
   {
     date: 'Oct 2026', sort: '2026-10-a', year: 2026, type: 'Talk',
-    title: 'I will give a guest lecture for <b>CP4190: Introduction to Climate Change Planning</b> at the <b>Georgia Institute of Technology</b>.',
+    title: 'I gave a guest lecture for <b>CP4190: Introduction to Climate Change Planning</b> at the <b>Georgia Institute of Technology</b>.',
   },
   {
     date: 'Sep 2026', sort: '2026-09-a', year: 2026, type: 'Teaching',

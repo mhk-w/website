@@ -19,7 +19,7 @@ const TEACHING_FIELDS = [
 
 const TEACHING_TIMELINE = [
   { institution: 'Stanford University', year: 'Fall 2026', role: 'Lead Instructor',
-    course: 'CEE 308: Topics in Disaster Resilience Research',
+    course: 'CEE 308: Topics in Disaster Resilience Research (Journal Club)',
     fields: ['disaster'] },
   { institution: 'UC Berkeley', year: 'Spring 2024', role: 'Graduate Student Instructor',
     course: 'LDARCH/ESPM C289: Applied Remote Sensing',
