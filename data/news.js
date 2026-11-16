@@ -27,7 +27,7 @@ const NEWS_ITEMS = [
   },
   {
     date: 'Nov 2026', sort: '2026-11-a', year: 2026, type: 'Talk',
-    title: 'I was invited to give a seminar, &ldquo;Multiscale analysis of wildfire risk in the built and natural environments,&rdquo; at the Geospatial Science and Engineering Lab, <b>Chungbuk National University</b>.',
+    title: 'I gave a seminar, &ldquo;Multiscale analysis of wildfire risk in the built and natural environments,&rdquo; at the Geospatial Science and Engineering Lab, <b>Chungbuk National University</b>.',
   },
   {
     date: 'Oct 2026', sort: '2026-10-d', year: 2026, type: 'Paper',
